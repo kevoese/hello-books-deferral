@@ -1,0 +1,23 @@
+{
+  "name": "hello-books",
+  "version": "1.0.0",
+  "description": "A system that allows efficient, cost-effective management of our library.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bahdcoder/hello-books-deferral.git"
+  },
+  "keywords": [
+    "books",
+    "library"
+  ],
+  "author": "obi chinedu frank <frankieetchy@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bahdcoder/hello-books-deferral/issues"
+  },
+  "homepage": "https://github.com/bahdcoder/hello-books-deferral#readme"
+}
