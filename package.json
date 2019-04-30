@@ -19,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/bahdcoder/hello-books-deferral/issues"
   },
-  "homepage": "https://github.com/bahdcoder/hello-books-deferral#readme"
+  "homepage": "https://github.com/bahdcoder/hello-books-deferral#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2"
+  }
 }
