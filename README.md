@@ -1,4 +1,6 @@
+
 [![Build Status](https://travis-ci.com/bahdcoder/hello-books-deferral.svg?branch=master)](https://travis-ci.com/bahdcoder/hello-books-deferral)
+[![](https://img.shields.io/badge/Protected%20by-Hound-%23d896ff.svg)](https://houndci.com)
 
 # Hello Books 
 A system that allows efficient, cost-effective management of our 
