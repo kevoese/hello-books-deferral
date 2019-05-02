@@ -1,6 +1,5 @@
-
 [![Build Status](https://travis-ci.com/bahdcoder/hello-books-deferral.svg?branch=master)](https://travis-ci.com/bahdcoder/hello-books-deferral)
-[![](https://img.shields.io/badge/Protected%20by-Hound-%23d896ff.svg)](https://houndci.com)
+[![](https://img.shields.io/badge/Protected%20by-Hound-%23d896ff.svg)](https://houndci.com)  [![Coverage Status](https://coveralls.io/repos/github/bahdcoder/hello-books-deferral/badge.svg?branch=master)](https://coveralls.io/github/bahdcoder/hello-books-deferral?branch=master)
 
 # Hello Books
 
