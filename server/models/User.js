@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 const { Model } = require('objection');
 
 class User extends Model {
