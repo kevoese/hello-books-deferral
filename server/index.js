@@ -1,13 +1,16 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const swagger = require("swagger-ui-express");
-const swaggerDocument = require("../swagger");
+const express = require('express');
+const dotenv = require('dotenv');
+const morgan = require('morgan');
+const consola = require('consola');
+const swagger = require('swagger-ui-express');
+const swaggerDocument = require('../swagger');
 
 dotenv.config();
 const app = express();
+app.use(morgan('combined'));
 
-app.get("/", (req, res) => {
-  res.send({ message: "Hello Books Deferral" });
+app.get('/', (req, res) => {
+  res.send({ message: 'Hello Books Deferral' });
 });
 /**
  *  setup Swagger
@@ -19,4 +22,6 @@ app.use(
 );
 
 const { PORT } = process.env;
-app.listen(PORT);
+app.listen(PORT, () => {
+  consola.success(`server start at port ${PORT}`);
+});
