@@ -34,7 +34,7 @@
     "knex": "^0.16.5",
     "objection": "^1.6.8",
     "pg": "^7.10.0",
-    "swagger-ui-express": "^4.0.2"
+    "swagger-ui-express": "4.0.2"
   },
   "devDependencies": {
     "coveralls": "^3.0.3",
