@@ -1,8 +1,10 @@
 // Update with your config settings.
+const pg = require('pg');
+
+pg.defaults.ssl = true;
 require('dotenv').config();
 
 module.exports = {
-
   development: {
     client: process.env.DATABASE_CLIENT,
     connection: process.env.DATABASE_URL,
@@ -51,5 +53,4 @@ module.exports = {
       tableName: 'knex_migrations'
     }
   }
-
 };
