@@ -27,11 +27,12 @@
   },
   "homepage": "https://github.com/bahdcoder/hello-books-deferral#readme",
   "dependencies": {
+    "body-parser": "1.19.0",
     "consola": "2.6.0",
-    "morgan": "1.9.1",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "knex": "^0.16.5",
+    "morgan": "1.9.1",
     "objection": "^1.6.8",
     "pg": "^7.10.0",
     "swagger-ui-express": "4.0.2"
