@@ -23,7 +23,21 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: "knex_migrations"
+      tableName: 'knex_migrations',
+      directory: './server/migrations'
+    }
+  },
+
+  review: {
+    client: process.env.DATABASE_CLIENT,
+    connection: process.env.BACKUP_DATABASE,
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations',
+      directory: './server/migrations'
     }
   },
 
@@ -35,7 +49,8 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: "knex_migrations"
+      tableName: 'knex_migrations',
+      directory: './server/migrations'
     }
   },
 
@@ -47,7 +62,8 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: "knex_migrations"
+      tableName: 'knex_migrations',
+      directory: './server/migrations'
     }
   }
 };

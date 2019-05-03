@@ -12,6 +12,7 @@
     "make:migration": "knex migrate:make",
     "migrate:rollback": "knex migrate:rollback",
     "start": "node server/index",
+    "heroku-postbuild": "npm run migrate",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "husky": {
@@ -20,7 +21,10 @@
     }
   },
   "lint-staged": {
-      "*.js": ["npm run lint:fix", "git add"]
+    "*.js": [
+      "npm run lint:fix",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -37,17 +41,21 @@
   },
   "homepage": "https://github.com/bahdcoder/hello-books-deferral#readme",
   "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "consola": "2.6.0",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "express-jsend": "^0.1.0",
+    "husky": "^2.2.0",
+    "indicative": "^5.0.8",
+    "knex": "^0.16.5",
+    "lint-staged": "^8.1.5",
     "mocha": "^6.1.4",
     "morgan": "1.9.1",
     "nodemon": "^1.18.10",
-    "dotenv": "^7.0.0",
-    "express": "^4.16.4",
-    "husky": "^2.2.0",
-    "knex": "^0.16.5",
-    "lint-staged": "^8.1.5",
     "objection": "^1.6.8",
     "pg": "^7.10.0",
     "prettier-eslint": "^8.8.2",

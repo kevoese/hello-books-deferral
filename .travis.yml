@@ -4,6 +4,11 @@ node_js:
 cache:
   directories:
     - "node-modules"
+env:
+  global:
+  - NODE_ENV=test
+before_script:
+  - psql -c 'create database hellobookstest;' -U postgres
 services:
   - postgresql
 after_success: 
