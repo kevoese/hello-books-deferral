@@ -3,7 +3,7 @@
 
 # Hello Books
 
-A system that allows efficient, cost-effective management of our
+📚 A system that allows efficient, cost-effective management of our library.
 
 ## Prerequisites
 
