@@ -1,21 +1,4 @@
 {
   "name": "Hello Books",
-  "description": "A system that allows efficient, cost-effective management of Books for Libraries.",
-  "env": {
-    "DATABASE_CLIENT": {
-      "required": true
-    },
-    "DATABASE_URL": {
-      "required": true
-    },
-    "TEST_DATABASE_CLIENT": {
-      "required": true
-    },
-    "TEST_DATABASE_URL": {
-      "required": true
-    },
-    "NODE_ENV": {
-      "required": true
-    }
-  }
+  "description": "A system that allows efficient, cost-effective management of Books for Libraries."
 }
