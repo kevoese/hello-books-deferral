@@ -1,20 +1,13 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
-const Mail = require("../server/helper/mail");
+const Mail = require("../../server/helper/mail");
 
 chai.use(chaiHttp);
 const { expect } = chai;
 chai.should();
 
-const add = 2 + 2;
-describe("Sample Test", () => {
-  it("Add number", () => {
-    expect(add).to.eql(4);
-  });
-});
-
-// tests for helper Mail class
-describe("Tests for helper Mail class", () => {
+// tests for The Mail class
+describe("The Mail class", () => {
   let mailTest;
   let mailTestNoSubject;
   beforeEach(() => {
@@ -30,7 +23,7 @@ describe("Tests for helper Mail class", () => {
     link: "somelinktoverifyuser"
   };
 
-  it("It should fail if no recipient is specified", () => {
+  it("Should fail if no recipient is specified", () => {
     return mailTest
       .message(
         `
@@ -46,7 +39,7 @@ describe("Tests for helper Mail class", () => {
         );
       });
   });
-  it("It should fail if a wrong recipient email is specified", () => {
+  it("Should fail if a wrong recipient email is specified", () => {
     return mailTest
       .to("sample")
       .message(
@@ -64,7 +57,7 @@ describe("Tests for helper Mail class", () => {
         );
       });
   });
-  it("It should fail if mail body is not a string ", () => {
+  it("Should fail if mail body is not a string ", () => {
     return mailTest
       .to("sample@mail.com")
       .message(data)
@@ -76,7 +69,7 @@ describe("Tests for helper Mail class", () => {
         );
       });
   });
-  it("It should fail if subject of a mail is not specified", () => {
+  it("Should fail if subject of a mail is not specified", () => {
     return mailTestNoSubject
       .to("sample@mail.com")
       .message(
@@ -92,7 +85,7 @@ describe("Tests for helper Mail class", () => {
         expect(err.code.toString()).to.be.equal("400");
       });
   });
-  it("It should be successfull if a recipient is specified", () => {
+  it("Should be successfull if a recipient is specified", () => {
     return mailTest
       .to("john@mail.com")
       .message(
@@ -106,7 +99,7 @@ describe("Tests for helper Mail class", () => {
         res[0].should.have.status(202);
       });
   });
-  it("It should be able to send mail to multiple recipients", () => {
+  it("Should be able to send mail to multiple recipients", () => {
     return mailTest
       .to(["john@mail.com", "jane@mail.com", "tony@mail.com"])
       .message(
