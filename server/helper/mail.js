@@ -1,5 +1,5 @@
-const SendGrid = require('@sendgrid/mail');
-const config = require('../../mail.config');
+const SendGrid = require("@sendgrid/mail");
+const config = require("../../mail.config");
 
 /**
  * Mail class for sending mail
@@ -28,7 +28,7 @@ class Mail {
   /**
    * get mail data
    * @param {string} data
-   * @returns {string} this
+   * @returns {object} this
    */
   message(data) {
     this.payload.message = data;
@@ -38,15 +38,15 @@ class Mail {
   /**
    * send email to user
    * using SendGrid
-   * @returns {object} data
+   * @returns {Promise} data
    */
   send() {
     SendGrid.setApiKey(config.SendGrid.apiKey);
     const msg = {
       to: this.payload.email,
-      from: 'hello-books@andela.com',
+      from: "hello-books@andela.com",
       subject: this.payload.subject,
-      text: this.payload.message
+      html: this.payload.message
     };
     return SendGrid.send(msg);
   }

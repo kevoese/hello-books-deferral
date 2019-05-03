@@ -1,5 +1,5 @@
 // enable env for use
-require('dotenv').config();
+require("dotenv").config();
 
 module.exports = {
   // coniguration for sendGrid
