@@ -23,7 +23,12 @@ module.exports = {
       max: 10
     },
     migrations: {
+<<<<<<< HEAD
       tableName: "knex_migrations"
+=======
+      tableName: 'knex_migrations',
+      directory: './server/migrations'
+>>>>>>> feat: send detailed signup error/success messages
     }
   },
 
@@ -35,7 +40,12 @@ module.exports = {
       max: 10
     },
     migrations: {
+<<<<<<< HEAD
       tableName: "knex_migrations"
+=======
+      tableName: 'knex_migrations',
+      directory: './server/migrations'
+>>>>>>> feat: send detailed signup error/success messages
     }
   },
 
@@ -47,7 +57,12 @@ module.exports = {
       max: 10
     },
     migrations: {
+<<<<<<< HEAD
       tableName: "knex_migrations"
+=======
+      tableName: 'knex_migrations',
+      directory: './server/migrations'
+>>>>>>> feat: send detailed signup error/success messages
     }
   }
 };
