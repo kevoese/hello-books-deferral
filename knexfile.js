@@ -28,6 +28,19 @@ module.exports = {
     }
   },
 
+  review: {
+    client: process.env.DATABASE_CLIENT,
+    connection: process.env.BACKUP_DATABASE,
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations',
+      directory: './server/migrations'
+    }
+  },
+
   staging: {
     client: process.env.DATABASE_CLIENT,
     connection: process.env.DATABASE_URL,
