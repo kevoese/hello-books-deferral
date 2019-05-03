@@ -1,20 +1,88 @@
 {
-  "swagger": "2.0",
-  "info": {
+    "swagger": "2.0",
+    "info": {
       "title": "Hello Books",
       "description": "A system that allows efficient, cost-effective management of our library.",
       "version": "1.0.0"
-  },
-  "explore": "true",
-  "basePath": "/api/v1",
-  "schemes": [
+    },
+    "basePath": "/api/v1",
+    "schemes": [
       "http",
       "https"
-  ],
-  "consumes": [
+    ],
+    "consumes": [
       "application/json"
-  ],
-  "produces": [
+    ],
+    "produces": [
       "application/json"
-  ]
-}
+    ],
+    "paths": {
+      "/auth/signup": {
+        "post": {
+          "tags": [
+            "auth"
+          ],
+          "summary": "Add a new user account",
+          "operationId": "addUser",
+          "consumes": [
+            "application/json",
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User object that needs to be added to the app",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/NewUser"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfull User Registration"
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "NewUser": {
+        "type": "object",
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "password",
+          "password_confirmation"
+        ],
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "password_confirmation": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "NewUser"
+        }
+      }
+    }
+  }
