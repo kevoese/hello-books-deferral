@@ -14,7 +14,7 @@ router.post('/signup', validator.signUp, async (req, res) => {
       firstName, lastName, password, email
     });
 
-  res.status(201).json({ message: 'User registered' });
+  res.status(201).json([{ message: 'User registered' }]);
 });
 
 module.exports = router;
