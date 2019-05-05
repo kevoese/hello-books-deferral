@@ -10,6 +10,7 @@ const KnexFile = require("../knexfile");
 const swaggerDocument = require("../swagger");
 const auth = require("./routes/v1/auth");
 
+const author = require("./routes/v1/author");
 require("express-jsend");
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(morgan("combined"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/v1/auth", auth);
+app.use("/api/v1", author);
 
 app.get("/", (req, res) => {
   res.status(200).jsend({ message: "Hello Books Deferral" });
