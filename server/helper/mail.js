@@ -17,6 +17,7 @@ class Mail {
 
   /**
    * get recipient email
+   * mail can be sent to multiple recipient
    * @param {array} email
    * @returns {object} this
    */
@@ -38,7 +39,7 @@ class Mail {
   /**
    * send email to user
    * using SendGrid
-   * @returns {Promise} data
+   * @returns {Promise}
    */
   send() {
     SendGrid.setApiKey(config.SendGrid.apiKey);
