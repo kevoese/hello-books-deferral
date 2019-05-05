@@ -9,8 +9,8 @@ const { Model } = require("objection");
 const KnexFile = require("../knexfile");
 const swaggerDocument = require("../swagger");
 const auth = require("./routes/v1/auth");
-const author = require("./routes/v1/author");
 
+const author = require("./routes/v1/author");
 require("express-jsend");
 
 dotenv.config();
