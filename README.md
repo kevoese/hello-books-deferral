@@ -40,3 +40,20 @@ To certify that the server is operational navigate to http://localhost:5000 on y
 ```
 { message: 'Hello Books Deferral' }
 ```
+## Using SendGrid Mail Service
+To send email within the application using SendGrid
+
+1. Update your local `.env` file with the following `SEND_API_KEY=YOUR_SENDGRID_API_KEY` 
+2. Import `Mail` class from `helper/mail.js`
+3. Create an instance of `new Mail('Example Subject')` with the subject of the mail
+
+  Note: `Mail` is a chainable class 
+
+  ```
+  example: 
+
+     const sampleMail = new Mail('Email Verification');
+     sampleMail.to('user@mail.com')
+               .message('some message')
+               .send()  // returns a promise
+  ```  
