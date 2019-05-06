@@ -14,7 +14,7 @@ const addAuthor = (req, res, next) => {
       next();
     })
     .catch(errors => {
-      res.status(400).jerror(errors);
+      res.status(422).jerror("ValidationFailed", errors);
     });
 };
 
