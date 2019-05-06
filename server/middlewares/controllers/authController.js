@@ -23,6 +23,7 @@ const signUp = async (req, res) => {
   // send user a welcome mail
   await new Mail("welcome-mail")
     .to(email, firstName)
+    .data(firstName)
     .subject("Welcome Onboard")
     .send();
 
