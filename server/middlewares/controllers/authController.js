@@ -11,22 +11,18 @@ const signUp = async (req, res) => {
     email
   });
 
-  if (user) {
-    const { id, email } = user;
-
-    const token = jwt.sign({ id, email }, process.env.JWT_SECRET, {
+  const token = jwt.sign(
+    { id: user.id, email: user.email },
+    process.env.JWT_SECRET,
+    {
       expiresIn: "12h"
-    });
+    }
+  );
 
-    res.status(201).jsend({
-      message: "User registered",
-      token
-    });
-  } else {
-    res.status(500).jsend({
-      message: "Something went wrong. Please try again"
-    });
-  }
+  res.status(201).jsend({
+    message: "User registered",
+    token
+  });
 };
 
 module.exports = { signUp };
