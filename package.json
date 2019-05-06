@@ -41,9 +41,9 @@
   },
   "homepage": "https://github.com/bahdcoder/hello-books-deferral#readme",
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
-    "@sendgrid/mail": "^6.3.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "consola": "2.6.0",
@@ -52,6 +52,7 @@
     "express-jsend": "^0.1.0",
     "husky": "^2.2.0",
     "indicative": "^5.0.8",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.16.5",
     "lint-staged": "^8.1.5",
     "mocha": "^6.1.4",

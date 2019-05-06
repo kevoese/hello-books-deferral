@@ -54,6 +54,7 @@ describe("AUTH API ENDPOINTS", () => {
       expect(res.body).to.have.property("data");
       expect(res.body.data).to.be.an("object");
       expect(res.body.data).to.have.property("message");
+      expect(res.body.data).to.have.property("token");
       expect(res.body.data.message).to.include("User registered");
     });
     it("should not sign up user that is already registered", async () => {
