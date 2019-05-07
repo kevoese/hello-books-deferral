@@ -23,7 +23,7 @@ const signUp = (req, res, next) => {
       next();
     })
     .catch(errors => {
-      res.status(400).jerror(errors);
+      res.status(422).jerror("ValidationFailed", errors);
     });
 };
 /* add other auth validators here */

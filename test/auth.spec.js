@@ -22,8 +22,6 @@ describe("AUTH API ENDPOINTS", () => {
   });
   after(async () => {
     await databaseConnection("users").truncate();
-    databaseConnection.destroy();
-    server.close();
   });
 
   describe("POST SIGN UP api/v1/auth/signup", () => {
@@ -33,13 +31,11 @@ describe("AUTH API ENDPOINTS", () => {
         .request(server)
         .post("/api/v1/auth/signup")
         .send(register);
-      expect(res).to.have.status(400);
-      expect(res.body).to.have.property("status");
+      expect(res).to.have.status(422);
       expect(res.body.status).to.include("error");
-      expect(res.body).to.have.property("code");
-      expect(res.body.code).to.be.an("array");
-      expect(res.body.code[0]).to.have.property("message");
-      expect(res.body.code[0].message).to.include(
+      expect(res.body.code).to.equal("ValidationFailed");
+      expect(res.body.message[0]).to.have.property("message");
+      expect(res.body.message[0].message).to.include(
         "email is required to create a new account"
       );
     });
@@ -54,6 +50,7 @@ describe("AUTH API ENDPOINTS", () => {
       expect(res.body).to.have.property("data");
       expect(res.body.data).to.be.an("object");
       expect(res.body.data).to.have.property("message");
+      expect(res.body.data).to.have.property("token");
       expect(res.body.data.message).to.include("User registered");
     });
     it("should not sign up user that is already registered", async () => {
@@ -61,13 +58,11 @@ describe("AUTH API ENDPOINTS", () => {
         .request(server)
         .post("/api/v1/auth/signup")
         .send(register);
-      expect(res).to.have.status(400);
-      expect(res.body).to.have.property("status");
+      expect(res).to.have.status(422);
       expect(res.body.status).to.include("error");
-      expect(res.body).to.have.property("code");
-      expect(res.body.code).to.be.an("array");
-      expect(res.body.code[0]).to.have.property("message");
-      expect(res.body.code[0].message).to.include("email must be unique");
+      expect(res.body.code).to.equal("ValidationFailed");
+      expect(res.body.message[0]).to.have.property("message");
+      expect(res.body.message[0].message).to.include("email must be unique");
     });
   });
 
@@ -93,13 +88,11 @@ describe("AUTH API ENDPOINTS", () => {
         .request(server)
         .post("/api/v1/authors")
         .send(data);
-      expect(res).to.have.status(400);
-      expect(res.body).to.have.property("status");
+      expect(res).to.have.status(422);
       expect(res.body.status).to.include("error");
-      expect(res.body).to.have.property("code");
-      expect(res.body.code).to.be.an("array");
-      expect(res.body.code[0]).to.have.property("message");
-      expect(res.body.code[0].message).to.include(
+      expect(res.body.code).to.equal("ValidationFailed");
+      expect(res.body.message).to.be.an("array");
+      expect(res.body.message[0].message).to.include(
         "name is required to create an author"
       );
     });

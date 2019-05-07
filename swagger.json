@@ -1,88 +1,207 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "title": "Hello Books",
-      "description": "A system that allows efficient, cost-effective management of our library.",
-      "version": "1.0.0"
-    },
-    "basePath": "/api/v1",
-    "schemes": [
-      "http",
-      "https"
-    ],
-    "consumes": [
-      "application/json"
-    ],
-    "produces": [
-      "application/json"
-    ],
-    "paths": {
-      "/auth/signup": {
-        "post": {
-          "tags": [
-            "auth"
-          ],
-          "summary": "Add a new user account",
-          "operationId": "addUser",
-          "consumes": [
-            "application/json",
-            "application/x-www-form-urlencoded"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "User object that needs to be added to the app",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/NewUser"
-              }
+  "swagger": "2.0",
+  "info": {
+    "title": "Hello Books",
+    "description": "A system that allows efficient, cost-effective management of our library.",
+    "version": "1.0.0"
+  },
+  "basePath": "/api/v1/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Add a new user account",
+        "operationId": "addUser",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that needs to be added to the app",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewUser"
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "Successfull User Registration"
-            },
-            "400": {
-              "description": "Invalid input"
-            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User Registration Successful"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           }
         }
       }
     },
-    "definitions": {
-      "NewUser": {
-        "type": "object",
-        "required": [
-          "firstName",
-          "lastName",
-          "email",
-          "password",
-          "password_confirmation"
+    "/authors": {
+      "post": {
+        "tags": [
+          "authors"
         ],
-        "properties": {
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "password_confirmation": {
-            "type": "string"
+        "summary": "Add a new author",
+        "operationId": "addAuthor",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that needs to be added to the app",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewAuthor"
+            }
           }
-        },
-        "xml": {
-          "name": "NewUser"
+        ],
+        "responses": {
+          "201": {
+            "description": "Author added successfully"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/books": {
+      "post": {
+        "tags": [
+          "books"
+        ],
+        "summary": "Add a new book",
+        "operationId": "addBook",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that needs to be added to the app",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewBook"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Book added Successfully"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
         }
       }
     }
+  },
+  "definitions": {
+    "NewUser": {
+      "type": "object",
+      "required": [
+        "firstName",
+        "lastName",
+        "email",
+        "password",
+        "password_confirmation"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "password_confirmation": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "NewUser"
+      }
+    },
+    "NewAuthor": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example":"Dangote Jnr"
+        }
+      },
+      "xml": {
+        "name": "NewAuthor"
+      }
+    },
+    "NewBook": {
+      "type": "object",
+      "required": [
+        "title",
+        "coverType",
+        "isbn",
+        "description",
+        "publisher",
+        "year"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "coverType": {
+          "type": "string"
+        },
+        "isbn": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "year": {
+          "type": "number"
+        }
+      },
+      "xml": {
+        "name": "NewUser"
+      }
+    }
   }
+}
