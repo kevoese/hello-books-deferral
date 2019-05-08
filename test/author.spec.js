@@ -8,7 +8,7 @@ const { expect } = chai;
 let author;
 
 describe("AUTHOR API ENDPOINTS", () => {
-  const success = async (res, statusCode, classType) => {
+  const success = async (res, statusCode, classType = "object") => {
     expect(res).to.have.status(statusCode);
     expect(res.body).to.have.property("status");
     expect(res.body.status).to.include("success");
@@ -48,22 +48,20 @@ describe("AUTHOR API ENDPOINTS", () => {
         .request(server)
         .post("/api/v1/authors")
         .send(author);
-      success(res, 201, "object");
+      success(res, 201);
       console.log(res.body.data);
       expect(res.body.data).to.have.all.keys("name", "id");
     });
   });
 
   describe("GET AUTHOR api/v1/authors", () => {
-    it("should return all authors", async () => {
-      const res = await chai.request(server).get("/api/v1/authors");
-      success(res, 200, "array");
+    it("should not get author if id param is not a number", async () => {
+      const res = await chai.request(server).get("/api/v1/authors/d");
+      fail(res, 422, "id must be an integer");
     });
     it("should return single author with name query string", async () => {
-      const res = await chai
-        .request(server)
-        .get(`/api/v1/authors?name=${author.name}`);
-      success(res, 200, "array");
+      const res = await chai.request(server).get("/api/v1/authors/1");
+      success(res, 200);
     });
   });
 
@@ -82,13 +80,13 @@ describe("AUTHOR API ENDPOINTS", () => {
         .request(server)
         .patch("/api/v1/authors/1")
         .send(author);
-      success(res, 200, "object");
+      success(res, 200);
       expect(res.body.data).to.have.all.keys("name", "id");
     });
   });
 
   describe("DELETE AUTHOR api/v1/authors", () => {
-    it("should not delete author if id param is not provided", async () => {
+    it("should not delete author if id param is not a number", async () => {
       const res = await chai.request(server).delete("/api/v1/authors/d");
       fail(res, 422, "id must be an integer");
     });

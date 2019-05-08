@@ -6,12 +6,9 @@ const addAuthor = async (req, res) => {
   return res.status(201).jsend(author);
 };
 
-const getAuthor = async (req, res) => {
-  /* get single author with the 'name' query string or all authors */
-  const authors = !req.query.name
-    ? await Author.query()
-    : await Author.query().where("name", req.query.name);
-  return res.status(200).jsend(authors);
+const getSingleAuthor = async (req, res) => {
+  const author = await Author.query().findById(req.params.id);
+  return res.status(200).jsend(author);
 };
 
 const updateAuthor = async (req, res) => {
@@ -27,4 +24,4 @@ const deleteAuthor = async (req, res) => {
   return res.status(200).jsend({ message: "Author deleted successfully" });
 };
 
-module.exports = { addAuthor, getAuthor, updateAuthor, deleteAuthor };
+module.exports = { addAuthor, getSingleAuthor, updateAuthor, deleteAuthor };

@@ -42,7 +42,7 @@ const updateAuthor = (req, res, next) => {
     });
 };
 
-const deleteAuthor = (req, res, next) => {
+const deleteOrGetAuthor = (req, res, next) => {
   const rules = {
     id: "required|number"
   };
@@ -61,4 +61,4 @@ const deleteAuthor = (req, res, next) => {
     });
 };
 
-module.exports = { addAuthor, updateAuthor, deleteAuthor };
+module.exports = { addAuthor, updateAuthor, deleteOrGetAuthor };

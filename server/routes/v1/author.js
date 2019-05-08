@@ -5,7 +5,11 @@ const AuthorValidator = require("../../middlewares/validators/authorValidator");
 const router = express.Router();
 
 router.post("/", AuthorValidator.addAuthor, AuthorController.addAuthor);
-router.get("/", AuthorController.getAuthor);
+router.get(
+  "/:id",
+  AuthorValidator.deleteOrGetAuthor,
+  AuthorController.getSingleAuthor
+);
 router.patch(
   "/:id",
   AuthorValidator.updateAuthor,
@@ -13,7 +17,7 @@ router.patch(
 );
 router.delete(
   "/:id",
-  AuthorValidator.deleteAuthor,
+  AuthorValidator.deleteOrGetAuthor,
   AuthorController.deleteAuthor
 );
 
