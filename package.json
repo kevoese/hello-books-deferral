@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint **/*.js",
     "lint:fix": "prettier-eslint **/*.js --write",
-    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha test/**/**/*.spec.js --timeout=10000",
+    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha test/**/**/*.spec.js --timeout=10000 --exit",
     "dev": "nodemon server/index",
     "migrate": "knex migrate:latest",
     "make:migration": "knex migrate:make",

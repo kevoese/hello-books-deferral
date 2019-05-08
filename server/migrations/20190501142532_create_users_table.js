@@ -11,6 +11,8 @@ exports.up = knex =>
       .unique()
       .notNull();
     table.string("password").notNull();
+    table.enu("role", ["super_admin", "admin", "patron"]).defaultTo("patron");
+    table.timestamps();
   });
 
 exports.down = knex => knex.schema.dropTable("users");
