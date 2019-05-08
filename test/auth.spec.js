@@ -65,36 +65,4 @@ describe("AUTH API ENDPOINTS", () => {
       expect(res.body.message[0].message).to.include("email must be unique");
     });
   });
-
-  describe("POST ADD AN AUTHOR api/v1/authors", () => {
-    it("should addd a new author", done => {
-      data = {
-        name: "John Doe"
-      };
-      chai
-        .request(server)
-        .post("/api/v1/authors")
-        .send(data)
-        .end((err, res) => {
-          expect(res).to.have.status(201);
-          expect(res.body).to.have.property("status");
-          done();
-        });
-    });
-
-    it("should not add an author if name field is empty", async () => {
-      data.name = "";
-      const res = await chai
-        .request(server)
-        .post("/api/v1/authors")
-        .send(data);
-      expect(res).to.have.status(422);
-      expect(res.body.status).to.include("error");
-      expect(res.body.code).to.equal("ValidationFailed");
-      expect(res.body.message).to.be.an("array");
-      expect(res.body.message[0].message).to.include(
-        "name is required to create an author"
-      );
-    });
-  });
 });

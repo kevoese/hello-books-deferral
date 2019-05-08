@@ -24,7 +24,7 @@ app.use(morgan("combined"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/v1/auth", auth);
-app.use("/api/v1", author);
+app.use("/api/v1/authors", author);
 app.use("/api/v1/books", books);
 
 app.get("/", (req, res) => {
