@@ -18,7 +18,7 @@ describe.skip("The Mail class", () => {
     mailTestNoSubject = new Mail();
   });
 
-  it("Should fail if no recipient is specified", () => {
+  it.skip("Should fail if no recipient is specified", () => {
     return mailTest
       .to("")
       .data({
@@ -31,7 +31,7 @@ describe.skip("The Mail class", () => {
         expect(err.message.toString()).to.be.equal("No recipients defined");
       });
   });
-  it("Should fail if subject of a mail is not specified", () => {
+  it.skip("Should fail if subject of a mail is not specified", () => {
     return mailTestNoSubject
       .to("sample@mail.com")
       .data({
@@ -45,7 +45,7 @@ describe.skip("The Mail class", () => {
         expect(err.code.toString()).to.be.equal("400");
       });
   });
-  it("Should be successfull if a recipient is specified", () => {
+  it.skip("Should be successfull if a recipient is specified", () => {
     return mailTest
       .to("john@mail.com")
       .subject("Test Mail Service")
