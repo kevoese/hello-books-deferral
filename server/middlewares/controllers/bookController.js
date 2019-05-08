@@ -20,8 +20,19 @@ const storeBooks = async (req, res) => {
 const getAllBooks = async (req, res) => {
   const books = await Book.query().select();
 
-  return res.status(200).jsend({
-    data: books
-  });
+  return res.status(200).jsend(books);
 };
-module.exports = { storeBooks, getAllBooks };
+
+const getSingleBook = async (req, res) => {
+  const book = await Book.query().findById(req.params.id);
+
+  if (book) {
+    return res.status(200).jsend(book);
+  } else {
+    return res.status(404).jsend({
+      message: "Book requested doesn't exist"
+    });
+  }
+};
+
+module.exports = { storeBooks, getAllBooks, getSingleBook };
