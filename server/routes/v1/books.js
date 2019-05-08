@@ -12,5 +12,10 @@ router.get(
   bookValidator.getBookValidation,
   bookController.getSingleBook
 );
+router.delete(
+  "/:id",
+  bookValidator.getBookValidation,
+  bookController.deleteSingleBook
+);
 
 module.exports = router;

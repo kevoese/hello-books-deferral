@@ -110,4 +110,34 @@ describe("BOOKS API ENDPOINTS", () => {
       );
     });
   });
+
+  describe("DELETE A BOOK API ENDPOINT", () => {
+    it("should return suucess message when book is deleted", async () => {
+      const res = await chai.request(server).delete("/api/v1/books/1");
+
+      expect(res).to.have.status(200);
+      expect(res.body.data).to.have.property("message");
+      expect(res.body.data.message).to.eql("Book succesfully deleted");
+    });
+
+    it("should return message not exist when book requested doesnt exist", async () => {
+      const res = await chai.request(server).delete("/api/v1/books/99");
+
+      expect(res).to.have.status(404);
+      expect(res.body.data).to.have.property("message");
+      expect(res.body.data.message).to.eql("Book requested doesn't exist");
+    });
+
+    it("should return error when id passed in is not an interger", async () => {
+      const res = await chai.request(server).delete("/api/v1/books/ab");
+
+      expect(res).to.have.status(422);
+      expect(res.body).to.have.property("message");
+      expect(res.body).to.have.property("code");
+      expect(res.body.code).to.eql("ValidationFailed");
+      expect(res.body.message[0].message).to.eql(
+        "id is expected to be a an integer"
+      );
+    });
+  });
 });

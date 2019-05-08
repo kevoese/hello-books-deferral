@@ -35,4 +35,18 @@ const getSingleBook = async (req, res) => {
   }
 };
 
-module.exports = { storeBooks, getAllBooks, getSingleBook };
+const deleteSingleBook = async (req, res) => {
+  const book = await Book.query().deleteById(req.params.id);
+
+  if (book > 0) {
+    return res.status(200).jsend({
+      message: "Book succesfully deleted"
+    });
+  } else {
+    return res.status(404).jsend({
+      message: "Book requested doesn't exist"
+    });
+  }
+};
+
+module.exports = { storeBooks, getAllBooks, getSingleBook, deleteSingleBook };
