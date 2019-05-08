@@ -59,3 +59,15 @@ describe("BOOKS API ENDPOINTS", () => {
     );
   });
 });
+
+describe("GET ALL BOOKS API ENDPOINT", () => {
+  it("should return all books", async () => {
+    const res = await chai
+      .request(server)
+      .get("/api/v1/books")
+      .set("Accept", "application/json");
+
+    expect(res).to.have.status(200);
+    expect(res.body).to.have.property("data");
+  });
+});

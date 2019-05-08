@@ -17,4 +17,11 @@ const storeBooks = async (req, res) => {
     .jsend({ message: "Book has been added to the library", book });
 };
 
-module.exports.storeBooks = storeBooks;
+const getAllBooks = async (req, res) => {
+  const books = await Book.query().select();
+
+  return res.status(200).jsend({
+    data: books
+  });
+};
+module.exports = { storeBooks, getAllBooks };

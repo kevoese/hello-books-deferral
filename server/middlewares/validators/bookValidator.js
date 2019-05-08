@@ -27,4 +27,4 @@ const addBook = (req, res, next) => {
     });
 };
 
-module.exports = addBook;
+module.exports = { addBook };
