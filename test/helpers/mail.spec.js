@@ -7,7 +7,7 @@ const { expect } = chai;
 chai.should();
 
 // tests for The Mail class
-describe("The Mail class", () => {
+describe.skip("The Mail class", () => {
   let mailTest;
   let mailTestNoSubject;
   beforeEach(() => {
