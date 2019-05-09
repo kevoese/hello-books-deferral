@@ -5,15 +5,16 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint **/*.js",
-    "lint:fix": "prettier-eslint **/*.js --write",
-    "test": "jest",
+    "lint:fix": "prettier-eslint **/**/*.{js,json} --write",
+    "prettier": "prettier **/**/*.{js,json} --write",
+    "test": "jest --forceExit",
     "dev": "nodemon --exec babel-node server/index",
     "migrate": "knex migrate:latest",
     "make:migration": "knex migrate:make",
     "migrate:rollback": "knex migrate:rollback",
     "start": "node server/index",
     "heroku-postbuild": "npm run migrate",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "husky": {
     "hooks": {
@@ -23,6 +24,7 @@
   "lint-staged": {
     "*.js": [
       "npm run lint:fix",
+      "npm run prettier",
       "git add"
     ]
   },
@@ -41,7 +43,6 @@
   },
   "homepage": "https://github.com/bahdcoder/hello-books-deferral#readme",
   "dependencies": {
-    "@sendgrid/mail": "^6.3.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "consola": "2.6.0",

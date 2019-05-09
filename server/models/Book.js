@@ -1,7 +1,7 @@
-const { Model } = require("objection");
+const { Model } = require('objection');
 
 class Book extends Model {
-  static tableName = "books";
+    static tableName = 'books';
 }
 
 module.exports = Book;

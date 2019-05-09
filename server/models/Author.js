@@ -1,7 +1,7 @@
-import { Model } from "objection";
+import { Model } from 'objection';
 
 class Author extends Model {
-  static tableName = "authors";
+    static tableName = 'authors';
 }
 
 export default Author;

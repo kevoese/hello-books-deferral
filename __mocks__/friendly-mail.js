@@ -1,15 +1,15 @@
 export default class Mail {
-  to() {
-    return this;
-  }
+    to() {
+        return this;
+    }
 
-  data() {
-    return this;
-  }
+    data() {
+        return this;
+    }
 
-  subject() {
-    return this;
-  }
+    subject() {
+        return this;
+    }
 
-  async send() {}
+    async send() {}
 }

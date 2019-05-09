@@ -15,10 +15,11 @@
             "alias": {
                 "@": "./",
                 "@server": "./server",
-                "@config": "./server/config",
                 "@utils": "./server/utils",
                 "@models": "./server/models",
+                "@config": "./server/config",
                 "@routes": "./server/routes",
+                "@tests": "./__tests__",
                 "@controllers": "./server/controllers",
                 "@middleware": "./server/middleware",
                 "@validators": "./server/middleware/validators"
