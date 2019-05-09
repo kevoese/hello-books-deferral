@@ -1,4 +1,4 @@
-const Book = require("../../models/Book");
+import Book from "@models/Book";
 
 const storeBooks = async (req, res) => {
   const { title, coverType, description, isbn, publisher, year } = req.body;
@@ -48,5 +48,4 @@ const deleteSingleBook = async (req, res) => {
     });
   }
 };
-
-module.exports = { storeBooks, getAllBooks, getSingleBook, deleteSingleBook };
+export default { storeBooks, getAllBooks, getSingleBook, deleteSingleBook };

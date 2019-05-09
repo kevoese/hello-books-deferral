@@ -1,6 +1,6 @@
-const express = require("express");
-const AuthorController = require("../../middlewares/controllers/authorController");
-const AuthorValidator = require("../../middlewares/validators/authorValidator");
+import express from "express";
+import AuthorValidator from "@validators/authorValidator";
+import AuthorController from "@controllers/authorController";
 
 const router = express.Router();
 
@@ -21,4 +21,4 @@ router.delete(
   AuthorController.deleteAuthor
 );
 
-module.exports = router;
+export default router;

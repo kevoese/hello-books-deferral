@@ -1,4 +1,4 @@
-const { validateAll } = require("indicative");
+import { validateAll } from "indicative";
 
 const addBook = (req, res, next) => {
   const rules = {
@@ -47,4 +47,4 @@ const getBookValidation = (req, res, next) => {
     });
 };
 
-module.exports = { addBook, getBookValidation };
+export default { addBook, getBookValidation };

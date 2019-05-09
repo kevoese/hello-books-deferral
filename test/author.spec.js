@@ -24,18 +24,18 @@ describe("AUTHOR API ENDPOINTS", () => {
     expect(res.body.message[0].message).to.be.a("string");
     expect(res.body.message[0].message).to.include(message);
   };
-  before(async () => {
+  beforeAll(async () => {
     await databaseConnection.migrate.latest();
   });
   beforeEach(() => {
     author = { name: "john doe" };
   });
-  after(async () => {
+  afterAll(async () => {
     await databaseConnection("authors").truncate();
   });
 
   describe("POST CREATE AUTHOR api/v1/authors", () => {
-    it("should not create author if name field is empty", async () => {
+    test("should not create author if name field is empty", async () => {
       author.name = "";
       const res = await chai
         .request(server)
@@ -43,7 +43,7 @@ describe("AUTHOR API ENDPOINTS", () => {
         .send(author);
       fail(res, 422, "name is required to create an author");
     });
-    it("should create author with valid inputs", async () => {
+    test("should create author with valid inputs", async () => {
       const res = await chai
         .request(server)
         .post("/api/v1/authors")
@@ -55,18 +55,18 @@ describe("AUTHOR API ENDPOINTS", () => {
   });
 
   describe("GET AUTHOR api/v1/authors", () => {
-    it("should not get author if id param is not a number", async () => {
+    test("should not get author if id param is not a number", async () => {
       const res = await chai.request(server).get("/api/v1/authors/d");
       fail(res, 422, "id must be an integer");
     });
-    it("should return single author with name query string", async () => {
+    test("should return single author with name query string", async () => {
       const res = await chai.request(server).get("/api/v1/authors/1");
       success(res, 200);
     });
   });
 
   describe("UPDATE AUTHOR api/v1/authors", () => {
-    it("should not update author if name field is empty", async () => {
+    test("should not update author if name field is empty", async () => {
       author.name = "";
       const res = await chai
         .request(server)
@@ -74,7 +74,7 @@ describe("AUTHOR API ENDPOINTS", () => {
         .send(author);
       fail(res, 422, "name is required to update an author");
     });
-    it("should update author with valid inputs", async () => {
+    test("should update author with valid inputs", async () => {
       author.name = "jane doe";
       const res = await chai
         .request(server)
@@ -86,11 +86,11 @@ describe("AUTHOR API ENDPOINTS", () => {
   });
 
   describe("DELETE AUTHOR api/v1/authors", () => {
-    it("should not delete author if id param is not a number", async () => {
+    test("should not delete author if id param is not a number", async () => {
       const res = await chai.request(server).delete("/api/v1/authors/d");
       fail(res, 422, "id must be an integer");
     });
-    it("should delete author with id param valid", async () => {
+    test("should delete author with id param valid", async () => {
       const res = await chai.request(server).delete("/api/v1/authors/1");
       success(res, 200, "object");
       expect(res.body.data).to.have.property("message");

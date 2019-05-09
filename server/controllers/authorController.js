@@ -1,4 +1,4 @@
-const Author = require("../../models/Author");
+import Author from "@models/Author";
 
 const addAuthor = async (req, res) => {
   const { name } = req.body;
@@ -24,4 +24,4 @@ const deleteAuthor = async (req, res) => {
   return res.status(200).jsend({ message: "Author deleted successfully" });
 };
 
-module.exports = { addAuthor, getSingleAuthor, updateAuthor, deleteAuthor };
+export default { addAuthor, getSingleAuthor, updateAuthor, deleteAuthor };

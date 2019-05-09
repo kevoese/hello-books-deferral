@@ -1,10 +1,10 @@
-const { validations } = require("indicative");
-const { Vanilla } = require("indicative/builds/formatters");
-const Validator = require("indicative/builds/validator");
-const User = require("../models/User");
+import { validations } from "indicative";
+import { Vanilla } from "indicative/builds/formatters";
+import Validator from "indicative/builds/validator";
+import User from "@models/User";
 
 /* custom user friendly error messages */
-const messages = {
+export const messages = {
   required: "{{ field }} is required to create a new account",
   string: "{{ field }} is not a string",
   unique: "{{ field }} must be unique",
@@ -15,7 +15,7 @@ const messages = {
 };
 
 /* sanitization rule to trim whitespaces */
-const sanitizeRules = {
+export const sanitizeRules = {
   firstName: "trim",
   lastName: "trim",
   email: "trim",
@@ -32,9 +32,7 @@ validations.unique = async (data, field, message, args, get) => {
   if (row[0]) throw message;
 };
 
-const validatorInstance = Validator(
+export const validatorInstance = Validator(
   validations,
   Vanilla
 ); /* create custom validator */
-
-module.exports = { validatorInstance, messages, sanitizeRules };

@@ -1,9 +1,7 @@
-const { Model } = require("objection");
+import { Model } from "objection";
 
 class Author extends Model {
-  static get tableName() {
-    return "authors";
-  }
+  static tableName = "authors";
 }
 
-module.exports = Author;
+export default Author;

@@ -21,17 +21,17 @@ const fineBoys = {
 };
 
 describe("BOOKS API ENDPOINTS", () => {
-  before(async () => {
+  beforeAll(async () => {
     await databaseConnection.migrate.latest();
   });
 
-  after(async () => {
+  afterAll(async () => {
     await databaseConnection("books").truncate();
     server.close();
   });
 
   describe("ADD BOOKS API ENDPOINT", () => {
-    it("should be able to add a book", async () => {
+    test("should be able to add a book", async () => {
       const res = await chai
         .request(server)
         .post(`${booksRoute}`)
@@ -46,7 +46,7 @@ describe("BOOKS API ENDPOINTS", () => {
       expect(res.body.data.book.title).to.equal(fineBoys.title);
     });
 
-    it("should return validation errors if validation fails", async () => {
+    test("should return validation errors if validation fails", async () => {
       const res = await chai
         .request(server)
         .post(`${booksRoute}`)
@@ -62,7 +62,7 @@ describe("BOOKS API ENDPOINTS", () => {
   });
 
   describe("GET ALL BOOKS API ENDPOINT", () => {
-    it("should return all books", async () => {
+    test("should return all books", async () => {
       const res = await chai
         .request(server)
         .get("/api/v1/books")
@@ -74,7 +74,7 @@ describe("BOOKS API ENDPOINTS", () => {
   });
 
   describe("GET A BOOKS API ENDPOINT", () => {
-    it("should return the specified book data", async () => {
+    test("should return the specified book data", async () => {
       const res = await chai.request(server).get("/api/v1/books/1");
 
       expect(res).to.have.status(200);
@@ -90,7 +90,7 @@ describe("BOOKS API ENDPOINTS", () => {
       );
     });
 
-    it("should return message not exist when book requested doesnt exist", async () => {
+    test("should return message not exist when book requested doesnt exist", async () => {
       const res = await chai.request(server).get("/api/v1/books/99");
 
       expect(res).to.have.status(404);
@@ -98,7 +98,7 @@ describe("BOOKS API ENDPOINTS", () => {
       expect(res.body.data.message).to.eql("Book requested doesn't exist");
     });
 
-    it("should return error when id passed in is not an interger", async () => {
+    test("should return error when id passed in is not an interger", async () => {
       const res = await chai.request(server).get("/api/v1/books/ab");
 
       expect(res).to.have.status(422);
@@ -112,7 +112,7 @@ describe("BOOKS API ENDPOINTS", () => {
   });
 
   describe("DELETE A BOOK API ENDPOINT", () => {
-    it("should return suucess message when book is deleted", async () => {
+    test("should return suucess message when book is deleted", async () => {
       const res = await chai.request(server).delete("/api/v1/books/1");
 
       expect(res).to.have.status(200);
@@ -120,7 +120,7 @@ describe("BOOKS API ENDPOINTS", () => {
       expect(res.body.data.message).to.eql("Book succesfully deleted");
     });
 
-    it("should return message not exist when book requested doesnt exist", async () => {
+    test("should return message not exist when book requested doesnt exist", async () => {
       const res = await chai.request(server).delete("/api/v1/books/99");
 
       expect(res).to.have.status(404);
@@ -128,7 +128,7 @@ describe("BOOKS API ENDPOINTS", () => {
       expect(res.body.data.message).to.eql("Book requested doesn't exist");
     });
 
-    it("should return error when id passed in is not an interger", async () => {
+    test("should return error when id passed in is not an interger", async () => {
       const res = await chai.request(server).delete("/api/v1/books/ab");
 
       expect(res).to.have.status(422);

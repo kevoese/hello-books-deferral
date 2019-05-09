@@ -2,9 +2,7 @@ const { Model } = require("objection");
 const bcrypt = require("bcryptjs");
 
 class User extends Model {
-  static get tableName() {
-    return "users";
-  }
+  static tableName = "users";
   async $beforeInsert(context) {
     await super.$beforeInsert(context);
     const salt = await bcrypt.genSalt(10);

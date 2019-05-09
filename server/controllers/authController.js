@@ -1,15 +1,14 @@
-const User = require("../../models/User");
-const jwt = require("jsonwebtoken");
-const Mail = require("friendly-mail");
-const dotenv = require("dotenv");
-const crypto = require("crypto");
+import User from "@models/User";
+import Mail from "friendly-mail";
+import config from "@config";
+import crypto from "crypto";
+import jwt from "jsonwebtoken";
 
-dotenv.config();
 const signUp = async (req, res) => {
   const { firstName, lastName, password, email } = req.body;
 
   const verificationCode = crypto.randomBytes(16).toString("hex");
-  console.log("verification code", verificationCode);
+
   const user = await User.query().insert({
     firstName,
     lastName,
@@ -20,7 +19,7 @@ const signUp = async (req, res) => {
 
   const token = jwt.sign(
     { id: user.id, email: user.email },
-    process.env.JWT_SECRET,
+    config.auth.secret,
     {
       expiresIn: "12h"
     }
@@ -31,14 +30,15 @@ const signUp = async (req, res) => {
     .to(email, firstName)
     .data({
       name: firstName,
-      url: `${process.env.APP_URL}/api/v1/auth/verify/${verificationCode}`
+      url: `${config.server.url}/api/v1/auth/verify/${verificationCode}`
     })
     .subject("Welcome Onboard")
     .send();
 
   res.status(201).jsend({
     message: "User registered",
-    token
+    token,
+    user
   });
 };
 
@@ -63,4 +63,4 @@ const verifyEmail = async (req, res) => {
   });
 };
 
-module.exports = { signUp, verifyEmail };
+export default { signUp, verifyEmail };

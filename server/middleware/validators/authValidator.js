@@ -1,9 +1,10 @@
-const { sanitize } = require("indicative");
-const {
+import { sanitize } from "indicative";
+
+import {
   validatorInstance,
   messages,
   sanitizeRules
-} = require("../../utils/validationUtils");
+} from "@utils/validationUtils";
 
 const signUp = (req, res, next) => {
   /* create validation rule for request fields */
@@ -27,4 +28,4 @@ const signUp = (req, res, next) => {
     });
 };
 /* add other auth validators here */
-module.exports = { signUp };
+export default { signUp };

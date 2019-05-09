@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AUTH API ENDPOINTS POST SIGN UP api/v1/auth/signup should not sign up user if email is empty 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "email",
+      "message": "email is required to create a new account",
+      "validation": "required",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTH API ENDPOINTS POST SIGN UP api/v1/auth/signup should not sign up user that is already registered 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "email",
+      "message": "email must be unique",
+      "validation": "unique",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTH API ENDPOINTS POST SIGN UP api/v1/auth/signup should sign up user with valid inputs 1`] = `
+Array [
+  "message",
+  "token",
+  "user",
+]
+`;

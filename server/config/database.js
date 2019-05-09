@@ -1,7 +1,4 @@
-// Update with your config settings.
-require("dotenv").config();
-
-module.exports = {
+export default () => ({
   development: {
     client: process.env.DATABASE_CLIENT,
     connection: process.env.DATABASE_URL,
@@ -66,4 +63,4 @@ module.exports = {
       directory: "./server/migrations"
     }
   }
-};
+});

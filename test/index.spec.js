@@ -7,12 +7,12 @@ const { expect } = chai;
 
 const add = 2 + 2;
 describe("Sample Test", () => {
-  it("Add number", () => {
+  test("Add number", () => {
     expect(add).to.eql(4);
   });
 });
 describe("APP HOST /", () => {
-  it("should return Hello Books Deferral", async () => {
+  test("should return Hello Books Deferral", async () => {
     const res = await chai.request(server).get("/");
     expect(res).to.have.status(200);
     expect(res.body).to.have.property("status");
