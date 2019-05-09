@@ -1,100 +1,102 @@
-const chai = require("chai");
-const chaiHttp = require("chai-http");
-const { server, databaseConnection } = require("../server/index");
+import supertest from "supertest";
+import { app, databaseConnection } from "@server/app";
 
-chai.use(chaiHttp);
-const { expect } = chai;
-
+const server = () => supertest(app);
 let author;
 
 describe("AUTHOR API ENDPOINTS", () => {
-  const success = async (res, statusCode, classType = "object") => {
-    expect(res).to.have.status(statusCode);
-    expect(res.body).to.have.property("status");
-    expect(res.body.status).to.include("success");
-    expect(res.body).to.have.property("data");
-    expect(res.body.data).to.be.an(classType);
-  };
-  const fail = async (res, statusCode, message) => {
-    expect(res).to.have.status(statusCode);
-    expect(res.body).to.have.property("status");
-    expect(res.body.status).to.include("error");
-    expect(res.body.code).to.equal("ValidationFailed");
-    expect(res.body.message[0]).to.have.property("message");
-    expect(res.body.message[0].message).to.be.a("string");
-    expect(res.body.message[0].message).to.include(message);
-  };
   beforeAll(async () => {
     await databaseConnection.migrate.latest();
   });
+
   beforeEach(() => {
     author = { name: "john doe" };
   });
+
   afterAll(async () => {
     await databaseConnection("authors").truncate();
   });
 
   describe("POST CREATE AUTHOR api/v1/authors", () => {
-    test("should not create author if name field is empty", async () => {
-      author.name = "";
-      const res = await chai
-        .request(server)
+    it("should not create author if name field is empty", async () => {
+      const { status, body } = await server()
         .post("/api/v1/authors")
-        .send(author);
-      fail(res, 422, "name is required to create an author");
+        .send({
+          ...author,
+          name: ""
+        });
+
+      expect(status).toBe(422);
+      expect(body).toMatchSnapshot();
     });
-    test("should create author with valid inputs", async () => {
-      const res = await chai
-        .request(server)
+
+    it("should create author with valid inputs", async () => {
+      const { status, body } = await server()
         .post("/api/v1/authors")
         .send(author);
-      success(res, 201);
-      console.log(res.body.data);
-      expect(res.body.data).to.have.all.keys("name", "id");
+
+      expect(status).toBe(201);
+      expect(body).toMatchSnapshot();
     });
   });
 
   describe("GET AUTHOR api/v1/authors", () => {
-    test("should not get author if id param is not a number", async () => {
-      const res = await chai.request(server).get("/api/v1/authors/d");
-      fail(res, 422, "id must be an integer");
+    it("should not get author if id param is not a number", async () => {
+      const { status, body } = await server().get("/api/v1/authors/d");
+
+      expect(status).toBe(422);
+      expect(body).toMatchSnapshot();
     });
-    test("should return single author with name query string", async () => {
-      const res = await chai.request(server).get("/api/v1/authors/1");
-      success(res, 200);
+
+    it("should return single author with name query string", async () => {
+      const { status, body } = await server().get("/api/v1/authors/1");
+
+      expect(status).toBe(200);
+      expect(body.data.name).toBe(author.name);
+      expect(body).toMatchSnapshot();
     });
   });
 
   describe("UPDATE AUTHOR api/v1/authors", () => {
-    test("should not update author if name field is empty", async () => {
-      author.name = "";
-      const res = await chai
-        .request(server)
+    it("should not update author if name field is empty", async () => {
+      const { status, body } = await server()
         .patch("/api/v1/authors/1")
-        .send(author);
-      fail(res, 422, "name is required to update an author");
+        .send({
+          ...author,
+          name: ""
+        });
+
+      expect(status).toBe(422);
+      expect(body).toMatchSnapshot();
     });
-    test("should update author with valid inputs", async () => {
-      author.name = "jane doe";
-      const res = await chai
-        .request(server)
+
+    it("should update author with valid inputs", async () => {
+      const { status, body } = await server()
         .patch("/api/v1/authors/1")
-        .send(author);
-      success(res, 200);
-      expect(res.body.data).to.have.all.keys("name", "id");
+        .send({
+          ...author,
+          name: "Jane Doe"
+        });
+
+      expect(status).toBe(200);
+      expect(body.data.name).toBe("Jane Doe");
+      expect(body).toMatchSnapshot();
     });
   });
 
   describe("DELETE AUTHOR api/v1/authors", () => {
-    test("should not delete author if id param is not a number", async () => {
-      const res = await chai.request(server).delete("/api/v1/authors/d");
-      fail(res, 422, "id must be an integer");
+    it("should not delete author if id param is not a number", async () => {
+      const { status, body } = await server().delete("/api/v1/authors/d");
+
+      expect(status).toBe(422);
+      expect(body).toMatchSnapshot();
     });
-    test("should delete author with id param valid", async () => {
-      const res = await chai.request(server).delete("/api/v1/authors/1");
-      success(res, 200, "object");
-      expect(res.body.data).to.have.property("message");
-      expect(res.body.data.message).to.include("Author deleted successfully");
+
+    it("should delete author with id param valid", async () => {
+      const { status, body } = await server().delete("/api/v1/authors/1");
+
+      expect(status).toBe(200);
+      expect(body).toMatchSnapshot();
     });
   });
 });

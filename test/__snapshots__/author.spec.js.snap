@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AUTHOR API ENDPOINTS DELETE AUTHOR api/v1/authors should delete author with id param valid 1`] = `
+Object {
+  "data": Object {
+    "message": "Author deleted successfully",
+  },
+  "status": "success",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS DELETE AUTHOR api/v1/authors should not delete author if id param is not a number 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "id",
+      "message": "id must be an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS GET AUTHOR api/v1/authors should not get author if id param is not a number 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "id",
+      "message": "id must be an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS GET AUTHOR api/v1/authors should return single author with name query string 1`] = `
+Object {
+  "data": Object {
+    "id": 1,
+    "name": "john doe",
+  },
+  "status": "success",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS POST CREATE AUTHOR api/v1/authors should create author with valid inputs 1`] = `
+Object {
+  "data": Object {
+    "id": 1,
+    "name": "john doe",
+  },
+  "status": "success",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS POST CREATE AUTHOR api/v1/authors should not create author if name field is empty 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "name",
+      "message": "name is required to create an author",
+      "validation": "required",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS UPDATE AUTHOR api/v1/authors should not update author if name field is empty 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "name",
+      "message": "name is required to update an author",
+      "validation": "required",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS UPDATE AUTHOR api/v1/authors should update author with valid inputs 1`] = `
+Object {
+  "data": Object {
+    "id": 1,
+    "name": "Jane Doe",
+  },
+  "status": "success",
+}
+`;
