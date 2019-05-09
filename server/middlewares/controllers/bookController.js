@@ -1,7 +1,15 @@
 const Book = require("../../models/Book");
 
 const storeBooks = async (req, res) => {
-  const { title, coverType, description, isbn, publisher, year } = req.body;
+  const {
+    title,
+    coverType,
+    description,
+    isbn,
+    publisher,
+    year,
+    copiesAvailable
+  } = req.body;
 
   const book = await Book.query().insert({
     title,
@@ -9,7 +17,8 @@ const storeBooks = async (req, res) => {
     description,
     isbn,
     publisher,
-    year
+    year,
+    copiesAvailable
   });
 
   return res

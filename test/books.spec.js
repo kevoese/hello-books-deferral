@@ -17,7 +17,8 @@ const fineBoys = {
   description:
     "A novel depicting the real life story of Eghosa and his Warri friends...",
   publisher: "Farfina Kachifo",
-  year: 2014
+  year: 2014,
+  copiesAvailable: 4
 };
 
 describe("BOOKS API ENDPOINTS", () => {
@@ -26,7 +27,8 @@ describe("BOOKS API ENDPOINTS", () => {
   });
 
   after(async () => {
-    await databaseConnection("books").truncate();
+    await databaseConnection.migrate.rollback();
+    // await databaseConnection("books").truncate();
     server.close();
   });
 
@@ -43,6 +45,20 @@ describe("BOOKS API ENDPOINTS", () => {
       "Book has been added to the library"
     );
     expect(res.body.data.book.title).to.equal(fineBoys.title);
+  });
+
+  it("should be return validation error if isbn is not unique", async () => {
+    const res = await chai
+      .request(server)
+      .post(`${booksRoute}`)
+      .send(fineBoys)
+      .set("Accept", "/application/json");
+
+    expect(res).to.have.status(422);
+    expect(res.body.status).to.include("error");
+    expect(res.body.code).to.equal("ValidationFailed");
+    expect(res.body.message[0].message).to.include("isbn must be unique");
+    // expect(res.body.data.book.title).to.equal(fineBoys.title);
   });
 
   it("should return validation errors if validation fails", async () => {

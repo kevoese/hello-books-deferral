@@ -31,7 +31,8 @@ describe("AUTHOR API ENDPOINTS", () => {
     author = { name: "john doe" };
   });
   after(async () => {
-    await databaseConnection("authors").truncate();
+    await databaseConnection.migrate.rollback();
+    // await databaseConnection("authors").truncate();
   });
 
   describe("POST CREATE AUTHOR api/v1/authors", () => {
@@ -49,7 +50,6 @@ describe("AUTHOR API ENDPOINTS", () => {
         .post("/api/v1/authors")
         .send(author);
       success(res, 201);
-      console.log(res.body.data);
       expect(res.body.data).to.have.all.keys("name", "id");
     });
   });

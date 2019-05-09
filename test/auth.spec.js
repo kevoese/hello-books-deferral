@@ -66,9 +66,9 @@ describe("AUTH API ENDPOINTS", () => {
       expect(res.body.message[0].message).to.include("email must be unique");
     });
   });
-  
+
   describe("POST ADD AN AUTHOR api/v1/authors", () => {
-    it("should addd a new author", done => {
+    it("should add a new author", done => {
       data = {
         name: "John Doe"
       };

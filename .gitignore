@@ -3,3 +3,5 @@ package-lock.json
 .env
 coverage
 .nyc_output
+yarn.lock
+.vscode
