@@ -1,16 +1,12 @@
-const chai = require("chai");
-const chaiHttp = require("chai-http");
-const { server, databaseConnection } = require("../server/index");
+import faker from "faker";
+import Book from "@models/Book";
+import supertest from "supertest";
+import { app, databaseConnection } from "@server/app";
 
-chai.use(chaiHttp);
-
-const { expect } = chai;
-
+const server = () => supertest(app);
 const booksRoute = "/api/v1/books";
 
-const knexfile = require("./../knexfile")[process.env.NODE_ENV];
-
-const fineBoys = {
+const getBook = () => ({
   title: "Fine Boys",
   coverType: "PaperBack",
   isbn: "9789785205862",
@@ -18,9 +14,9 @@ const fineBoys = {
     "A novel depicting the real life story of Eghosa and his Warri friends...",
   publisher: "Farfina Kachifo",
   year: 2014
-};
+});
 
-describe("BOOKS API ENDPOINTS", () => {
+describe("BOOK API ENDPOINTS", () => {
   beforeAll(async () => {
     await databaseConnection.migrate.latest();
   });
@@ -31,113 +27,113 @@ describe("BOOKS API ENDPOINTS", () => {
   });
 
   describe("ADD BOOKS API ENDPOINT", () => {
-    test("should be able to add a book", async () => {
-      const res = await chai
-        .request(server)
+    it.only("should be able to add a book", async () => {
+      const fineBoys = getBook();
+      fineBoys.isbn = "23ihnv3490nv920327";
+      const { status, body } = await server()
         .post(`${booksRoute}`)
-        .send(fineBoys)
-        .set("Accept", "/application/json");
+        .send(fineBoys);
 
-      expect(res).to.have.status(201);
-      expect(res.body.status).to.include("success");
-      expect(res.body.data.message).to.include(
-        "Book has been added to the library"
-      );
-      expect(res.body.data.book.title).to.equal(fineBoys.title);
+      expect(status).toBe(201);
+      expect(body).toMatchSnapshot();
     });
 
-    test("should return validation errors if validation fails", async () => {
-      const res = await chai
-        .request(server)
+    it.only("should return validation errors if validation fails", async () => {
+      const { status, body } = await server()
         .post(`${booksRoute}`)
-        .send({})
-        .set("Accept", "/application/json");
+        .send({});
 
-      expect(res).to.have.status(422);
-      expect(res.body.code).to.equal("ValidationFailed");
-      expect(res.body.message[0].message).to.equal(
-        "title is required to create a book"
-      );
+      expect(status).toBe(422);
+      expect(body).toMatchSnapshot();
     });
   });
+});
 
-  describe("GET ALL BOOKS API ENDPOINT", () => {
-    test("should return all books", async () => {
-      const res = await chai
-        .request(server)
-        .get("/api/v1/books")
-        .set("Accept", "application/json");
-
-      expect(res).to.have.status(200);
-      expect(res.body).to.have.property("data");
-    });
+describe("GET ALL BOOKS API ENDPOINT", () => {
+  beforeAll(async () => {
+    await databaseConnection.migrate.latest();
   });
 
-  describe("GET A BOOKS API ENDPOINT", () => {
-    test("should return the specified book data", async () => {
-      const res = await chai.request(server).get("/api/v1/books/1");
-
-      expect(res).to.have.status(200);
-      expect(res.body).to.have.property("data");
-      expect(res.body.data).to.have.keys(
-        "id",
-        "title",
-        "coverType",
-        "description",
-        "isbn",
-        "publisher",
-        "year"
-      );
-    });
-
-    test("should return message not exist when book requested doesnt exist", async () => {
-      const res = await chai.request(server).get("/api/v1/books/99");
-
-      expect(res).to.have.status(404);
-      expect(res.body.data).to.have.property("message");
-      expect(res.body.data.message).to.eql("Book requested doesn't exist");
-    });
-
-    test("should return error when id passed in is not an interger", async () => {
-      const res = await chai.request(server).get("/api/v1/books/ab");
-
-      expect(res).to.have.status(422);
-      expect(res.body).to.have.property("message");
-      expect(res.body).to.have.property("code");
-      expect(res.body.code).to.eql("ValidationFailed");
-      expect(res.body.message[0].message).to.eql(
-        "id is expected to be a an integer"
-      );
-    });
+  afterAll(async () => {
+    await databaseConnection("books").truncate();
+    server.close();
   });
 
-  describe("DELETE A BOOK API ENDPOINT", () => {
-    test("should return suucess message when book is deleted", async () => {
-      const res = await chai.request(server).delete("/api/v1/books/1");
+  it.only("should return all books", async () => {
+    const firstBook = getBook();
+    firstBook.isbn = "128b4v389028074";
+    const secondBook = getBook();
+    secondBook.isbn = "9204798753002380";
 
-      expect(res).to.have.status(200);
-      expect(res.body.data).to.have.property("message");
-      expect(res.body.data.message).to.eql("Book succesfully deleted");
-    });
+    await Book.query().insert(firstBook);
+    await Book.query().insert(secondBook);
 
-    test("should return message not exist when book requested doesnt exist", async () => {
-      const res = await chai.request(server).delete("/api/v1/books/99");
+    const { status, body } = await server().get(`${booksRoute}`);
+    expect(status).toBe(200);
 
-      expect(res).to.have.status(404);
-      expect(res.body.data).to.have.property("message");
-      expect(res.body.data.message).to.eql("Book requested doesn't exist");
-    });
+    expect(body).toMatchSnapshot();
+  });
 
-    test("should return error when id passed in is not an interger", async () => {
-      const res = await chai.request(server).delete("/api/v1/books/ab");
+  it.only("should return the specified Books data", async () => {
+    const theBook = getBook();
+    theBook.isbn = "23895u0174-82";
 
-      expect(res).to.have.status(422);
-      expect(res.body).to.have.property("message");
-      expect(res.body).to.have.property("code");
-      expect(res.body.code).to.eql("ValidationFailed");
-      expect(res.body.message[0].message).to.eql(
-        "id is expected to be a an integer"
-      );
-    });
+    await Book.query().insert(theBook);
+
+    const { status, body } = await server().get(`${booksRoute}/1`);
+
+    expect(status).toBe(200);
+    expect(Object.keys(body.data)).toMatchSnapshot();
+  });
+
+  it.only("should return message not exist when book requested doesnt exist", async () => {
+    const { status, body } = await server().get(`${booksRoute}/987654`);
+
+    expect(status).toBe(404);
+    expect(body).toMatchSnapshot();
+  });
+
+  it.only("should return error when id passed in is not an integer", async () => {
+    const { status, body } = await server().get(`${booksRoute}/ab`);
+
+    expect(status).toBe(422);
+    expect(body).toMatchSnapshot();
+  });
+});
+
+describe("DELETE BOOK(S) API ENDPOINT", () => {
+  beforeAll(async () => {
+    await databaseConnection.migrate.latest();
+  });
+
+  afterAll(async () => {
+    await databaseConnection("books").truncate();
+    server.close();
+  });
+
+  it.only("should return success message when an existing book is deleted", async () => {
+    const theBook = getBook();
+    theBook.isbn = "230u10973872032";
+
+    await Book.query().insert(theBook);
+
+    const { status, body } = await server().delete(`${booksRoute}/1`);
+
+    expect(status).toBe(200);
+    expect(body).toMatchSnapshot();
+  });
+
+  it.only("should return message not exist when book requested does not exist", async () => {
+    const { body, status } = await server().delete(`${booksRoute}/326879`);
+
+    expect(status).toBe(404);
+    expect(body).toMatchSnapshot();
+  });
+
+  it.only("should return error when id passed in is not an integer", async () => {
+    const { body, status } = await server().delete(`${booksRoute}/ab`);
+
+    expect(status).toBe(422);
+    expect(body).toMatchSnapshot();
   });
 });
