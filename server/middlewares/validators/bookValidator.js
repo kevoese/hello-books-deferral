@@ -27,4 +27,24 @@ const addBook = (req, res, next) => {
     });
 };
 
-module.exports = addBook;
+const getBookValidation = (req, res, next) => {
+  const rules = {
+    id: "required|number"
+  };
+
+  const data = req.params;
+  const messages = {
+    required: "{{ field }} is required to get a book",
+    number: "{{ field }} is expected to be a an integer"
+  };
+
+  validateAll(data, rules, messages)
+    .then(() => {
+      next();
+    })
+    .catch(errors => {
+      res.status(422).jerror("ValidationFailed", errors);
+    });
+};
+
+module.exports = { addBook, getBookValidation };
