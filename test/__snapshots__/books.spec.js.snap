@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BOOK API ENDPOINTS ADD BOOKS API ENDPOINT should be able to add a book 1`] = `
+Object {
+  "data": Object {
+    "book": Object {
+      "coverType": "PaperBack",
+      "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
+      "id": 1,
+      "isbn": "23ihnv3490nv920327",
+      "publisher": "Farfina Kachifo",
+      "title": "Fine Boys",
+      "year": 2014,
+    },
+    "message": "Book has been added to the library",
+  },
+  "status": "success",
+}
+`;
+
+exports[`BOOK API ENDPOINTS ADD BOOKS API ENDPOINT should return validation errors if validation fails 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "title",
+      "message": "title is required to create a book",
+      "validation": "required",
+    },
+    Object {
+      "field": "coverType",
+      "message": "coverType is required to create a book",
+      "validation": "required",
+    },
+    Object {
+      "field": "description",
+      "message": "description is required to create a book",
+      "validation": "required",
+    },
+    Object {
+      "field": "isbn",
+      "message": "isbn is required to create a book",
+      "validation": "required",
+    },
+    Object {
+      "field": "publisher",
+      "message": "publisher is required to create a book",
+      "validation": "required",
+    },
+    Object {
+      "field": "year",
+      "message": "year is required to create a book",
+      "validation": "required",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`DELETE BOOK(S) API ENDPOINT should return error when id passed in is not an integer 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "id",
+      "message": "id is expected to be a an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`DELETE BOOK(S) API ENDPOINT should return message not exist when book requested does not exist 1`] = `
+Object {
+  "data": Object {
+    "message": "Book requested doesn't exist",
+  },
+  "status": "success",
+}
+`;
+
+exports[`DELETE BOOK(S) API ENDPOINT should return success message when an existing book is deleted 1`] = `
+Object {
+  "data": Object {
+    "message": "Book succesfully deleted",
+  },
+  "status": "success",
+}
+`;
+
+exports[`GET ALL BOOKS API ENDPOINT should return all books 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "coverType": "PaperBack",
+      "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
+      "id": 1,
+      "isbn": "128b4v389028074",
+      "publisher": "Farfina Kachifo",
+      "title": "Fine Boys",
+      "year": "2014",
+    },
+    Object {
+      "coverType": "PaperBack",
+      "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
+      "id": 2,
+      "isbn": "9204798753002380",
+      "publisher": "Farfina Kachifo",
+      "title": "Fine Boys",
+      "year": "2014",
+    },
+  ],
+  "status": "success",
+}
+`;
+
+exports[`GET ALL BOOKS API ENDPOINT should return error when id passed in is not an integer 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "id",
+      "message": "id is expected to be a an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`GET ALL BOOKS API ENDPOINT should return message not exist when book requested doesnt exist 1`] = `
+Object {
+  "data": Object {
+    "message": "Book requested doesn't exist",
+  },
+  "status": "success",
+}
+`;
+
+exports[`GET ALL BOOKS API ENDPOINT should return the specified Books data 1`] = `
+Array [
+  "id",
+  "title",
+  "coverType",
+  "description",
+  "isbn",
+  "publisher",
+  "year",
+]
+`;
