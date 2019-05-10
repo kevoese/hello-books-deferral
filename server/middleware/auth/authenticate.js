@@ -1,7 +1,7 @@
-const User = require("../../models/User");
-const jwt = require("jsonwebtoken");
+import User from "@models/User";
+import jwt from "jsonwebtoken";
 
-const isAuthenticated = async (req, res, next) => {
+export const isAuthenticated = async (req, res, next) => {
   const token = req.headers["x-access-token"];
   if (!token) {
     return res.status(400).jsend({
@@ -30,7 +30,7 @@ const isAuthenticated = async (req, res, next) => {
   }
 };
 
-const isAdmin = (req, res, next) => {
+export const isAdmin = (req, res, next) => {
   const { role } = req.user;
 
   if (role !== "admin") {
@@ -63,7 +63,7 @@ const isPatron = (req, res, next) => {
   next();
 };
 
-module.exports = {
+export default {
   isAuthenticated,
   isAdmin,
   isSuperAdmin,

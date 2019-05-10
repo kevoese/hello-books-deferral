@@ -1,10 +1,10 @@
-const express = require("express");
-const Validator = require("../../middlewares/validators/authValidator");
-const Controller = require("../../middlewares/controllers/authController");
+import express from "express";
+import Validator from "@validators/authValidator";
+import authController from "@controllers/authController";
 
 const router = express.Router();
 
-router.post("/signup", Validator.signUp, Controller.signUp);
-router.post("/verify/:verificationCode", Controller.verifyEmail);
+router.post("/signup", Validator.signUp, authController.signUp);
+router.post("/verify/:verificationCode", authController.verifyEmail);
 
-module.exports = router;
+export default router;

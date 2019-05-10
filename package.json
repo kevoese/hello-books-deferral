@@ -5,15 +5,16 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint **/*.js",
-    "lint:fix": "prettier-eslint **/*.js --write",
-    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha test/**/**/*.spec.js --timeout=10000 --exit",
-    "dev": "nodemon server/index",
+    "lint:fix": "prettier-eslint **/**/*.{js,json} --write",
+    "prettier": "prettier **/**/*.{js,json} --write",
+    "test": "jest --forceExit",
+    "dev": "nodemon --exec babel-node server/index",
     "migrate": "knex migrate:latest",
     "make:migration": "knex migrate:make",
     "migrate:rollback": "knex migrate:rollback",
     "start": "node server/index",
     "heroku-postbuild": "npm run migrate",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "jest --forceExit --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "husky": {
     "hooks": {
@@ -23,6 +24,7 @@
   "lint-staged": {
     "*.js": [
       "npm run lint:fix",
+      "npm run prettier",
       "git add"
     ]
   },
@@ -41,11 +43,8 @@
   },
   "homepage": "https://github.com/bahdcoder/hello-books-deferral#readme",
   "dependencies": {
-    "@sendgrid/mail": "^6.3.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
-    "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
     "consola": "2.6.0",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
@@ -56,8 +55,6 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.16.5",
     "lint-staged": "^8.1.5",
-    "mocha": "^6.1.4",
-    "morgan": "1.9.1",
     "nodemon": "^1.18.10",
     "objection": "^1.6.8",
     "pg": "^7.10.0",
@@ -66,16 +63,20 @@
     "swagger-ui-express": "^4.0.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "babel-plugin-module-resolver": "^3.2.0",
     "coveralls": "^3.0.3",
-    "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
-    "istanbul": "^0.4.5",
-    "mocha": "^6.1.4",
+    "faker": "^4.1.0",
+    "jest": "^24.8.0",
     "nodemon": "^1.18.10",
-    "nyc": "^14.0.0"
+    "supertest": "^4.0.2"
   }
 }

@@ -1,5 +1,4 @@
-const { validateAll } = require("indicative");
-const { sanitize } = require("indicative");
+import { validateAll, sanitize } from "indicative";
 
 const addAuthor = (req, res, next) => {
   const rules = {
@@ -61,4 +60,4 @@ const deleteOrGetAuthor = (req, res, next) => {
     });
 };
 
-module.exports = { addAuthor, updateAuthor, deleteOrGetAuthor };
+export default { addAuthor, updateAuthor, deleteOrGetAuthor };
