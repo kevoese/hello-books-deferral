@@ -3,12 +3,15 @@ import Book from '@models/Book';
 import { Vanilla } from 'indicative/builds/formatters';
 import Validator from 'indicative/builds/validator';
 import User from '@models/User';
+import Fines from '@models/Fines';
 
 /* custom user friendly error messages */
 export const messages = {
     required: '{{ field }} is required',
     string: '{{ field }} is not a string',
     unique: '{{ field }} must be unique',
+    itExists: '{{ field }} not found',
+    mustContain: '{{ field }} content not accepted',
     email: '{{ field }} is invalid',
     min: '{{ field }} is must be less than {{ argument.0 }}',
     alpha_numeric: 'only numbers and letters are allowed for {{ field }}',
@@ -48,6 +51,27 @@ validations.unique = async (data, field, message, args, get) => {
     }
 
     if (row[0]) throw message;
+};
+
+/* add a custom validator to check for existing content in the validations object */
+validations.itExists = async (data, field, message, args, get) => {
+    const value = get(data, field);
+    if (!value) return;
+    const table = args[0];
+    const column = args[1];
+
+    /*check to see if a fine exist*/
+    let found = true;
+
+    if (table === 'fines') {
+        [found] = await Fines.query().where(column, value);
+    }
+
+    if (table === 'users') {
+        [found] = await User.query().where(column, value);
+    }
+
+    if (!found) throw message;
 };
 
 export const validatorInstance = Validator(

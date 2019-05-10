@@ -24,3 +24,12 @@ export const createUser = user =>
         email: user.email,
         password: 'secret0001'
     });
+
+export const getFine = user_id => ({
+    description: 'Fighting with book',
+    amount: 50000,
+    type: 'BOOK_DAMAGING',
+    user_id
+});
+
+export const createFine = user_id => Fines.query().insert(getFine(user_id));

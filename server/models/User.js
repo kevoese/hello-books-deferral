@@ -3,6 +3,7 @@ import config from '@config';
 import bcrypt from 'bcryptjs';
 import Mail from 'friendly-mail';
 import { Model } from 'objection';
+import Fines from '@models/Fines';
 
 class User extends Model {
     static tableName = 'users';
@@ -28,6 +29,17 @@ class User extends Model {
             .subject('Welcome Onboard')
             .send();
     }
+
+    static relationMappings = {
+        fines: {
+            relation: Model.HasManyRelation,
+            modelClass: Fines,
+            join: {
+                from: 'users.id',
+                to: 'fines.user_id'
+            }
+        }
+    };
 }
 
 export default User;
