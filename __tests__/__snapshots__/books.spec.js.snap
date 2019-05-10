@@ -4,6 +4,7 @@ exports[`BOOK API ENDPOINTS ADD BOOKS API ENDPOINT should be able to add a book 
 Object {
   "data": Object {
     "book": Object {
+      "copiesAvailable": 4,
       "coverType": "PaperBack",
       "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
       "id": 1,
@@ -15,6 +16,20 @@ Object {
     "message": "Book has been added to the library",
   },
   "status": "success",
+}
+`;
+
+exports[`BOOK API ENDPOINTS ADD BOOKS API ENDPOINT should return validation error if isbn is not unique 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "isbn",
+      "message": "unique validation failed on isbn",
+      "validation": "unique",
+    },
+  ],
+  "status": "error",
 }
 `;
 
@@ -50,6 +65,11 @@ Object {
     Object {
       "field": "year",
       "message": "year is required to create a book",
+      "validation": "required",
+    },
+    Object {
+      "field": "copiesAvailable",
+      "message": "copiesAvailable is required to create a book",
       "validation": "required",
     },
   ],
@@ -93,18 +113,30 @@ exports[`GET ALL BOOKS API ENDPOINT should return all books 1`] = `
 Object {
   "data": Array [
     Object {
+      "copiesAvailable": 4,
       "coverType": "PaperBack",
       "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
       "id": 1,
+      "isbn": "9789785205862",
+      "publisher": "Farfina Kachifo",
+      "title": "Fine Boys",
+      "year": "2014",
+    },
+    Object {
+      "copiesAvailable": 4,
+      "coverType": "PaperBack",
+      "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
+      "id": 2,
       "isbn": "128b4v389028074",
       "publisher": "Farfina Kachifo",
       "title": "Fine Boys",
       "year": "2014",
     },
     Object {
+      "copiesAvailable": 4,
       "coverType": "PaperBack",
       "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
-      "id": 2,
+      "id": 3,
       "isbn": "9204798753002380",
       "publisher": "Farfina Kachifo",
       "title": "Fine Boys",
@@ -147,5 +179,6 @@ Array [
   "isbn",
   "publisher",
   "year",
+  "copiesAvailable",
 ]
 `;

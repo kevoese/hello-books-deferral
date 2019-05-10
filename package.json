@@ -14,7 +14,7 @@
     "migrate:rollback": "knex migrate:rollback",
     "start": "node server/index",
     "heroku-postbuild": "npm run migrate",
-    "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "coverage": "jest --forceExit --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "husky": {
     "hooks": {

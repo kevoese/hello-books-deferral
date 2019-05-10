@@ -6,8 +6,8 @@ const server = () => supertest(app);
 
 describe('AUTH API ENDPOINTS', () => {
     beforeAll(async () => {
-        await databaseConnection('users').truncate();
         await databaseConnection.migrate.latest();
+        await databaseConnection('users').truncate();
     });
 
     describe('POST SIGN UP api/v1/auth/signup', () => {

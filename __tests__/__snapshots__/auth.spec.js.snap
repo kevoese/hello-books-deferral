@@ -6,7 +6,7 @@ Object {
   "message": Array [
     Object {
       "field": "email",
-      "message": "email is required to create a new account",
+      "message": "email is required",
       "validation": "required",
     },
   ],

@@ -13,6 +13,7 @@ exports.up = knex =>
             .notNull();
         table.string('publisher').notNull();
         table.string('year').notNull();
+        table.integer('copiesAvailable').notNull();
     });
 
 exports.down = knex => knex.schema.dropTable('books');

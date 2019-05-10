@@ -7,6 +7,7 @@ let author;
 describe('AUTHOR API ENDPOINTS', () => {
     beforeAll(async () => {
         await databaseConnection.migrate.latest();
+        await databaseConnection('authors').truncate();
     });
 
     beforeEach(() => {
