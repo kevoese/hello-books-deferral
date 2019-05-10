@@ -3,7 +3,7 @@ import Book from '@models/Book';
 import { Vanilla } from 'indicative/builds/formatters';
 import Validator from 'indicative/builds/validator';
 import User from '@models/User';
-import Fines from '@models/Fines';
+import Fine from '@models/Fine';
 
 /* custom user friendly error messages */
 export const messages = {
@@ -30,7 +30,8 @@ export const sanitizeRules = {
     isbn: 'trim',
     publisher: 'trim',
     year: 'trim',
-    copiesAvailable: 'trim'
+    copiesAvailable: 'trim',
+    type: 'trim'
 };
 
 /* add the unique custom validator to indicative validations object */
@@ -64,7 +65,7 @@ validations.itExists = async (data, field, message, args, get) => {
     let found = true;
 
     if (table === 'fines') {
-        [found] = await Fines.query().where(column, value);
+        [found] = await Fine.query().where(column, value);
     }
 
     if (table === 'users') {

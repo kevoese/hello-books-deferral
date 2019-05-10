@@ -1,9 +1,15 @@
-import Fines from '@models/Fines';
+import Fine from '@models/Fine';
+
+const getFines = async (req, res) => {
+    const userFines = await Fine.query().where({ user_id: req.user.id });
+
+    return res.jsend(userFines);
+};
 
 const addFine = async (req, res) => {
     const { description, amount, type } = req.body;
     const user_id = req.params.userId;
-    const userFine = await Fines.query().insert({
+    const userFine = await Fine.query().insert({
         description,
         amount,
         type,
@@ -19,7 +25,7 @@ const addFine = async (req, res) => {
 const getFine = async (req, res) => {
     const { fineId } = req.params;
 
-    const userFine = await Fines.query().findById(fineId);
+    const userFine = await Fine.query().findById(fineId);
 
     return res.status(200).jsend(userFine);
 };
@@ -27,11 +33,11 @@ const getFine = async (req, res) => {
 const deleteFine = async (req, res) => {
     const { fineId } = req.params;
 
-    await Fines.query().deleteById(fineId);
+    await Fine.query().deleteById(fineId);
 
     return res.status(200).jsend({
         message: 'Fine succesfully deleted'
     });
 };
 
-export default { addFine, getFine, deleteFine };
+export default { addFine, getFine, getFines, deleteFine };

@@ -1,4 +1,5 @@
-import { validateAll } from 'indicative';
+import { validateAll, sanitize } from 'indicative';
+import { sanitizeRules } from '@utils/validationUtils';
 import consola from 'consola';
 
 const addFine = (req, res, next) => {
@@ -9,13 +10,16 @@ const addFine = (req, res, next) => {
         userId: 'required|number|itExists:users,id'
     };
 
-    const data = req.body;
+    let data = req.body;
     data.userId = req.params.userId;
     const messages = {
         required: '{{ field }} is required to create a fine',
         number: '{{ field }} is expected to be a an integer',
         itExists: "User's Id does not exist"
     };
+
+    /* sanitize data object */
+    req.body = sanitize(req.body, sanitizeRules);
 
     validateAll(data, rules, messages)
         .then(() => {

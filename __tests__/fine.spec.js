@@ -1,16 +1,28 @@
+import Fine from '@models/Fine';
 import supertest from 'supertest';
 import { app, databaseConnection } from '@server/app';
-import { getUser, createUser, createFine, getFine } from '@tests/utils/helpers';
-import Fines from '@models/Fines';
+import {
+    getUser,
+    createUser,
+    createFine,
+    getFine,
+    getToken
+} from '@tests/utils/helpers';
 
 const server = () => supertest(app);
+let adminToken;
+let userToken;
 
 describe('FINES API ENDPOINTS', () => {
     beforeAll(async () => {
         await databaseConnection.migrate.latest();
         const user = getUser();
         await createUser(user);
+        const admin = getUser();
+        admin.role = 'admin';
+        await createUser(admin);
         await createFine(1);
+        adminToken = getToken({ id: 2, email: admin.email });
     });
 
     afterAll(async () => {
@@ -18,10 +30,26 @@ describe('FINES API ENDPOINTS', () => {
         await databaseConnection('users').truncate();
     });
 
+    describe('GET FINES api/v1/fines', () => {
+        it('should get all fines for authenticated user', async () => {
+            const user = await createUser(getUser());
+            await createFine(user.id);
+            const userToken = getToken({ id: user.id, email: user.email });
+            const { status, body } = await server()
+                .get('/api/v1/fines')
+                .set('x-access-token', userToken);
+
+            expect(status).toBe(200);
+            expect(body.data.length).toBe(1);
+            expect(body.data[0].user_id).toBe(user.id);
+        });
+    });
+
     describe('POST CREATE FINE api/v1/fines', () => {
         it('should not create fine if type and description field is empty', async () => {
             const { status, body } = await server()
                 .post('/api/v1/fines/1')
+                .set('x-access-token', adminToken)
                 .send({
                     ...getFine(1),
                     type: '',
@@ -29,52 +57,64 @@ describe('FINES API ENDPOINTS', () => {
                 });
 
             expect(status).toBe(422);
-            // expect(body).toMatchSnapshot();
+            expect(body).toMatchSnapshot();
         });
 
         it('should not create fine if userId param is not a number', async () => {
-            const { status, body } = await server().get('/api/v1/fines/bag');
+            const { status, body } = await server()
+                .get('/api/v1/fines/bag')
+                .set('x-access-token', adminToken)
+                .send(getFine(1));
             expect(status).toBe(422);
-            // expect(body).toMatchSnapshot();
+            expect(body).toMatchSnapshot();
         });
 
         it('should not create fine if userId does not exists', async () => {
-            const { status, body } = await server().post('/api/v1/fines/5');
+            const { status, body } = await server()
+                .post('/api/v1/fines/15')
+                .set('x-access-token', adminToken)
+                .send(getFine(1));
             expect(status).toBe(422);
-            // expect(body).toMatchSnapshot();
+            expect(body).toMatchSnapshot();
         });
 
         it('should create a fine with valid inputs', async () => {
             const { status, body } = await server()
                 .post('/api/v1/fines/1')
+                .set('x-access-token', adminToken)
                 .send(getFine(1));
 
             expect(status).toBe(201);
-            // expect(body).toMatchSnapshot();
+            expect(body.data.userFine.user_id).toBe('1');
         });
     });
 
-    describe('GET FINE api/v1/authors', () => {
+    describe('GET FINE api/v1/fines', () => {
         it('should not get fine if fineId param is not a number', async () => {
-            const { status, body } = await server().get('/api/v1/fines/5');
+            const { status, body } = await server()
+                .get('/api/v1/fines/5')
+                .set('x-access-token', adminToken);
             expect(status).toBe(422);
             expect(body).toMatchSnapshot();
         });
 
         it('should return a fine', async () => {
-            const { status, body } = await server().get('/api/v1/fines/1');
+            const { status, body } = await server()
+                .get('/api/v1/fines/1')
+                .set('x-access-token', adminToken);
 
             expect(status).toBe(200);
             expect(body.data.amount).toBe(50000);
-            // expect(body).toMatchSnapshot();
         });
     });
 
-    describe('DELETE AUTHOR api/v1/authors', () => {
-        it('should delete author with id param valid', async () => {
-            const { status, body } = await server().delete('/api/v1/fines/1');
+    describe('DELETE FINES api/v1/fines', () => {
+        it('should delete fines with id param valid', async () => {
+            const { status, body } = await server()
+                .delete('/api/v1/fines/1')
+                .set('x-access-token', adminToken);
             expect(status).toBe(200);
-            // expect(body).toMatchSnapshot();
+            expect(body).toMatchSnapshot();
         });
     });
 });

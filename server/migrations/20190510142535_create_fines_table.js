@@ -4,7 +4,7 @@ exports.up = knex =>
             .increments('id')
             .unsigned()
             .primary();
-        table.integer('user_id').references('users.id');
+        table.integer('user_id').notNull();
         table.datetime('created_on').defaultTo(knex.fn.now());
         table.string('type').notNull();
         table.string('description').notNull();

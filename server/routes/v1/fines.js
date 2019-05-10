@@ -8,7 +8,7 @@ const router = express.Router();
 router.post(
     '/:userId',
     isAuthenticated,
-
+    isAdmin,
     fineValidator.addFine,
     fineController.addFine
 );
@@ -16,15 +16,17 @@ router.post(
 router.get(
     '/:fineId',
     isAuthenticated,
-
+    isAdmin,
     fineValidator.checkId,
     fineController.getFine
 );
 
+router.get('/', isAuthenticated, fineController.getFines);
+
 router.delete(
     '/:fineId',
     isAuthenticated,
-
+    isAdmin,
     fineValidator.checkId,
     fineController.deleteFine
 );
