@@ -1,17 +1,21 @@
 import supertest from 'supertest';
+import Author from '@models/Author';
 import { app, databaseConnection } from '@server/app';
 
 const server = () => supertest(app);
 let author;
 
+const getAuthor = ({ name = 'frank doe' } = {}) => ({
+    name
+});
+
 describe('AUTHOR API ENDPOINTS', () => {
     beforeAll(async () => {
         await databaseConnection.migrate.latest();
-        await databaseConnection('authors').truncate();
     });
 
     beforeEach(() => {
-        author = { name: 'john doe' };
+        author = { name: 'John Doe' };
     });
 
     afterAll(async () => {
@@ -37,6 +41,70 @@ describe('AUTHOR API ENDPOINTS', () => {
                 .send(author);
 
             expect(status).toBe(201);
+            expect(body).toMatchSnapshot();
+        });
+    });
+
+    describe('GET ALL AUTHOR api/v1/authors', () => {
+        it('should not get author if page query is not a number', async () => {
+            const { status, body } = await server().get(
+                '/api/v1/authors?page=e'
+            );
+
+            expect(status).toBe(422);
+            expect(body).toMatchSnapshot();
+        });
+
+        it('should not get author if limit query is not a number', async () => {
+            const { status, body } = await server().get(
+                '/api/v1/authors?limit=e'
+            );
+
+            expect(status).toBe(422);
+            expect(body).toMatchSnapshot();
+        });
+
+        it('should get all authors', async () => {
+            const firstAuthor = getAuthor();
+            firstAuthor.name = 'James Bond';
+            const secondAuthor = getAuthor();
+            secondAuthor.name = 'James Bond';
+            const thirdAuthor = getAuthor();
+            thirdAuthor.name = 'James Bond';
+            const fourthAuthor = getAuthor();
+            fourthAuthor.name = 'James Bond';
+            const fifthAuthor = getAuthor();
+            fifthAuthor.name = 'James Bond';
+            const sixthAuthor = getAuthor();
+            sixthAuthor.name = 'James Bond';
+            const seventhAuthor = getAuthor();
+            seventhAuthor.name = 'James Bond';
+            const eigthAuthor = getAuthor();
+            eigthAuthor.name = 'James Bond';
+            const ninthAuthor = getAuthor();
+            ninthAuthor.name = 'James Bond';
+            const tenthAuthor = getAuthor();
+            tenthAuthor.name = 'James Bond';
+
+            await Author.query().insert([
+                firstAuthor,
+                secondAuthor,
+                thirdAuthor,
+                fourthAuthor,
+                fifthAuthor,
+                sixthAuthor,
+                seventhAuthor,
+                eigthAuthor,
+                ninthAuthor,
+                tenthAuthor
+            ]);
+
+            const { status, body } = await server().get(
+                '/api/v1/authors?page=1&limit=10'
+            );
+
+            expect(status).toBe(200);
+            expect(body.data.total).toBe(13);
             expect(body).toMatchSnapshot();
         });
     });

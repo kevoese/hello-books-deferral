@@ -70,6 +70,37 @@
                         "description": "Unprocessable Entity"
                     }
                 }
+            },
+            "get": {
+                "tags": ["authors"],
+                "summary": "Get all authors",
+                "consumes": [
+                    "application/json",
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "type": "integer",
+                        "description": "Define the page index for the records",
+                        "in": "query"        
+                    },
+                    {
+                        "name": "limit",
+                        "type": "integer",
+                        "description": "Define the limit for the record",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successfully fetched all authorss"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                }
             }
         },
         "/books": {
@@ -96,6 +127,37 @@
                 "responses": {
                     "201": {
                         "description": "Book added Successfully"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["books"],
+                "summary": "Get all books",
+                "consumes": [
+                    "application/json",
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "type": "integer",
+                        "description": "Define the page index for the records",
+                        "in": "query"        
+                    },
+                    {
+                        "name": "limit",
+                        "type": "integer",
+                        "description": "Define the limit for the record",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successfully fetched all books"
                     },
                     "422": {
                         "description": "Unprocessable Entity"

@@ -102,18 +102,61 @@ describe('GET ALL BOOKS API ENDPOINT', () => {
         server.close();
     });
 
+    it('should not get book if page query is not a number', async () => {
+        const { status, body } = await server().get('/api/v1/books?page=e');
+
+        expect(status).toBe(422);
+        expect(body).toMatchSnapshot();
+    });
+
+    it('should not get book if limit query is not a number', async () => {
+        const { status, body } = await server().get('/api/v1/books?limit=e');
+
+        expect(status).toBe(422);
+        expect(body).toMatchSnapshot();
+    });
+
     it('should return all books', async () => {
         const firstBook = getBook();
         firstBook.isbn = '128b4v389028074';
         const secondBook = getBook();
         secondBook.isbn = '9204798753002380';
+        const thirdBook = getBook();
+        thirdBook.isbn = '128b4v3e349028074';
+        const fourthBook = getBook();
+        fourthBook.isbn = '920479875343002380';
+        const fifthBook = getBook();
+        fifthBook.isbn = '128b4v3892342028074';
+        const sixthBook = getBook();
+        sixthBook.isbn = '920479875234123002380';
+        const seventhBook = getBook();
+        seventhBook.isbn = '128b4v38ojsdpof9028074';
+        const eigthBook = getBook();
+        eigthBook.isbn = '92047987530kl0902380';
+        const ninthBook = getBook();
+        ninthBook.isbn = '128b4v389028l0074';
+        const tenthBook = getBook();
+        tenthBook.isbn = '92047987530023da2380';
 
-        await Book.query().insert(firstBook);
-        await Book.query().insert(secondBook);
+        await Book.query().insert([
+            firstBook,
+            secondBook,
+            thirdBook,
+            fourthBook,
+            fifthBook,
+            sixthBook,
+            seventhBook,
+            eigthBook,
+            ninthBook,
+            tenthBook
+        ]);
 
-        const { status, body } = await server().get(`${booksRoute}`);
+        const { status, body } = await server().get(
+            `${booksRoute}?page=1&limit=10`
+        );
+
         expect(status).toBe(200);
-
+        expect(body.data.total).toBe(11);
         expect(body).toMatchSnapshot();
     });
 

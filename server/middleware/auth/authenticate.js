@@ -20,8 +20,8 @@ export const isAuthenticated = async (req, res, next) => {
                 message: 'Unauthenticated'
             });
         }
-
-        req.user = { id: user.id, email: user.email, role: user.role };
+      
+        req.user = user;
         next();
     } catch (error) {
         return res.status(500).jsend({

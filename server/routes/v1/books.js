@@ -6,7 +6,11 @@ const router = express.Router();
 
 router.post('/', bookValidator.addBook, bookController.storeBooks);
 
-router.get('/', bookController.getAllBooks);
+router.get(
+    '/',
+    bookValidator.getAllBooksValidation,
+    bookController.getAllBooks
+);
 
 router.get(
     '/:id',
