@@ -1,5 +1,89 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`AUTH API ENDPOINTS **INTERNET CONNECTION NEEDED** POST PASSWORD RESET api/v1/auth/reset should not send mail if user email is invalid 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "email",
+      "message": "email is invalid",
+      "validation": "email",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTH API ENDPOINTS **INTERNET CONNECTION NEEDED** POST PASSWORD RESET api/v1/auth/reset should not send mail if user is not found 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "message": "email does not exist",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTH API ENDPOINTS **INTERNET CONNECTION NEEDED** POST PASSWORD RESET api/v1/auth/reset should send email if user is valid 1`] = `
+Array [
+  "message",
+]
+`;
+
+exports[`AUTH API ENDPOINTS GET PASSWORD RESET api/v1/auth/reset should access reset page with invalid token 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "message": "reset token is invalid",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTH API ENDPOINTS PATCH PASSWORD RESET api/v1/auth/reset should not reset password if password is invalid 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "password",
+      "message": "password must be more than 8",
+      "validation": "min",
+    },
+    Object {
+      "field": "password",
+      "message": "Confirm password does not match password",
+      "validation": "confirmed",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTH API ENDPOINTS PATCH PASSWORD RESET api/v1/auth/reset should not reset password if token is invalid 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "message": "reset token is invalid",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTH API ENDPOINTS PATCH PASSWORD RESET api/v1/auth/reset should reset password if all inputs are valid 1`] = `
+Object {
+  "data": Object {
+    "message": "password reset successfull",
+  },
+  "status": "success",
+}
+`;
+
 exports[`AUTH API ENDPOINTS POST SIGN UP api/v1/auth/signup should not sign up user if email is empty 1`] = `
 Object {
   "code": "ValidationFailed",

@@ -42,3 +42,4 @@ export const getToken = user =>
     });
 
 export const createFine = user_id => Fine.query().insert(getFine(user_id));
+export const findUser = email => User.query().where('email', email);

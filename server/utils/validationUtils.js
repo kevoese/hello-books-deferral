@@ -13,7 +13,7 @@ export const messages = {
     itExists: '{{ field }} not found',
     mustContain: '{{ field }} content not accepted',
     email: '{{ field }} is invalid',
-    min: '{{ field }} is must be less than {{ argument.0 }}',
+    min: '{{ field }} must be more than {{ argument.0 }}',
     alpha_numeric: 'only numbers and letters are allowed for {{ field }}',
     confirmed: 'Confirm {{ field }} does not match {{ field }}'
 };

@@ -41,7 +41,7 @@ exports[`AUTHOR API ENDPOINTS GET AUTHOR api/v1/authors should return single aut
 Object {
   "data": Object {
     "id": 1,
-    "name": "john doe",
+    "name": "John Doe",
   },
   "status": "success",
 }
@@ -51,7 +51,7 @@ exports[`AUTHOR API ENDPOINTS POST CREATE AUTHOR api/v1/authors should create au
 Object {
   "data": Object {
     "id": 1,
-    "name": "john doe",
+    "name": "John Doe",
   },
   "status": "success",
 }

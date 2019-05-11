@@ -11,7 +11,7 @@ describe('AUTHOR API ENDPOINTS', () => {
     });
 
     beforeEach(() => {
-        author = { name: 'john doe' };
+        author = { name: 'John Doe' };
     });
 
     afterAll(async () => {
