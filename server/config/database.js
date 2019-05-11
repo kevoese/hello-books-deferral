@@ -9,10 +9,6 @@ export default () => ({
         migrations: {
             tableName: 'knex_migrations',
             directory: './server/migrations'
-        },
-        seeds: {
-            tableName: 'knex_migrations',
-            directory: './server/seeds'
         }
     },
 
@@ -26,10 +22,6 @@ export default () => ({
         migrations: {
             tableName: 'knex_migrations',
             directory: './server/migrations'
-        },
-        seeds: {
-            tableName: 'knex_migrations',
-            directory: './server/seeds'
         }
     },
 

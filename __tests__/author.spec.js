@@ -69,42 +69,15 @@ describe('AUTHOR API ENDPOINTS', () => {
             firstAuthor.name = 'James Bond';
             const secondAuthor = getAuthor();
             secondAuthor.name = 'James Bond';
-            const thirdAuthor = getAuthor();
-            thirdAuthor.name = 'James Bond';
-            const fourthAuthor = getAuthor();
-            fourthAuthor.name = 'James Bond';
-            const fifthAuthor = getAuthor();
-            fifthAuthor.name = 'James Bond';
-            const sixthAuthor = getAuthor();
-            sixthAuthor.name = 'James Bond';
-            const seventhAuthor = getAuthor();
-            seventhAuthor.name = 'James Bond';
-            const eigthAuthor = getAuthor();
-            eigthAuthor.name = 'James Bond';
-            const ninthAuthor = getAuthor();
-            ninthAuthor.name = 'James Bond';
-            const tenthAuthor = getAuthor();
-            tenthAuthor.name = 'James Bond';
 
-            await Author.query().insert([
-                firstAuthor,
-                secondAuthor,
-                thirdAuthor,
-                fourthAuthor,
-                fifthAuthor,
-                sixthAuthor,
-                seventhAuthor,
-                eigthAuthor,
-                ninthAuthor,
-                tenthAuthor
-            ]);
+            await Author.query().insert([firstAuthor, secondAuthor]);
 
             const { status, body } = await server().get(
-                '/api/v1/authors?page=1&limit=10'
+                '/api/v1/authors?page=2&limit=1'
             );
 
             expect(status).toBe(200);
-            expect(body.data.total).toBe(13);
+            expect(body.data.results.length).toBe(1);
             expect(body).toMatchSnapshot();
         });
     });

@@ -121,42 +121,15 @@ describe('GET ALL BOOKS API ENDPOINT', () => {
         firstBook.isbn = '128b4v389028074';
         const secondBook = getBook();
         secondBook.isbn = '9204798753002380';
-        const thirdBook = getBook();
-        thirdBook.isbn = '128b4v3e349028074';
-        const fourthBook = getBook();
-        fourthBook.isbn = '920479875343002380';
-        const fifthBook = getBook();
-        fifthBook.isbn = '128b4v3892342028074';
-        const sixthBook = getBook();
-        sixthBook.isbn = '920479875234123002380';
-        const seventhBook = getBook();
-        seventhBook.isbn = '128b4v38ojsdpof9028074';
-        const eigthBook = getBook();
-        eigthBook.isbn = '92047987530kl0902380';
-        const ninthBook = getBook();
-        ninthBook.isbn = '128b4v389028l0074';
-        const tenthBook = getBook();
-        tenthBook.isbn = '92047987530023da2380';
 
-        await Book.query().insert([
-            firstBook,
-            secondBook,
-            thirdBook,
-            fourthBook,
-            fifthBook,
-            sixthBook,
-            seventhBook,
-            eigthBook,
-            ninthBook,
-            tenthBook
-        ]);
+        await Book.query().insert([firstBook, secondBook]);
 
         const { status, body } = await server().get(
-            `${booksRoute}?page=1&limit=10`
+            `${booksRoute}?page=2&limit=1`
         );
 
         expect(status).toBe(200);
-        expect(body.data.total).toBe(11);
+        expect(body.data.results.length).toBe(1);
         expect(body).toMatchSnapshot();
     });
 

@@ -28,19 +28,11 @@ Object {
   "data": Object {
     "results": Array [
       Object {
-        "id": 11,
-        "name": "James Bond",
-      },
-      Object {
-        "id": 12,
-        "name": "James Bond",
-      },
-      Object {
-        "id": 13,
-        "name": "James Bond",
+        "id": 3,
+        "name": "John Doe",
       },
     ],
-    "total": 13,
+    "total": 5,
   },
   "status": "success",
 }

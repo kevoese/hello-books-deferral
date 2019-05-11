@@ -1,4 +1,4 @@
-import { validateAll } from 'indicative';
+import { validateAll, sanitize } from 'indicative';
 
 const addBook = (req, res, next) => {
     const rules = {
@@ -93,3 +93,4 @@ export default {
     getAllBooksValidation,
     bookRequestValidate
 };
+
