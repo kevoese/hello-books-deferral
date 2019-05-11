@@ -22,7 +22,8 @@
                 "@tests": "./__tests__",
                 "@controllers": "./server/controllers",
                 "@middleware": "./server/middleware",
-                "@validators": "./server/middleware/validators"
+                "@validators": "./server/middleware/validators",
+                "@helpers" : "./server/helpers"
             }
         }],
         "@babel/plugin-proposal-class-properties"

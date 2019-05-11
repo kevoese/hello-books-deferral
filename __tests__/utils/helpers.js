@@ -24,3 +24,12 @@ export const createUser = user =>
         email: user.email,
         password: 'secret0001'
     });
+
+export const superAdminUser = user =>
+    User.query().insert({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: 'secret0001',
+        role: 'super_admin'
+    });
