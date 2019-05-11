@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PROFILES API ENDPOINTS GET PROFILE api/v1/profile should get profile for authenticated user 1`] = `
+Array [
+  "firstName",
+  "lastName",
+  "email",
+  "bio",
+  "avatar",
+]
+`;
+
+exports[`PROFILES API ENDPOINTS GET PROFILE api/v1/profile should get profile for other users 1`] = `
+Array [
+  "firstName",
+  "lastName",
+  "email",
+  "bio",
+  "avatar",
+]
+`;
+
+exports[`PROFILES API ENDPOINTS GET PROFILE api/v1/profile should not get profile if userId param is not a number 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "id",
+      "message": "id is expected to be a an integer",
+      "validation": "number",
+    },
+    Object {
+      "field": "id",
+      "message": "select \\"users\\".* from \\"users\\" where \\"id\\" = $1 - invalid input syntax for integer: \\"yui\\"",
+      "validation": "ENGINE_EXCEPTION",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`PROFILES API ENDPOINTS PATCH update profile api/v1/profile should edit profile with valid inputs 1`] = `
+Array [
+  "firstName",
+  "lastName",
+  "email",
+  "bio",
+  "avatar",
+]
+`;
+
+exports[`PROFILES API ENDPOINTS PATCH update profile api/v1/profile should not edit profile if all field is empty 1`] = `
+Object {
+  "code": Object {
+    "message": "Update at least a field",
+  },
+  "status": "error",
+}
+`;
+
+exports[`PROFILES API ENDPOINTS PATCH update profile api/v1/profile should not edit profile with an email that already exists 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "email",
+      "message": "email must be unique",
+      "validation": "unique",
+    },
+  ],
+  "status": "error",
+}
+`;

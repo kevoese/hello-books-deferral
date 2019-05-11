@@ -16,13 +16,14 @@ let userToken;
 describe('FINES API ENDPOINTS', () => {
     beforeAll(async () => {
         await databaseConnection.migrate.latest();
-        const user = getUser();
-        await createUser(user);
+        await databaseConnection('users').truncate();
+        await databaseConnection('fines').truncate();
+        await createUser(getUser());
         const admin = getUser();
         admin.role = 'admin';
-        await createUser(admin);
+        const theAdmin = await createUser(admin);
         await createFine(1);
-        adminToken = getToken({ id: 2, email: admin.email });
+        adminToken = getToken({ id: theAdmin.id, email: theAdmin.email });
     });
 
     afterAll(async () => {
