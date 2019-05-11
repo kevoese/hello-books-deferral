@@ -1,34 +1,34 @@
 {
-  "name": "Hello Books",
-  "description": "A system that allows efficient, cost-effective management of Books for Libraries.",
-  "env": {
-    "DATABASE_CLIENT": {
-      "required": true
+    "name": "Hello Books",
+    "description": "A system that allows efficient, cost-effective management of Books for Libraries.",
+    "env": {
+        "DATABASE_CLIENT": {
+            "required": true
+        },
+        "DATABASE_URL": {
+            "required": true
+        },
+        "TEST_DATABASE_CLIENT": {
+            "required": true
+        },
+        "TEST_DATABASE_URL": {
+            "required": true
+        },
+        "MAIL_USERNAME": {
+            "required": true
+        },
+        "MAIL_PASSWORD": {
+            "required": true
+        },
+        "NODE_ENV": "review"
     },
-    "DATABASE_URL": {
-      "required": true
-    },
-    "TEST_DATABASE_CLIENT": {
-      "required": true
-    },
-    "TEST_DATABASE_URL": {
-      "required": true
-    },
-    "MAIL_USERNAME": {
-      "required": true
-    },
-    "MAIL_PASSWORD": {
-      "required": true
-    },
-    "NODE_ENV": "review"
-  },
-  "addons": [
-    {
-      "plan": "heroku-postgresql",
-      "as": "BACKUP_DATABASE",
-      "options": {
-        "version": "9.5"
-      }
-    }
-  ]
+    "addons": [
+        {
+            "plan": "heroku-postgresql",
+            "as": "BACKUP_DATABASE",
+            "options": {
+                "version": "9.5"
+            }
+        }
+    ]
 }
