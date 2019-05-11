@@ -12,7 +12,8 @@ export const messages = {
     email: '{{ field }} is invalid',
     min: '{{ field }} is must be less than {{ argument.0 }}',
     alpha_numeric: 'only numbers and letters are allowed for {{ field }}',
-    confirmed: 'Confirm {{ field }} does not match {{ field }}'
+    confirmed: 'Confirm {{ field }} does not match {{ field }}',
+    boolean: '{{ field }} is not set'
 };
 
 /* sanitization rule to trim whitespaces */

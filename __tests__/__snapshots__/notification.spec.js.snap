@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NOTIFICATION API ENDPOINTS GET IN-APP NOTIFICATION api/v1/notifications/:email SAMPLE NOTIFICATION -> should create author with valid inputs and send user notification 1`] = `
+Object {
+  "data": Object {
+    "id": 3,
+    "name": "john doe",
+  },
+  "status": "success",
+}
+`;
+
+exports[`NOTIFICATION API ENDPOINTS GET IN-APP NOTIFICATION api/v1/notifications/:email should not get notification if notification id param is invalid 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "id",
+      "message": "id is expected to be a an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`NOTIFICATION API ENDPOINTS GET IN-APP NOTIFICATION api/v1/notifications/:email should not get notifications if email param is invalid 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "email",
+      "message": "email must be a valid",
+      "validation": "email",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`NOTIFICATION API ENDPOINTS GET IN-APP NOTIFICATION api/v1/notifications/:email should return user notifications with email param 1`] = `
+Object {
+  "data": Array [],
+  "status": "success",
+}
+`;

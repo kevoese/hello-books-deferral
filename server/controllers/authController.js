@@ -4,13 +4,14 @@ import config from '@config';
 import jwt from 'jsonwebtoken';
 
 const signUp = async (req, res) => {
-    const { firstName, lastName, password, email } = req.body;
+    const { firstName, lastName, password, email, settings } = req.body;
 
     const user = await User.query().insert({
         firstName,
         lastName,
         password,
-        email
+        email,
+        settings
     });
 
     const token = jwt.sign(

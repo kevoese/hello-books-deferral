@@ -1,8 +1,14 @@
 import Author from '@models/Author';
+import user from '@controllers/notificationController';
 
 const addAuthor = async (req, res) => {
     const { name } = req.body;
+
     const author = await Author.query().insert({ name });
+    await user.sendNotification(
+        `testNotify`,
+        `this is a notification about ${name}, the new Author`
+    );
     return res.status(201).jsend(author);
 };
 
