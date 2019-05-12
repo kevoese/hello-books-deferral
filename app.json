@@ -1,7 +1,16 @@
 {
     "name": "Hello Books",
     "description": "A system that allows efficient, cost-effective management of Books for Libraries.",
+    "scripts": {
+        "postdeploy": "export APP_URL=https://$HEROKU_APP_NAME.herokuapp.com"
+    },
     "env": {
+        "HEROKU_APP_NAME": {
+            "required": true
+        },
+        "HEROKU_PARENT_APP_NAME": {
+          "required": true
+        },
         "DATABASE_CLIENT": {
             "required": true
         },
@@ -18,6 +27,12 @@
             "required": true
         },
         "MAIL_PASSWORD": {
+            "required": true
+        },
+        "JWT_SECRET": {
+            "required": true
+        },
+        "SENDGRID_API_KEY": {
             "required": true
         },
         "NODE_ENV": "review"

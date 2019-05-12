@@ -8,12 +8,13 @@
         "lint:fix": "prettier-eslint **/**/*.{js,json} --write",
         "prettier": "prettier **/**/*.{js,json} --write",
         "test": "jest --forceExit",
+        "build": "babel server --out-dir build",
         "dev": "nodemon --exec babel-node server/index",
         "migrate": "knex migrate:latest",
         "make:migration": "knex migrate:make",
         "migrate:rollback": "knex migrate:rollback",
-        "start": "node server/index",
-        "heroku-postbuild": "npm run migrate",
+        "start": "node build/index",
+        "heroku-postbuild": "npm run migrate && npm run build",
         "coverage": "jest --forceExit --coverage && cat ./coverage/lcov.info | coveralls"
     },
     "husky": {
