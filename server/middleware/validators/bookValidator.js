@@ -1,4 +1,4 @@
-import { validateAll } from 'indicative';
+import { validateAll, sanitize } from 'indicative';
 
 const addBook = (req, res, next) => {
     const rules = {
@@ -91,5 +91,31 @@ const extendBorrow = (req, res, next) => {
             res.status(422).jerror('ValidationFailed', errors);
         });
 };
+const bookRequestValidate = (req, res, next) => {
+    const rules = {
+        description: 'required|string'
+    };
 
-export default { addBook, getBookValidation, bookUserValidation, extendBorrow };
+    let data = req.body;
+    data = sanitize(data, { description: 'trim' });
+    const messages = {
+        required: '{{ field }} is required',
+        string: '{{ field }} is expected to be a an integer'
+    };
+
+    validateAll(data, rules, messages)
+        .then(() => {
+            next();
+        })
+        .catch(errors => {
+            res.status(422).jerror('ValidationFailed', errors);
+        });
+};
+
+export default {
+    addBook,
+    getBookValidation,
+    bookUserValidation,
+    extendBorrow,
+    bookRequestValidate
+};

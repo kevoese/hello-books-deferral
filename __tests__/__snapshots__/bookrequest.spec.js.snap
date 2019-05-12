@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BOOK REQUEST API ENDPOINTS Should to make a book request 1`] = `
+Object {
+  "data": Object {
+    "message": "Your request has been noted",
+  },
+  "status": "success",
+}
+`;
+
+exports[`BOOK REQUEST API ENDPOINTS should return an error if desciption field is not provided 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "description",
+      "message": "description is required",
+      "validation": "required",
+    },
+  ],
+  "status": "error",
+}
+`;
