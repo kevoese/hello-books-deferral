@@ -24,3 +24,13 @@ export const createUser = user =>
         email: user.email,
         password: 'secret0001'
     });
+
+export const approvedBook = (patronId, theBookId) => ({
+    user: patronId,
+    book: theBookId,
+    status: 'approved',
+    requestDate: new Date(),
+    approvedDate: new Date(),
+    returned: false,
+    returnDate: new Date(new Date().setDate(new Date().getDate() + 30))
+});

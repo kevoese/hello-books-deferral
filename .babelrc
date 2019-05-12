@@ -10,21 +10,26 @@
         ]
     ],
     "plugins": [
-        ["module-resolver", {
-            "root": ["./"],
-            "alias": {
-                "@": "./",
-                "@server": "./server",
-                "@utils": "./server/utils",
-                "@models": "./server/models",
-                "@config": "./server/config",
-                "@routes": "./server/routes",
-                "@tests": "./__tests__",
-                "@controllers": "./server/controllers",
-                "@middleware": "./server/middleware",
-                "@validators": "./server/middleware/validators"
+        [
+            "module-resolver",
+            {
+                "root": ["./"],
+                "alias": {
+                    "@": "./",
+                    "@server": "./server",
+                    "@utils": "./server/utils",
+                    "@models": "./server/models",
+                    "@config": "./server/config",
+                    "@routes": "./server/routes",
+                    "@tests": "./__tests__",
+                    "@controllers": "./server/controllers",
+                    "@middleware": "./server/middleware",
+                    "@validators": "./server/middleware/validators",
+                    "@auth": "./server/middleware/auth",
+                    "@book": "./server/middleware/book"
+                }
             }
-        }],
+        ],
         "@babel/plugin-proposal-class-properties"
     ]
 }
