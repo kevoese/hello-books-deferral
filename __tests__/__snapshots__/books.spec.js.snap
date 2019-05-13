@@ -77,13 +77,96 @@ Object {
 }
 `;
 
+exports[`BORROW BOOKS API ENDPOINT not be able to borrow a book that is no longer available 1`] = `
+Object {
+  "data": Object {
+    "message": "No copy of this book is available at the moment, please check back later",
+  },
+  "status": "success",
+}
+`;
+
+exports[`BORROW BOOKS API ENDPOINT should be able to borrow an existing book from the library 1`] = `
+Object {
+  "data": Object {
+    "message": "Request received, you would be notified when approved",
+  },
+  "status": "success",
+}
+`;
+
+exports[`BORROW BOOKS API ENDPOINT should be able to extend a borowed book 1`] = `
+Object {
+  "data": Object {
+    "message": "You have successfully extended the return of this book by 7 days",
+  },
+  "status": "success",
+}
+`;
+
+exports[`BORROW BOOKS API ENDPOINT should not accept duplicate request for the same book 1`] = `
+Object {
+  "message": "You have already made a request for this book",
+}
+`;
+
+exports[`BORROW BOOKS API ENDPOINT should not be able to extend a book if it is past the return date 1`] = `
+Object {
+  "data": Object {
+    "message": "Return date already exceeded 30 days return limit, Please return the book to the library and make a new request",
+  },
+  "status": "success",
+}
+`;
+
+exports[`BORROW BOOKS API ENDPOINT should not be able to extend a book if user doesnt have the book 1`] = `
+Object {
+  "data": Object {
+    "message": "You do not have any book with this id",
+  },
+  "status": "success",
+}
+`;
+
+exports[`BORROW BOOKS API ENDPOINT should not be able to request for a book if borrow limit has been reached 1`] = `
+Object {
+  "data": Object {
+    "message": "You have reached the maximum borrow limit of 3",
+  },
+  "status": "success",
+}
+`;
+
+exports[`BORROW BOOKS API ENDPOINT should return Not found if the book does not exist in the library 1`] = `
+Object {
+  "data": Object {
+    "message": "Not Found, Library does not have any book with the specified id",
+  },
+  "status": "success",
+}
+`;
+
+exports[`BORROW BOOKS API ENDPOINT should return validation error for book extension 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "days",
+      "message": "days must be an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
 exports[`DELETE BOOK(S) API ENDPOINT should return error when id passed in is not an integer 1`] = `
 Object {
   "code": "ValidationFailed",
   "message": Array [
     Object {
       "field": "id",
-      "message": "id is expected to be a an integer",
+      "message": "id is expected to be an integer",
       "validation": "number",
     },
   ],
@@ -109,40 +192,51 @@ Object {
 }
 `;
 
-exports[`GET ALL BOOKS API ENDPOINT should return all books 1`] = `
+exports[`GET ALL BOOKS API ENDPOINT should not get book if limit query is not a number 1`] = `
 Object {
-  "data": Array [
+  "code": "ValidationFailed",
+  "message": Array [
     Object {
-      "copiesAvailable": 4,
-      "coverType": "PaperBack",
-      "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
-      "id": 1,
-      "isbn": "9789785205862",
-      "publisher": "Farfina Kachifo",
-      "title": "Fine Boys",
-      "year": "2014",
-    },
-    Object {
-      "copiesAvailable": 4,
-      "coverType": "PaperBack",
-      "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
-      "id": 2,
-      "isbn": "128b4v389028074",
-      "publisher": "Farfina Kachifo",
-      "title": "Fine Boys",
-      "year": "2014",
-    },
-    Object {
-      "copiesAvailable": 4,
-      "coverType": "PaperBack",
-      "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
-      "id": 3,
-      "isbn": "9204798753002380",
-      "publisher": "Farfina Kachifo",
-      "title": "Fine Boys",
-      "year": "2014",
+      "field": "limit",
+      "message": "limit is expected to be a an integer",
+      "validation": "number",
     },
   ],
+  "status": "error",
+}
+`;
+
+exports[`GET ALL BOOKS API ENDPOINT should not get book if page query is not a number 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "page",
+      "message": "page is expected to be a an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`GET ALL BOOKS API ENDPOINT should return all books 1`] = `
+Object {
+  "data": Object {
+    "results": Array [
+      Object {
+        "copiesAvailable": 4,
+        "coverType": "PaperBack",
+        "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
+        "id": 3,
+        "isbn": "9204798753002380",
+        "publisher": "Farfina Kachifo",
+        "title": "Fine Boys",
+        "year": "2014",
+      },
+    ],
+    "total": 3,
+  },
   "status": "success",
 }
 `;
@@ -153,7 +247,7 @@ Object {
   "message": Array [
     Object {
       "field": "id",
-      "message": "id is expected to be a an integer",
+      "message": "id is expected to be an integer",
       "validation": "number",
     },
   ],
@@ -181,4 +275,45 @@ Array [
   "year",
   "copiesAvailable",
 ]
+`;
+
+exports[`LEND BOOKS API ENDPOINT should be able to accept the request for a book 1`] = `
+Object {
+  "data": Object {
+    "message": "Book request approved",
+  },
+  "status": "success",
+}
+`;
+
+exports[`LEND BOOKS API ENDPOINT should encounter validation error when deciding on a requested book 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "id",
+      "message": "id must be a number",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`LEND BOOKS API ENDPOINT should not be able to accept request for a book if the book is no longer available 1`] = `
+Object {
+  "data": Object {
+    "message": "No copy of this book is available at the moment, please check back later",
+  },
+  "status": "success",
+}
+`;
+
+exports[`LEND BOOKS API ENDPOINT should not be able to accept the request for a book when borrow limit is exceeded 1`] = `
+Object {
+  "data": Object {
+    "message": "Request declined: Patron has reached the maximum borrow limit",
+  },
+  "status": "success",
+}
 `;

@@ -41,6 +41,95 @@
                 }
             }
         },
+        "/auth/reset": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "send reset password email",
+                "operationId": "reset password link",
+                "consumes": [
+                    "application/json",
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User email",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UserEmail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Reset Email Successfully sent to user"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["auth"],
+                "summary": "reset password action",
+                "operationId": "reset password",
+                "consumes": [
+                    "application/json",
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User reset info",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UserPasswords"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Password reset Successfull"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                }
+            }
+        },
+        "/auth/reset/:token": {
+            "get": {
+                "tags": ["auth"],
+                "summary": "get reset password page",
+                "operationId": "resetpage",
+                "consumes": [
+                    "application/json",
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "description": "reset token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Reset token confirmed"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                }
+            }
+        },
         "/authors": {
             "post": {
                 "tags": ["authors"],
@@ -65,6 +154,37 @@
                 "responses": {
                     "201": {
                         "description": "Author added successfully"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["authors"],
+                "summary": "Get all authors",
+                "consumes": [
+                    "application/json",
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "type": "integer",
+                        "description": "Define the page index for the records",
+                        "in": "query"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "integer",
+                        "description": "Define the limit for the record",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successfully fetched all authorss"
                     },
                     "422": {
                         "description": "Unprocessable Entity"
@@ -96,6 +216,37 @@
                 "responses": {
                     "201": {
                         "description": "Book added Successfully"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["books"],
+                "summary": "Get all books",
+                "consumes": [
+                    "application/json",
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "type": "integer",
+                        "description": "Define the page index for the records",
+                        "in": "query"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "integer",
+                        "description": "Define the limit for the record",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successfully fetched all books"
                     },
                     "422": {
                         "description": "Unprocessable Entity"
@@ -133,6 +284,36 @@
             },
             "xml": {
                 "name": "NewUser"
+            }
+        },
+        "UserEmail": {
+            "type": "object",
+            "required": ["email"],
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            },
+            "xml": {
+                "name": "UserEmail"
+            }
+        },
+        "UserPasswords": {
+            "type": "object",
+            "required": ["token", "password", "password_confirmation"],
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "password_confirmation": {
+                    "type": "string"
+                }
+            },
+            "xml": {
+                "name": "UserPasswords"
             }
         },
         "NewAuthor": {

@@ -1,5 +1,4 @@
 import User from '@models/User';
-import Mail from 'friendly-mail';
 import config from '@config';
 import jwt from 'jsonwebtoken';
 
@@ -50,4 +49,56 @@ const verifyEmail = async (req, res) => {
     });
 };
 
-export default { signUp, verifyEmail };
+const sendResetLink = async (req, res) => {
+    await req.user.createResetLink();
+
+    return res.status(200).jsend({
+        message: 'Check your email for password reset link.'
+    });
+};
+
+const resetPassword = async (req, res) => {
+    await req.user.resetPassword(req.body.password);
+
+    return res.status(200).jsend({
+        message: 'password reset successfull'
+    });
+};
+
+const createUser = async (req, res) => {
+    const { firstName, lastName, email } = req.body;
+    const password = User.generateRandomPsssword();
+    const rawPassword = password;
+
+    const auth_first_name = req.user.firstName;
+    const auth_last_name = req.user.lastName;
+    const name = `${auth_first_name} ${auth_last_name}`;
+
+    const user = await User.query().insert({
+        firstName,
+        lastName,
+        password,
+        email,
+        by_admin: true,
+        email_confirm_code: null
+    });
+
+    const data = {
+        name,
+        rawPassword
+    };
+
+    await user.sendInviteMail(data);
+
+    return res.status(201).jsend({
+        message: 'user has been created and mail sent to user'
+    });
+};
+
+export default {
+    signUp,
+    verifyEmail,
+    createUser,
+    sendResetLink,
+    resetPassword
+};

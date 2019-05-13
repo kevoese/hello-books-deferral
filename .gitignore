@@ -6,3 +6,4 @@ coverage
 .vscode
 yarn.lock
 vim.exe.stackdump
+build

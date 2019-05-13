@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FINES API ENDPOINTS DELETE FINES api/v1/fines should delete fines with id param valid 1`] = `
+Object {
+  "data": Object {
+    "message": "Fine succesfully deleted",
+  },
+  "status": "success",
+}
+`;
+
+exports[`FINES API ENDPOINTS GET FINE api/v1/fines should not get fine if fineId param is not a number 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "fineId",
+      "message": "Fine Id does not exist",
+      "validation": "itExists",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`FINES API ENDPOINTS POST CREATE FINE api/v1/fines should not create fine if type and description field is empty 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "type",
+      "message": "type is required to create a fine",
+      "validation": "required",
+    },
+    Object {
+      "field": "description",
+      "message": "description is required to create a fine",
+      "validation": "required",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`FINES API ENDPOINTS POST CREATE FINE api/v1/fines should not create fine if userId does not exists 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "userId",
+      "message": "User's Id does not exist",
+      "validation": "itExists",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`FINES API ENDPOINTS POST CREATE FINE api/v1/fines should not create fine if userId param is not a number 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "fineId",
+      "message": "fineId is expected to be a an integer",
+      "validation": "number",
+    },
+    Object {
+      "field": "fineId",
+      "message": "select \\"fines\\".* from \\"fines\\" where \\"id\\" = $1 - invalid input syntax for integer: \\"bag\\"",
+      "validation": "ENGINE_EXCEPTION",
+    },
+  ],
+  "status": "error",
+}
+`;

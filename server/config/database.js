@@ -27,7 +27,7 @@ export default () => ({
 
     review: {
         client: process.env.DATABASE_CLIENT,
-        connection: process.env.BACKUP_DATABASE,
+        connection: process.env.BACKUP_DATABASE_URL,
         pool: {
             min: 2,
             max: 10
