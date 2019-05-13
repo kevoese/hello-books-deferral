@@ -34,7 +34,7 @@ export const createUser = user =>
         settings: {
             email_notify: 1,
             in_app_notify: 0
-        }
+        },
         role: user.role || 'patron'
     });
 
