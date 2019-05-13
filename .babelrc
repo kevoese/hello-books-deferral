@@ -26,7 +26,8 @@
                     "@middleware": "./server/middleware",
                     "@validators": "./server/middleware/validators",
                     "@auth": "./server/middleware/auth",
-                    "@book": "./server/middleware/book"
+                    "@book": "./server/middleware/book",
+                    "@helpers": "./server/helpers"
                 }
             }
         ],

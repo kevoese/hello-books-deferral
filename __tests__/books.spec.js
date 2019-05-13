@@ -1,4 +1,5 @@
 import faker from 'faker';
+import moment from 'moment';
 import Book from '@models/Book';
 import Author from '@models/Author';
 import User from '@models/User';
@@ -105,18 +106,34 @@ describe('GET ALL BOOKS API ENDPOINT', () => {
         server.close();
     });
 
+    it('should not get book if page query is not a number', async () => {
+        const { status, body } = await server().get('/api/v1/books?page=e');
+
+        expect(status).toBe(422);
+        expect(body).toMatchSnapshot();
+    });
+
+    it('should not get book if limit query is not a number', async () => {
+        const { status, body } = await server().get('/api/v1/books?limit=e');
+
+        expect(status).toBe(422);
+        expect(body).toMatchSnapshot();
+    });
+
     it('should return all books', async () => {
         const firstBook = getBook();
         firstBook.isbn = '128b4v389028074';
         const secondBook = getBook();
         secondBook.isbn = '9204798753002380';
 
-        await Book.query().insert(firstBook);
-        await Book.query().insert(secondBook);
+        await Book.query().insert([firstBook, secondBook]);
 
-        const { status, body } = await server().get(`${booksRoute}`);
+        const { status, body } = await server().get(
+            `${booksRoute}?page=2&limit=1`
+        );
+
         expect(status).toBe(200);
-
+        expect(body.data.results.length).toBe(1);
         expect(body).toMatchSnapshot();
     });
 
@@ -222,7 +239,7 @@ describe('BORROW BOOKS API ENDPOINT', () => {
             user: patronId,
             book: bookId,
             status: 'pending',
-            requestDate: new Date()
+            requestDate: moment(new Date())
         });
 
         const { body, status } = await server()
@@ -308,11 +325,11 @@ describe('BORROW BOOKS API ENDPOINT', () => {
         await LendingRequest.query().insert(approvedBook(patronId, theBookId));
         await LendingRequest.query()
             .patch({
-                approvedDate: new Date(
-                    new Date().setDate(new Date().getDate() - 35)
+                approvedDate: moment(
+                    new Date(new Date().setDate(new Date().getDate() - 35))
                 ),
-                returnDate: new Date(
-                    new Date().setDate(new Date().getDate() - 30)
+                returnDate: moment(
+                    new Date(new Date().setDate(new Date().getDate() - 30))
                 )
             })
             .where('book', theBookId)
@@ -431,7 +448,7 @@ describe('LEND BOOKS API ENDPOINT', () => {
             book: theBookId,
             user: patronId,
             status: 'pending',
-            requestDate: new Date()
+            requestDate: moment(new Date())
         });
 
         const { adminToken } = container;
@@ -518,7 +535,7 @@ describe('LEND BOOKS API ENDPOINT', () => {
             user: patronId,
             book: theBookId,
             status: 'pending',
-            requestDate: new Date()
+            requestDate: moment(new Date())
         });
 
         const { adminToken } = container;

@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Book from '@models/Book';
 import LendingRequest from '@models/LendingRequest';
 
@@ -99,7 +100,7 @@ export const withBook = async (req, res, next) => {
         });
     }
 
-    if (hasBook.returnDate < new Date()) {
+    if (moment(hasBook.returnDate) < moment(new Date())) {
         return res.status(400).jsend({
             message:
                 'Return date already exceeded 30 days return limit, Please return the book to the library and make a new request'

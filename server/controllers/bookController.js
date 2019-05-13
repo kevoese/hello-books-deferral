@@ -1,5 +1,6 @@
 import Book from '@models/Book';
 import LendingRequest from '@models/LendingRequest';
+import moment from 'moment';
 
 const storeBooks = async (req, res) => {
     const {
@@ -31,7 +32,11 @@ const storeBooks = async (req, res) => {
 };
 
 const getAllBooks = async (req, res) => {
-    const books = await Book.query().select();
+    const { page, limit } = req.query;
+
+    const books = await Book.query()
+        .select()
+        .page(page || 1, limit || 10);
 
     return res.status(200).jsend(books);
 };
@@ -69,7 +74,7 @@ const requestBook = async (req, res) => {
         user: id,
         book: req.params.id,
         status: 'pending',
-        requestDate: new Date()
+        requestDate: moment(new Date())
     });
 
     return res.status(200).jsend({
@@ -83,9 +88,11 @@ const decideBookRequest = async (req, res) => {
     await LendingRequest.query()
         .patch({
             status: 'approved',
-            approvedDate: new Date(),
+            approvedDate: moment(new Date()),
             returned: false,
-            returnDate: new Date(new Date().setDate(new Date().getDate() + 30))
+            returnDate: moment(
+                new Date(new Date().setDate(new Date().getDate() + 30))
+            )
         })
         .where('user', req.params.userId)
         .where('book', req.params.id);
@@ -99,8 +106,10 @@ const extendBorrow = async (req, res) => {
     const { lendId, oldReturnDate } = req.user;
 
     await LendingRequest.query().patchAndFetchById(lendId, {
-        returnDate: new Date(
-            oldReturnDate.setDate(oldReturnDate.getDate() + req.body.days)
+        returnDate: moment(
+            new Date(
+                oldReturnDate.setDate(oldReturnDate.getDate() + req.body.days)
+            )
         )
     });
 

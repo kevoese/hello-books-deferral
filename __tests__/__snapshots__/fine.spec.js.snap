@@ -62,6 +62,11 @@ Object {
   "message": Array [
     Object {
       "field": "fineId",
+      "message": "fineId is expected to be a an integer",
+      "validation": "number",
+    },
+    Object {
+      "field": "fineId",
       "message": "select \\"fines\\".* from \\"fines\\" where \\"id\\" = $1 - invalid input syntax for integer: \\"bag\\"",
       "validation": "ENGINE_EXCEPTION",
     },

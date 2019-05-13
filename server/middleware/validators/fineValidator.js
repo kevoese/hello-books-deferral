@@ -32,7 +32,7 @@ const addFine = (req, res, next) => {
 
 const checkId = (req, res, next) => {
     const rules = {
-        fineId: 'required|string|itExists:fines,id'
+        fineId: 'required|number|itExists:fines,id'
     };
 
     const data = req.params;
