@@ -42,7 +42,7 @@ async function createAdminUser() {
         lastName: 'User',
         email: 'admin.user@gmail.com',
         email_confirm_code: null,
-        password: Bcrypt.hashSync('password'),
+        password: Bcrypt.hash('password', 10),
         role: 'admin'
     });
 }
@@ -59,7 +59,7 @@ async function createPatron() {
         lastName: 'User',
         email: 'patron.user@gmail.com',
         email_confirm_code: null,
-        password: Bcrypt.hashSync('password'),
+        password: Bcrypt.hash('password', 10),
         role: 'patron'
     });
 }
@@ -107,13 +107,13 @@ async function createSuperAdminUser() {
         lastName: 'Admin',
         email: 'super.admin@gmail.com',
         email_confirm_code: null,
-        password: Bcrypt.hashSync('password'),
+        password: Bcrypt.hash('password', 10),
         role: 'super_admin'
     });
 }
 
 async function seed() {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 500; i++) {
         const author = await createAuthor();
 
         const book = await createBook();
