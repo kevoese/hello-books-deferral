@@ -11,6 +11,9 @@ import {
 } from '@middleware/auth/authenticate';
 
 describe('Auth middleware', () => {
+    beforeAll(async () => {
+        await databaseConnection.migrate.latest();
+    });
     it('should return an error if token is not provided', async () => {
         const req = {
             headers: {}
@@ -25,27 +28,27 @@ describe('Auth middleware', () => {
         expect(jsendSpy).toHaveBeenCalledWith({ message: 'Unauthenticated' });
     });
 
-    // it('should return an error if token is invalid', async () => {
-    //     const token = jwt.sign(
-    //         { id: 2, email: 'random@me.com' },
-    //         config.auth.secret
-    //     );
+    it('should return an error if token is invalid', async () => {
+        const token = jwt.sign(
+            { id: 2, email: 'random@me.com' },
+            config.auth.secret
+        );
 
-    //     const req = {
-    //         headers: {
-    //             'x-access-token': token
-    //         }
-    //     };
+        const req = {
+            headers: {
+                'x-access-token': token
+            }
+        };
 
-    //     const res = new Response();
-    //     const statusSpy = jest.spyOn(res, 'status');
-    //     const jsendSpy = jest.spyOn(res, 'jsend');
-    //     const next = () => {};
+        const res = new Response();
+        const statusSpy = jest.spyOn(res, 'status');
+        const jsendSpy = jest.spyOn(res, 'jsend');
+        const next = () => {};
 
-    //     await isAuthenticated(req, res, next);
-    //     expect(statusSpy).toHaveBeenCalledWith(400);
-    //     expect(jsendSpy).toHaveBeenCalledWith({ message: 'Unauthenticated' });
-    // });
+        await isAuthenticated(req, res, next);
+        expect(statusSpy).toHaveBeenCalledWith(400);
+        expect(jsendSpy).toHaveBeenCalledWith({ message: 'Unauthenticated' });
+    });
 
     it('should return 500 error when any deep error occurred', async () => {
         const token = 'fdbfhbdfhbddfbbdjfb.dfdjfddf.dvbdd';
@@ -95,33 +98,33 @@ describe('Auth middleware', () => {
         expect(next).toHaveBeenCalled();
     });
 
-    // it('should call the next function if user is valid', async () => {
-    //     const user = getUser();
+    it('should call the next function if user is valid', async () => {
+        const user = getUser();
 
-    //     const createdUser = await User.query().insert({
-    //         email: user.email,
-    //         password: user.password,
-    //         firstName: user.firstName,
-    //         lastName: user.lastName
-    //     });
+        const createdUser = await User.query().insert({
+            email: user.email,
+            password: user.password,
+            firstName: user.firstName,
+            lastName: user.lastName
+        });
 
-    //     const token = jwt.sign(
-    //         { id: createdUser.id, email: createdUser.email },
-    //         config.auth.secret
-    //     );
+        const token = jwt.sign(
+            { id: createdUser.id, email: createdUser.email },
+            config.auth.secret
+        );
 
-    //     const req = {
-    //         headers: {
-    //             'x-access-token': token
-    //         }
-    //     };
-    //     const res = new Response();
-    //     const next = jest.fn();
+        const req = {
+            headers: {
+                'x-access-token': token
+            }
+        };
+        const res = new Response();
+        const next = jest.fn();
 
-    //     await isAuthenticated(req, res, next);
+        await isAuthenticated(req, res, next);
 
-    //     expect(next).toHaveBeenCalled();
-    // });
+        expect(next).toHaveBeenCalled();
+    });
 
     it('should return 500 error when any deep error occurred', async () => {
         const token = 'fdbfhbdfhbddfbbdjfb.dfdjfddf.dvbdd';
@@ -206,26 +209,26 @@ describe('Auth middleware', () => {
         expect(next).toHaveBeenCalled();
     });
 
-    // it('should call the next function if user exist', async () => {
-    //     const user = getUser();
+    it('should call the next function if user exist', async () => {
+        const user = getUser();
 
-    //     const createdUser = await User.query().insert({
-    //         email: user.email,
-    //         password: user.password,
-    //         firstName: user.firstName,
-    //         lastName: user.lastName
-    //     });
+        const createdUser = await User.query().insert({
+            email: user.email,
+            password: user.password,
+            firstName: user.firstName,
+            lastName: user.lastName
+        });
 
-    //     const req = {
-    //         params: {
-    //             user_id: createdUser.id
-    //         }
-    //     };
-    //     const res = new Response();
-    //     const next = jest.fn();
+        const req = {
+            params: {
+                user_id: createdUser.id
+            }
+        };
+        const res = new Response();
+        const next = jest.fn();
 
-    //     await userExists(req, res, next);
+        await userExists(req, res, next);
 
-    //     expect(next).toHaveBeenCalled();
-    // });
+        expect(next).toHaveBeenCalled();
+    });
 });

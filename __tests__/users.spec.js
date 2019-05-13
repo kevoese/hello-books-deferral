@@ -7,6 +7,9 @@ import config from '@config';
 const server = () => supertest(app);
 
 describe('USER API ENDPOINTS', () => {
+    beforeAll(async () => {
+        await databaseConnection.migrate.latest();
+    });
     it('super admin should be able to get users', async () => {
         const user = getUser();
         const admin = await superAdminUser(user);
