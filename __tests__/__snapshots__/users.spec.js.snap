@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`USER API ENDPOINTS Super Admin can update a user field 1`] = `
+Array [
+  "status",
+  "data",
+]
+`;
+
+exports[`USER API ENDPOINTS should return an error if user does not exist 1`] = `
+Array [
+  "status",
+  "data",
+]
+`;
+
+exports[`USER API ENDPOINTS should throw an error if update fields are missing 1`] = `
+Array [
+  "status",
+  "code",
+  "message",
+]
+`;
+
+exports[`USER API ENDPOINTS super admin can change access level of normal users 1`] = `
+Array [
+  "status",
+  "data",
+]
+`;
+
+exports[`USER API ENDPOINTS super admin can delete a user 1`] = `
+Array [
+  "status",
+  "data",
+]
+`;

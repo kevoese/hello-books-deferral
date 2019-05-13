@@ -29,6 +29,15 @@ export const createUser = user =>
         role: user.role || 'patron'
     });
 
+export const superAdminUser = user =>
+    User.query().insert({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: 'secret0001',
+        role: 'super_admin'
+    });
+
 export const getFine = user_id => ({
     description: 'Fighting with book',
     amount: 50000,

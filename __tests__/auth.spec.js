@@ -1,6 +1,13 @@
 import supertest from 'supertest';
 import { app, databaseConnection } from '@server/app';
-import { getUser, createUser, findUser } from '@tests/utils/helpers';
+import {
+    getUser,
+    createUser,
+    findUser,
+    superAdminUser
+} from '@tests/utils/helpers';
+import jwt from 'jsonwebtoken';
+import config from '@config';
 
 const server = () => supertest(app);
 let emailReset;
@@ -143,5 +150,27 @@ describe('AUTH API ENDPOINTS', () => {
             expect(status).toBe(200);
             expect(body).toMatchSnapshot();
         }, 30000);
+    });
+
+    describe('POST CREATE USER api/v1/auth/create-user', () => {
+        it('A super-admin should be able to create a normal user', async () => {
+            const user = getUser();
+            const admin = await superAdminUser(user);
+
+            const token = jwt.sign(
+                { id: admin.id, email: admin.email },
+                config.auth.secret
+            );
+
+            const { status, body } = await server()
+                .post('/api/v1/auth/create-user')
+                .set('x-access-token', token)
+                .send({
+                    ...getUser()
+                });
+
+            expect(status).toBe(201);
+            expect(body).toMatchSnapshot();
+        });
     });
 });
