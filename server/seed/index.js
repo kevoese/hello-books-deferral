@@ -113,7 +113,7 @@ async function createSuperAdminUser() {
 }
 
 async function seed() {
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 500; i++) {
         const author = await createAuthor();
 
         const book = await createBook();
