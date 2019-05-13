@@ -30,7 +30,11 @@ const storeBooks = async (req, res) => {
 };
 
 const getAllBooks = async (req, res) => {
-    const books = await Book.query().select();
+    const { page, limit } = req.query;
+
+    const books = await Book.query()
+        .select()
+        .page(page || 1, limit || 10);
 
     return res.status(200).jsend(books);
 };

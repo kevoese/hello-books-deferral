@@ -67,4 +67,30 @@ const bookRequestValidate = (req, res, next) => {
         });
 };
 
-export default { addBook, getBookValidation, bookRequestValidate };
+const getAllBooksValidation = (req, res, next) => {
+    const rules = {
+        page: 'number',
+        limit: 'number'
+    };
+
+    const data = req.query;
+    const messages = {
+        number: '{{ field }} is expected to be a an integer'
+    };
+
+    validateAll(data, rules, messages)
+        .then(() => {
+            next();
+        })
+        .catch(errors => {
+            res.status(422).jerror('ValidationFailed', errors);
+        });
+};
+
+export default {
+    addBook,
+    getBookValidation,
+    getAllBooksValidation,
+    bookRequestValidate
+};
+
