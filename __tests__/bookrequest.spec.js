@@ -15,6 +15,10 @@ describe('BOOK REQUEST API ENDPOINTS', () => {
         await databaseConnection('users').truncate();
     });
 
+    afterAll(async () => {
+        await databaseConnection('users').truncate();
+    });
+
     it('should return an error if desciption field is not provided', async () => {
         const { status, body } = await server()
             .post(bookrequestRoute)

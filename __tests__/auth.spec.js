@@ -19,6 +19,10 @@ describe('AUTH API ENDPOINTS', () => {
         await databaseConnection('users').truncate();
     });
 
+    afterAll(async () => {
+        await databaseConnection('users').truncate();
+    });
+
     describe('POST SIGN UP api/v1/auth/signup', () => {
         it('should not sign up user if email is empty', async () => {
             const { status, body } = await server()
