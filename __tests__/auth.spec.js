@@ -1,10 +1,17 @@
 import supertest from 'supertest';
+import Bcrypt from 'bcryptjs';
 import { app, databaseConnection } from '@server/app';
-import { getUser, createUser, superAdminUser } from '@tests/utils/helpers';
+import {
+    getUser,
+    createUser,
+    findUser,
+    superAdminUser
+} from '@tests/utils/helpers';
 import jwt from 'jsonwebtoken';
 import config from '@config';
 
 const server = () => supertest(app);
+let emailReset;
 
 describe('AUTH API ENDPOINTS', () => {
     beforeAll(async () => {
@@ -68,6 +75,82 @@ describe('AUTH API ENDPOINTS', () => {
             expect(status).toBe(200);
             expect(body).toMatchSnapshot();
         });
+    });
+
+    describe('POST PASSWORD RESET api/v1/auth/reset', () => {
+        it('should not send mail if user email is invalid', async () => {
+            const { status, body } = await server()
+                .post('/api/v1/auth/reset')
+                .send({ email: 'ba@ gmail' });
+
+            expect(status).toBe(422);
+            expect(body).toMatchSnapshot();
+        });
+
+        it('should not send mail if user is not found', async () => {
+            const { status, body } = await server()
+                .post('/api/v1/auth/reset')
+                .send({ email: 'bambam@gmail.com' });
+
+            expect(status).toBe(404);
+            expect(body).toMatchSnapshot();
+        });
+
+        it('should send email if user is valid', async () => {
+            const user = getUser();
+            await createUser(user);
+            emailReset = user.email;
+
+            const { status, body } = await server()
+                .post('/api/v1/auth/reset')
+                .send({ email: emailReset });
+
+            expect(status).toBe(200);
+            expect(Object.keys(body.data)).toMatchSnapshot();
+        });
+    });
+
+    describe('PATCH PASSWORD RESET api/v1/auth/reset', () => {
+        it('should not reset password if token is invalid', async () => {
+            const { status, body } = await server()
+                .patch('/api/v1/auth/reset')
+                .send({
+                    password: 'qwert12345',
+                    token: 'resettoken'
+                });
+
+            expect(status).toBe(422);
+            expect(body).toMatchSnapshot();
+        });
+
+        it('should not reset password if password is invalid', async () => {
+            const { status, body } = await server()
+                .patch('/api/v1/auth/reset')
+                .send({
+                    password: 'qwert',
+                    token: 'resettoken'
+                });
+
+            expect(status).toBe(422);
+            expect(body).toMatchSnapshot();
+        });
+
+        it('should reset password if all inputs are valid', async () => {
+            let user = await findUser(emailReset);
+            const resettoken = user[0].resettoken;
+            const { status, body } = await server()
+                .patch('/api/v1/auth/reset')
+                .send({
+                    password: 'qwert12345',
+                    token: resettoken
+                });
+            user = await findUser(emailReset);
+            expect(status).toBe(200);
+            expect(Bcrypt.compareSync('qwert12345', user[0].password)).toBe(
+                true
+            );
+            expect(body).toMatchSnapshot();
+        }, 30000);
     });
 
     describe('POST CREATE USER api/v1/auth/create-user', () => {

@@ -20,6 +20,9 @@
         "MAIL_PASSWORD": {
             "required": true
         },
+        "JWT_SECRET": {
+            "required": true
+        },
         "NODE_ENV": "review"
     },
     "addons": [
