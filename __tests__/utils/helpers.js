@@ -1,4 +1,5 @@
 import faker from 'faker';
+import moment from 'moment';
 import User from '@models/User';
 import Fine from '@models/Fine';
 import jwt from 'jsonwebtoken';
@@ -28,6 +29,16 @@ export const createUser = user =>
         password: 'secret0001',
         role: user.role || 'patron'
     });
+
+export const approvedBook = (patronId, theBookId) => ({
+    user: patronId,
+    book: theBookId,
+    status: 'approved',
+    requestDate: moment(new Date()),
+    approvedDate: moment(new Date()),
+    returned: false,
+    returnDate: moment(new Date(new Date().setDate(new Date().getDate() + 30)))
+});
 
 export const superAdminUser = user =>
     User.query().insert({
