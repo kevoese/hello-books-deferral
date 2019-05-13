@@ -9,11 +9,6 @@ Object {
       "message": "password must be more than 8",
       "validation": "min",
     },
-    Object {
-      "field": "password",
-      "message": "Confirm password does not match password",
-      "validation": "confirmed",
-    },
   ],
   "status": "error",
 }

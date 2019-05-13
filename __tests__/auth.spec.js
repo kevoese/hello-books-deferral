@@ -1,4 +1,5 @@
 import supertest from 'supertest';
+import Bcrypt from 'bcryptjs';
 import { app, databaseConnection } from '@server/app';
 import {
     getUser,
@@ -100,7 +101,6 @@ describe('AUTH API ENDPOINTS', () => {
             await createUser(user);
             emailReset = user.email;
 
-            /* sendResetMail(emailReset); */
             const { status, body } = await server()
                 .post('/api/v1/auth/reset')
                 .send({ email: emailReset });
@@ -116,7 +116,6 @@ describe('AUTH API ENDPOINTS', () => {
                 .patch('/api/v1/auth/reset')
                 .send({
                     password: 'qwert12345',
-                    password_confirmation: 'qwert12345',
                     token: 'resettoken'
                 });
 
@@ -129,7 +128,6 @@ describe('AUTH API ENDPOINTS', () => {
                 .patch('/api/v1/auth/reset')
                 .send({
                     password: 'qwert',
-                    password_confirmation: 'qwert12345',
                     token: 'resettoken'
                 });
 
@@ -138,16 +136,19 @@ describe('AUTH API ENDPOINTS', () => {
         });
 
         it('should reset password if all inputs are valid', async () => {
-            const user = await findUser(emailReset);
+            let user = await findUser(emailReset);
             const resettoken = user[0].resettoken;
             const { status, body } = await server()
                 .patch('/api/v1/auth/reset')
                 .send({
                     password: 'qwert12345',
-                    password_confirmation: 'qwert12345',
                     token: resettoken
                 });
+            user = await findUser(emailReset);
             expect(status).toBe(200);
+            expect(Bcrypt.compareSync('qwert12345', user[0].password)).toBe(
+                true
+            );
             expect(body).toMatchSnapshot();
         }, 30000);
     });

@@ -64,19 +64,10 @@ class User extends Model {
 
     async resetPassword(password) {
         await this.$query().patch({
-            password: bcrypt.hashSync(password)
+            password: bcrypt.hashSync(password),
+            resettoken: null,
+            resetexpire: null
         });
-
-        await this.constructor
-            .knex()
-            .table('users')
-            .where({
-                email: this.email
-            })
-            .update({
-                resettoken: null,
-                resetexpire: null
-            });
     }
 
     async sendInviteMail({ name, rawPassword }) {

@@ -53,7 +53,7 @@ const sendResetLink = (req, res, next) => {
 const resetPassword = (req, res, next) => {
     const rules = {
         token: 'required',
-        password: 'required|min:8|alpha_numeric|confirmed'
+        password: 'required|min:8|alpha_numeric'
     };
     const data = req.body;
 
