@@ -20,7 +20,7 @@ export const isAuthenticated = async (req, res, next) => {
                 message: 'Unauthenticated'
             });
         }
-      
+
         req.user = user;
         next();
     } catch (error) {
@@ -41,7 +41,7 @@ export const isAdmin = (req, res, next) => {
     next();
 };
 
-const isSuperAdmin = (req, res, next) => {
+export const isSuperAdmin = (req, res, next) => {
     const { role } = req.user;
 
     if (role !== 'super_admin') {
@@ -63,9 +63,21 @@ const isPatron = (req, res, next) => {
     next();
 };
 
+export const userExists = async (req, res, next) => {
+    const { user_id } = req.params;
+    const user = await User.query().findById(user_id);
+    if (!user) {
+        return res.status(400).jsend({
+            message: 'Unauthenticated'
+        });
+    }
+    next();
+};
+
 export default {
     isAuthenticated,
     isAdmin,
     isSuperAdmin,
-    isPatron
+    isPatron,
+    userExists
 };

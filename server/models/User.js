@@ -17,6 +17,12 @@ class User extends Model {
     async $afterInsert(context) {
         await super.$afterInsert(context);
 
+        if (!this.by_admin) {
+            this.sendWelcomeMail();
+        }
+    }
+
+    async sendWelcomeMail() {
         await new Mail('welcome-mail')
             .to(this.email, this.firstName)
             .data({
@@ -27,6 +33,23 @@ class User extends Model {
             })
             .subject('Welcome Onboard')
             .send();
+    }
+
+    async sendInviteMail({ name, rawPassword }) {
+        await new Mail('invite-mail')
+            .to(this.email, this.firstName)
+            .data({
+                name: this.firstName,
+                email: this.email,
+                invitee_name: name,
+                password: rawPassword
+            })
+            .subject('Hello-Books invite mail')
+            .send();
+    }
+
+    static generateRandomPsssword() {
+        return crypto.randomBytes(8).toString('hex');
     }
 }
 

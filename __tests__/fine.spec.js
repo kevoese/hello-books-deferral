@@ -71,7 +71,7 @@ describe('FINES API ENDPOINTS', () => {
 
         it('should not create fine if userId does not exists', async () => {
             const { status, body } = await server()
-                .post('/api/v1/fines/15')
+                .post('/api/v1/fines/1545678')
                 .set('x-access-token', adminToken)
                 .send(getFine(1));
             expect(status).toBe(422);

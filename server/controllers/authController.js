@@ -49,4 +49,34 @@ const verifyEmail = async (req, res) => {
     });
 };
 
-export default { signUp, verifyEmail };
+const createUser = async (req, res) => {
+    const { firstName, lastName, email } = req.body;
+    const password = User.generateRandomPsssword();
+    const rawPassword = password;
+
+    const auth_first_name = req.user.firstName;
+    const auth_last_name = req.user.lastName;
+    const name = `${auth_first_name} ${auth_last_name}`;
+
+    const user = await User.query().insert({
+        firstName,
+        lastName,
+        password,
+        email,
+        by_admin: true,
+        email_confirm_code: null
+    });
+
+    const data = {
+        name,
+        rawPassword
+    };
+
+    await user.sendInviteMail(data);
+
+    return res.status(201).jsend({
+        message: 'user has been created and mail sent to user'
+    });
+};
+
+export default { signUp, verifyEmail, createUser };
