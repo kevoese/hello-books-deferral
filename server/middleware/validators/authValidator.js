@@ -29,20 +29,6 @@ const signUp = (req, res, next) => {
         });
 };
 
-const getResetPage = async (req, res, next) => {
-    const { token } = req.params;
-    const row = await User.query()
-        .where('resettoken', token)
-        .where('resetexpire', '>', new Date());
-    req.user = row[0];
-    if (req.user) return next();
-    res.status(422).jerror('ValidationFailed', [
-        {
-            message: 'reset token is invalid'
-        }
-    ]);
-};
-
 const sendResetLink = (req, res, next) => {
     const rules = { email: 'required|email' };
     let data = req.body;
@@ -89,4 +75,4 @@ const resetPassword = (req, res, next) => {
         });
 };
 
-export default { signUp, getResetPage, sendResetLink, resetPassword };
+export default { signUp, sendResetLink, resetPassword };

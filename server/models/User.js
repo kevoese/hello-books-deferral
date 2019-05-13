@@ -42,7 +42,6 @@ class User extends Model {
                 resettoken: token,
                 resetexpire: date
             });
-
         await this.sendResetEmail(token);
     }
 

@@ -55,13 +55,6 @@ const sendResetLink = async (req, res) => {
         message: 'Check your email for password reset link.'
     });
 };
-
-const getResetPage = async (req, res) =>
-    res.status(200).render('reset-password/reset', {
-        token: req.user.resettoken,
-        url: config.server.url
-    });
-
 const resetPassword = async (req, res) => {
     await req.user.resetPassword(req.body.password);
 
@@ -74,6 +67,5 @@ export default {
     signUp,
     verifyEmail,
     sendResetLink,
-    getResetPage,
     resetPassword
 };
