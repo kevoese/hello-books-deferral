@@ -1,15 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PROFILES API ENDPOINTS GET PROFILE api/v1/profile should get profile for authenticated user 1`] = `
-Array [
-  "firstName",
-  "lastName",
-  "email",
-  "bio",
-  "avatar",
-]
-`;
-
 exports[`PROFILES API ENDPOINTS GET PROFILE api/v1/profile should get profile for other users 1`] = `
 Array [
   "firstName",

@@ -11,24 +11,24 @@ import {
 
 const server = () => supertest(app);
 let adminToken;
-let userToken;
 
 describe('FINES API ENDPOINTS', () => {
     beforeAll(async () => {
         await databaseConnection.migrate.latest();
         await databaseConnection('users').truncate();
         await databaseConnection('fines').truncate();
-        await createUser(getUser());
+        const thisUser = await createUser(getUser());
         const admin = getUser();
         admin.role = 'admin';
         const theAdmin = await createUser(admin);
-        await createFine(1);
+        await createFine(thisUser.id);
         adminToken = getToken({ id: theAdmin.id, email: theAdmin.email });
     });
 
     afterAll(async () => {
         await databaseConnection('fines').truncate();
         await databaseConnection('users').truncate();
+        server.close();
     });
 
     describe('GET FINES api/v1/fines', () => {
@@ -39,7 +39,6 @@ describe('FINES API ENDPOINTS', () => {
             const { status, body } = await server()
                 .get('/api/v1/fines')
                 .set('x-access-token', userToken);
-
             expect(status).toBe(200);
             expect(body.data.length).toBe(1);
             expect(body.data[0].user_id).toBe(user.id);

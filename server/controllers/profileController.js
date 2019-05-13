@@ -12,6 +12,14 @@ const getUser = async id => {
     return { firstName, lastName, email, bio, avatar };
 };
 
+const filterObj = obj => {
+    const validKeys = Object.keys(obj).filter(key => obj[key]);
+    const validObject = validKeys.reduce((accum, keys) => {
+        return { ...accum, [keys]: obj[keys] };
+    }, {});
+    return validObject;
+};
+
 const getProfile = async (req, res) => {
     const userId = req.params.id;
     const thisUser = req.user;
@@ -24,20 +32,14 @@ const getProfile = async (req, res) => {
 
 const editProfile = async (req, res) => {
     const { id } = req.user;
-
     const { firstName, lastName, email, bio, avatar } = req.body;
+    const userData = { firstName, lastName, email, bio, avatar };
 
-    const update = async (column, value) => {
-        await User.query()
-            .findById(id)
-            .patch({ [column]: value });
-    };
+    // const result = filterObj(userData);
 
-    if (firstName) await update('firstName', firstName);
-    if (lastName) await update('lastName', lastName);
-    if (email) await update('email', email);
-    if (bio) await update('bio', bio);
-    if (avatar) await update('avatar', avatar);
+    await User.query()
+        .findById(id)
+        .patch(filterObj(userData));
 
     const user = await getUser(id);
     return res.status(200).jsend(user);

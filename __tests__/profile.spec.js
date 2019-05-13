@@ -9,6 +9,7 @@ let user;
 
 describe('PROFILES API ENDPOINTS', () => {
     beforeAll(async () => {
+        await databaseConnection('users').truncate();
         await databaseConnection.migrate.latest();
         user = await createUser(getUser());
         userToken = getToken({ id: user.id, email: user.email });
@@ -18,17 +19,18 @@ describe('PROFILES API ENDPOINTS', () => {
 
     afterAll(async () => {
         await databaseConnection('users').truncate();
+        server.close();
     });
 
     describe('GET PROFILE api/v1/profile', () => {
-        it('should get profile for authenticated user', async () => {
-            const { status, body } = await server()
-                .get('/api/v1/profile')
-                .set('x-access-token', userToken);
-
-            expect(status).toBe(200);
-            expect(Object.keys(body.data)).toMatchSnapshot();
-        });
+        'should get profile for authenticated user',
+            async () => {
+                const { status, body } = await server()
+                    .get('/api/v1/profile')
+                    .set('x-access-token', userToken);
+                expect(status).toBe(200);
+                expect(Object.keys(body.data)).toMatchSnapshot();
+            };
 
         it('should get profile for other users', async () => {
             const { status, body } = await server()
@@ -68,7 +70,6 @@ describe('PROFILES API ENDPOINTS', () => {
                     bio: 'loves reading',
                     avatar: 'profilePic'
                 });
-
             expect(status).toBe(422);
             expect(body).toMatchSnapshot();
         });
