@@ -102,18 +102,34 @@ describe('GET ALL BOOKS API ENDPOINT', () => {
         server.close();
     });
 
+    it('should not get book if page query is not a number', async () => {
+        const { status, body } = await server().get('/api/v1/books?page=e');
+
+        expect(status).toBe(422);
+        expect(body).toMatchSnapshot();
+    });
+
+    it('should not get book if limit query is not a number', async () => {
+        const { status, body } = await server().get('/api/v1/books?limit=e');
+
+        expect(status).toBe(422);
+        expect(body).toMatchSnapshot();
+    });
+
     it('should return all books', async () => {
         const firstBook = getBook();
         firstBook.isbn = '128b4v389028074';
         const secondBook = getBook();
         secondBook.isbn = '9204798753002380';
 
-        await Book.query().insert(firstBook);
-        await Book.query().insert(secondBook);
+        await Book.query().insert([firstBook, secondBook]);
 
-        const { status, body } = await server().get(`${booksRoute}`);
+        const { status, body } = await server().get(
+            `${booksRoute}?page=2&limit=1`
+        );
+
         expect(status).toBe(200);
-
+        expect(body.data.results.length).toBe(1);
         expect(body).toMatchSnapshot();
     });
 

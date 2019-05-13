@@ -11,6 +11,7 @@
         "build": "babel server --out-dir build",
         "dev": "nodemon --exec babel-node server/index",
         "migrate": "knex migrate:latest",
+        "seed": "babel-node server/seeds/index.js",
         "make:migration": "knex migrate:make",
         "migrate:rollback": "knex migrate:rollback",
         "start": "node build/index",

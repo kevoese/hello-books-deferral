@@ -19,6 +19,26 @@ const addAuthor = (req, res, next) => {
         });
 };
 
+const getAllAuthorsValidation = (req, res, next) => {
+    const rules = {
+        page: 'number',
+        limit: 'number'
+    };
+
+    const data = req.query;
+    const messages = {
+        number: '{{ field }} is expected to be a an integer'
+    };
+
+    validateAll(data, rules, messages)
+        .then(() => {
+            next();
+        })
+        .catch(errors => {
+            res.status(422).jerror('ValidationFailed', errors);
+        });
+};
+
 const updateAuthor = (req, res, next) => {
     const rules = {
         name: 'required|string',
@@ -60,4 +80,9 @@ const deleteOrGetAuthor = (req, res, next) => {
         });
 };
 
-export default { addAuthor, updateAuthor, deleteOrGetAuthor };
+export default {
+    addAuthor,
+    updateAuthor,
+    deleteOrGetAuthor,
+    getAllAuthorsValidation
+};

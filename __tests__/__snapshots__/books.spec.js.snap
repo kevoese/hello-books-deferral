@@ -109,40 +109,51 @@ Object {
 }
 `;
 
-exports[`GET ALL BOOKS API ENDPOINT should return all books 1`] = `
+exports[`GET ALL BOOKS API ENDPOINT should not get book if limit query is not a number 1`] = `
 Object {
-  "data": Array [
+  "code": "ValidationFailed",
+  "message": Array [
     Object {
-      "copiesAvailable": 4,
-      "coverType": "PaperBack",
-      "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
-      "id": 1,
-      "isbn": "9789785205862",
-      "publisher": "Farfina Kachifo",
-      "title": "Fine Boys",
-      "year": "2014",
-    },
-    Object {
-      "copiesAvailable": 4,
-      "coverType": "PaperBack",
-      "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
-      "id": 2,
-      "isbn": "128b4v389028074",
-      "publisher": "Farfina Kachifo",
-      "title": "Fine Boys",
-      "year": "2014",
-    },
-    Object {
-      "copiesAvailable": 4,
-      "coverType": "PaperBack",
-      "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
-      "id": 3,
-      "isbn": "9204798753002380",
-      "publisher": "Farfina Kachifo",
-      "title": "Fine Boys",
-      "year": "2014",
+      "field": "limit",
+      "message": "limit is expected to be a an integer",
+      "validation": "number",
     },
   ],
+  "status": "error",
+}
+`;
+
+exports[`GET ALL BOOKS API ENDPOINT should not get book if page query is not a number 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "page",
+      "message": "page is expected to be a an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`GET ALL BOOKS API ENDPOINT should return all books 1`] = `
+Object {
+  "data": Object {
+    "results": Array [
+      Object {
+        "copiesAvailable": 4,
+        "coverType": "PaperBack",
+        "description": "A novel depicting the real life story of Eghosa and his Warri friends...",
+        "id": 3,
+        "isbn": "9204798753002380",
+        "publisher": "Farfina Kachifo",
+        "title": "Fine Boys",
+        "year": "2014",
+      },
+    ],
+    "total": 3,
+  },
   "status": "success",
 }
 `;
