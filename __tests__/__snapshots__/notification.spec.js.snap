@@ -3,7 +3,7 @@
 exports[`NOTIFICATION API ENDPOINTS GET IN-APP NOTIFICATION api/v1/notifications/:email SAMPLE NOTIFICATION -> should create author with valid inputs and send user notification 1`] = `
 Object {
   "data": Object {
-    "id": 3,
+    "id": 1,
     "name": "john doe",
   },
   "status": "success",

@@ -76,7 +76,7 @@ describe('NOTIFICATION API ENDPOINTS', () => {
         it('SAMPLE NOTIFICATION -> should create author with valid inputs and send user notification', async () => {
             const { status, body } = await server()
                 .post('/api/v1/authors')
-                .send({ id: 10, name: 'john doe' });
+                .send({ id: 2, name: 'john doe' });
 
             expect(status).toBe(201);
             expect(body).toMatchSnapshot();

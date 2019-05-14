@@ -54,7 +54,11 @@ export const superAdminUser = user =>
         lastName: user.lastName,
         email: user.email,
         password: 'secret0001',
-        role: 'super_admin'
+        role: 'super_admin',
+        settings: {
+            email_notify: 0,
+            in_app_notify: 1
+        }
     });
 
 export const getFine = user_id => ({

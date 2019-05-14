@@ -1,9 +1,9 @@
 exports.up = knex =>
-    knex.schema.table('users', t => {
-        t.jsonb('settings').nullable();
+    knex.schema.table('users', table => {
+        table.json('settings').nullable();
     });
 
 exports.down = knex =>
-    knex.schema.table('users', t => {
-        t.dropColumn('settings');
+    knex.schema.table('users', table => {
+        table.dropColumn('settings');
     });

@@ -1,6 +1,7 @@
 import Mail from 'friendly-mail';
 import User from '@models/User';
 import Notification from '@models/Notification';
+import { exists } from 'fs';
 
 const inAppNotification = async (email, type, data) => {
     await Notification.query().insert({
@@ -23,10 +24,14 @@ const sendMailNotification = async (email, type, data) => {
 };
 
 const sendNotification = async (type, data) => {
+    let result = false;
     const users = await User.query().select();
 
     users.forEach(user => {
-        if (
+        if (user.settings === null) {
+            result = true;
+            return result;
+        } else if (
             user.settings.email_notify === 1 &&
             user.settings.in_app_notify === 1
         ) {
@@ -74,10 +79,13 @@ const getSpecificUserNotification = async (req, res) => {
         return res.status(404).jsend({
             message: 'Notification not found'
         });
-    } else {
+    }
+    if (!notification[0].read_at) {
         await Notification.query()
             .where({ id: id })
             .update({ read_at: 'now' });
+        return res.status(200).jsend(notification);
+    } else {
         return res.status(200).jsend(notification);
     }
 };

@@ -1,6 +1,7 @@
 import supertest from 'supertest';
 import Author from '@models/Author';
 import { app, databaseConnection } from '@server/app';
+import { getUser, createUser } from '@tests/utils/helpers';
 
 const server = () => supertest(app);
 let author;
@@ -36,10 +37,13 @@ describe('AUTHOR API ENDPOINTS', () => {
         });
 
         it('should create author with valid inputs', async () => {
+            const user = getUser();
+
+            await createUser(user);
+
             const { status, body } = await server()
                 .post('/api/v1/authors')
                 .send(author);
-
             expect(status).toBe(201);
             expect(body).toMatchSnapshot();
         });

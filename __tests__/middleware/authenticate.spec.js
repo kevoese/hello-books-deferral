@@ -4,17 +4,6 @@ import User from '@models/User';
 import { Response, getUser } from '@tests/utils/helpers';
 import { app, databaseConnection } from '@server/app';
 
-const getUser = () => ({
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    email: faker.internet.email(),
-    password_confirmation: 'secret0001',
-    password: 'secret0001',
-    settings: {
-        email_notify: 1,
-        in_app_notify: 1
-    }
-});
 import {
     isAuthenticated,
     userExists,
