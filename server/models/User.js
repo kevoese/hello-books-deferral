@@ -1,11 +1,26 @@
 import crypto from 'crypto';
 import config from '@config';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import Mail from 'friendly-mail';
 import { Model } from 'objection';
 
 class User extends Model {
     static tableName = 'users';
+
+    passwordsMatch(password) {
+        return bcrypt.compareSync(password, this.password);
+    }
+
+    getToken() {
+        return jwt.sign(
+            { id: this.id, email: this.email },
+            config.auth.secret,
+            {
+                expiresIn: '12h'
+            }
+        );
+    }
 
     async $beforeInsert(context) {
         await super.$beforeInsert(context);

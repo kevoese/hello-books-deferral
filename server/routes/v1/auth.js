@@ -6,6 +6,7 @@ import Auth from '@middleware/auth/authenticate';
 const router = express.Router();
 
 router.post('/signup', authValidator.signUp, authController.signUp);
+router.post('/login', authValidator.login, authController.login);
 router.post('/verify/:verificationCode', authController.verifyEmail);
 router.post(
     '/create-user',

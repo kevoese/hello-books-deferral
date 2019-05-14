@@ -12,10 +12,11 @@
         "dev": "nodemon --exec babel-node server/index",
         "migrate": "knex migrate:latest",
         "seed": "babel-node server/seeds/index.js",
+        "seed:prod":"node build/seed/index",
         "make:migration": "knex migrate:make",
         "migrate:rollback": "knex migrate:rollback",
         "start": "node build/index",
-        "heroku-postbuild": "npm run migrate && npm run build",
+        "heroku-postbuild": "npm run migrate && npm run build && npm run seed:prod",
         "coverage": "jest --forceExit --coverage && cat ./coverage/lcov.info | coveralls"
     },
     "husky": {
