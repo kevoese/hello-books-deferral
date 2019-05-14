@@ -23,6 +23,49 @@ Object {
 }
 `;
 
+exports[`AUTHOR API ENDPOINTS GET ALL AUTHOR api/v1/authors should get all authors 1`] = `
+Object {
+  "data": Object {
+    "results": Array [
+      Object {
+        "id": 3,
+        "name": "John Doe",
+      },
+    ],
+    "total": 5,
+  },
+  "status": "success",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS GET ALL AUTHOR api/v1/authors should not get author if limit query is not a number 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "limit",
+      "message": "limit is expected to be a an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS GET ALL AUTHOR api/v1/authors should not get author if page query is not a number 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "page",
+      "message": "page is expected to be a an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
 exports[`AUTHOR API ENDPOINTS GET AUTHOR api/v1/authors should not get author if id param is not a number 1`] = `
 Object {
   "code": "ValidationFailed",
@@ -41,7 +84,7 @@ exports[`AUTHOR API ENDPOINTS GET AUTHOR api/v1/authors should return single aut
 Object {
   "data": Object {
     "id": 1,
-    "name": "john doe",
+    "name": "John Doe",
   },
   "status": "success",
 }
@@ -50,8 +93,8 @@ Object {
 exports[`AUTHOR API ENDPOINTS POST CREATE AUTHOR api/v1/authors should create author with valid inputs 1`] = `
 Object {
   "data": Object {
-    "id": 1,
-    "name": "john doe",
+    "id": 3,
+    "name": "John Doe",
   },
   "status": "success",
 }

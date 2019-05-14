@@ -16,6 +16,8 @@ exports.up = knex =>
             .defaultTo('patron');
         table.timestamps();
         table.string('email_confirm_code');
+        table.string('bio');
+        table.string('avatar');
     });
 
 exports.down = knex => knex.schema.dropTable('users');

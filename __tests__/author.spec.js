@@ -1,17 +1,21 @@
 import supertest from 'supertest';
+import Author from '@models/Author';
 import { app, databaseConnection } from '@server/app';
 
 const server = () => supertest(app);
 let author;
 
+const getAuthor = ({ name = 'frank doe' } = {}) => ({
+    name
+});
+
 describe('AUTHOR API ENDPOINTS', () => {
     beforeAll(async () => {
         await databaseConnection.migrate.latest();
-        await databaseConnection('authors').truncate();
     });
 
     beforeEach(() => {
-        author = { name: 'john doe' };
+        author = { name: 'John Doe' };
     });
 
     afterAll(async () => {
@@ -37,6 +41,43 @@ describe('AUTHOR API ENDPOINTS', () => {
                 .send(author);
 
             expect(status).toBe(201);
+            expect(body).toMatchSnapshot();
+        });
+    });
+
+    describe('GET ALL AUTHOR api/v1/authors', () => {
+        it('should not get author if page query is not a number', async () => {
+            const { status, body } = await server().get(
+                '/api/v1/authors?page=e'
+            );
+
+            expect(status).toBe(422);
+            expect(body).toMatchSnapshot();
+        });
+
+        it('should not get author if limit query is not a number', async () => {
+            const { status, body } = await server().get(
+                '/api/v1/authors?limit=e'
+            );
+
+            expect(status).toBe(422);
+            expect(body).toMatchSnapshot();
+        });
+
+        it('should get all authors', async () => {
+            const firstAuthor = getAuthor();
+            firstAuthor.name = 'James Bond';
+            const secondAuthor = getAuthor();
+            secondAuthor.name = 'James Bond';
+
+            await Author.query().insert([firstAuthor, secondAuthor]);
+
+            const { status, body } = await server().get(
+                '/api/v1/authors?page=2&limit=1'
+            );
+
+            expect(status).toBe(200);
+            expect(body.data.results.length).toBe(1);
             expect(body).toMatchSnapshot();
         });
     });
