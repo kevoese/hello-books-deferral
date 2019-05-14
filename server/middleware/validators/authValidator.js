@@ -29,6 +29,21 @@ const signUp = (req, res, next) => {
         });
 };
 
+const login = async (req, res, next) => {
+    const rules = { email: 'required|email', password: 'required' };
+
+    let data = req.body;
+    data = sanitize(data, { email: 'trim' });
+
+    try {
+        await validateAll(data, rules, messages);
+
+        return next();
+    } catch (errors) {
+        res.status(422).jerror('ValidationFailed', errors);
+    }
+};
+
 const sendResetLink = (req, res, next) => {
     const rules = { email: 'required|email' };
     let data = req.body;
@@ -95,4 +110,4 @@ const createUser = (req, res, next) => {
 };
 
 /* add other auth validators here */
-export default { signUp, sendResetLink, resetPassword, createUser };
+export default { signUp, login, sendResetLink, resetPassword, createUser };
