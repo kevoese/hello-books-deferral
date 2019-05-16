@@ -1,19 +1,35 @@
 import express from 'express';
 import consola from 'consola';
+import path from 'path';
 import bodyParser from 'body-parser';
 import swagger from 'swagger-ui-express';
 import Knex from 'knex';
+import Webpack from 'webpack';
 import { createServer } from 'http';
 import { Model } from 'objection';
 import swaggerDocument from '@/swagger.json';
 import Routes from '@routes/v1';
 import config from '@config';
+import webpackConfig from '@/webpack.config';
+import WebpackDevMiddleware from 'webpack-dev-middleware';
+import WebpackHotMiddleware from 'webpack-hot-middleware';
 
 import 'express-jsend';
 
 export const app = express();
 
 export const databaseConnection = Knex(config.database[config.server.env]);
+
+const compiler = Webpack(webpackConfig);
+
+app.use(
+    WebpackDevMiddleware(compiler, {
+        hot: true,
+        publicPath: webpackConfig.output.publicPath
+    })
+);
+
+app.use(WebpackHotMiddleware(compiler));
 
 Model.knex(databaseConnection);
 
@@ -22,9 +38,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 Routes(app);
 
-app.get('/', (req, res) => {
-    res.status(200).jsend({ message: 'Hello Books Deferral' });
-});
+// app.use(Express.static(path.resolve(__dirname, 'public')))
+
+app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'public/index.html'))
+);
+
 /**
  *  setup Swagger
  */

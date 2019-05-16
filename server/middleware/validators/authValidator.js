@@ -13,7 +13,7 @@ const signUp = (req, res, next) => {
         firstName: 'string|required',
         lastName: 'string|required',
         email: 'required|string|email|unique:users,email',
-        password: 'required|min:8|alpha_numeric|confirmed'
+        password: 'required|min:8|alpha_numeric'
     };
     /* sanitize data object */
     let data = req.body;

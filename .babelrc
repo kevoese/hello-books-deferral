@@ -7,7 +7,8 @@
                     "node": "current"
                 }
             }
-        ]
+        ],
+        "@babel/preset-react"
     ],
     "plugins": [
         [
@@ -17,6 +18,8 @@
                 "alias": {
                     "@": "./",
                     "@server": "./server",
+                    "@client": "./client",
+                    "@pages": "./client/pages",
                     "@utils": "./server/utils",
                     "@models": "./server/models",
                     "@config": "./server/config",
