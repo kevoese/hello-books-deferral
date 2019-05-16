@@ -1,17 +1,19 @@
 import React from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
-import About from './Home/About';
-import index from './Home/index';
-import Navbar from './Home/Navbar';
+import About from '@pages/About';
+import index from '@pages/index';
+import Navbar from '../layout/Navbar';
 
 export default function Main() {
     return (
         <React.Fragment>
-            <BrowserRouter>
-                <Navbar />
-                <Route exact path="/" component={index} />
-                <Route path="/about" component={About} />
-            </BrowserRouter>
+            <div className="md:pl-3 lg:pl-3 xl:pl-3 md:pr-3 lg:pr-3 xl:pr-3">
+                <BrowserRouter>
+                    <Navbar />
+                    <Route exact path="/" component={index} />
+                    <Route path="/about" component={About} />
+                </BrowserRouter>
+            </div>
         </React.Fragment>
     );
 }
