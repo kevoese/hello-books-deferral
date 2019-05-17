@@ -80,6 +80,34 @@ Object {
 }
 `;
 
+exports[`AUTHOR API ENDPOINTS GET AUTHOR api/v1/authors should not get author if id param is not a number 2`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "limit",
+      "message": "limit is expected to be a an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS GET AUTHOR api/v1/authors should not get author if id param is not a number 3`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "id",
+      "message": "id must be an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
 exports[`AUTHOR API ENDPOINTS GET AUTHOR api/v1/authors should return single author with name query string 1`] = `
 Object {
   "data": Object {
@@ -115,6 +143,20 @@ Object {
 `;
 
 exports[`AUTHOR API ENDPOINTS UPDATE AUTHOR api/v1/authors should not update author if name field is empty 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "name",
+      "message": "name is required to update an author",
+      "validation": "required",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS UPDATE AUTHOR api/v1/authors should not update author if name field is empty 2`] = `
 Object {
   "code": "ValidationFailed",
   "message": Array [

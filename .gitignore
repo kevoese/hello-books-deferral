@@ -7,3 +7,4 @@ coverage
 yarn.lock
 build
 server/public/
+yarn.lock

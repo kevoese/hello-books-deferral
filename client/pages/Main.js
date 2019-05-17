@@ -1,16 +1,16 @@
 import React from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
-import About from './Home/About';
-import index from './Home/index';
-import Navbar from './Home/Navbar';
+import Home from '@pages/Home';
+import Books from '@pages/Books';
+import Navbar from '@components/Navbar';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 export default function Main() {
     return (
         <React.Fragment>
             <BrowserRouter>
                 <Navbar />
-                <Route exact path="/" component={index} />
-                <Route path="/about" component={About} />
+                <Route exact path="/" component={Home} />
+                <Route path="/books" component={Books} />
             </BrowserRouter>
         </React.Fragment>
     );
