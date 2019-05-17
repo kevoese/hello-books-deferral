@@ -3,7 +3,7 @@ import React from 'react';
 const Home = () => {
     return (
         <div>
-            <h1>Home Page</h1>
+            <h1 className='text-center'>Home Page</h1>
             <p>
                 Where does it come from ? Contrary to popular belief, Lorem
                 Ipsum is not simply random text.It has roots in a piece of

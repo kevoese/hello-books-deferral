@@ -6,15 +6,9 @@ const TerserPlugin = require('terser-webpack-plugin');
 const PurgecssPlugin = require('purgecss-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const root = __dirname.substring(0, __dirname.lastIndexOf('/') + 1);
 
-class TailwindExtractor {
-    static extract(content) {
-        return content.match(/[A-Za-z0-9-_:/]+/g) || [];
-    }
-}
 module.exports = {
-    mode: process.env.NODE_ENV ? 'development' : 'production',
+    mode: ['staging', 'review', 'production'].includes(process.env.NODE_ENV) ? 'production' : 'development',
     entry: {
         index: [
             'webpack-hot-middleware/client?reload=true',
@@ -22,7 +16,7 @@ module.exports = {
         ]
     },
     output: {
-        path: path.resolve(root, 'public/'),
+        path: path.resolve(__dirname, 'server', 'public'),
         filename: 'app.js',
         publicPath: '/'
     },
@@ -59,13 +53,7 @@ module.exports = {
                     path.join(__dirname, 'client/**/*.css')
                 ],
                 { nodir: true }
-            ),
-            extractors: [
-                {
-                    extractor: TailwindExtractor,
-                    extensions: ['html', 'js', 'css']
-                }
-            ]
+            )
         }),
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output

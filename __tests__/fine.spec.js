@@ -12,7 +12,7 @@ import {
 const server = () => supertest(app);
 let adminToken;
 
-describe('FINES API ENDPOINTS', () => {
+describe.skip('FINES API ENDPOINTS', () => {
     beforeAll(async () => {
         await databaseConnection.migrate.latest();
         await databaseConnection('users').truncate();

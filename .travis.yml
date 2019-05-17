@@ -3,7 +3,7 @@ node_js:
   - "node"
 cache:
   directories:
-    - "node-modules"
+    - "node_modules"
 env:
   global:
   - NODE_ENV=test
