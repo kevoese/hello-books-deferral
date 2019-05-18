@@ -14,6 +14,14 @@ const Navbar = () => {
                     About
                 </Link>
             </li>
+            <li className="mr-6">
+                <Link
+                    className="text-blue-500 hover:text-blue-800"
+                    to="/register"
+                >
+                    SignUp
+                </Link>
+            </li>
         </ul>
     );
 };

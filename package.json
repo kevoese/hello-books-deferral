@@ -47,12 +47,14 @@
     },
     "homepage": "https://github.com/bahdcoder/hello-books-deferral#readme",
     "dependencies": {
+        "axios": "0.18.0",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.19.0",
         "consola": "2.6.0",
         "dotenv": "^7.0.0",
         "express": "^4.16.4",
         "express-jsend": "^0.1.0",
+        "formik": "1.4.4",
         "friendly-mail": "^1.0.0",
         "husky": "^2.2.0",
         "indicative": "^5.0.8",
@@ -67,7 +69,8 @@
         "prettier-eslint": "^8.8.2",
         "prettier-eslint-cli": "^4.7.1",
         "react-router-dom": "5.0.0",
-        "swagger-ui-express": "^4.0.2"
+        "swagger-ui-express": "^4.0.2",
+        "yup": "0.27.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.4.4",
