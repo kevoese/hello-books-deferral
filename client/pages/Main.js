@@ -4,6 +4,7 @@ import About from '@home/About';
 import index from '@home/index';
 import Navbar from '@home/Navbar';
 import ForgotPassword from '@home/ForgotPassword';
+import ResetPassword from '@home/ResetPassword';
 
 export default function Main() {
     return (
@@ -13,6 +14,7 @@ export default function Main() {
                 <Route exact path="/" component={index} />
                 <Route path="/about" component={About} />
                 <Route path="/forgot" component={ForgotPassword} />
+                <Route path="/reset" component={ResetPassword} />
             </BrowserRouter>
         </React.Fragment>
     );
