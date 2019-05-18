@@ -1,7 +1,11 @@
 import { validateAll, sanitize } from 'indicative';
-import { sanitizeRules, messages } from '@utils/validationUtils';
+import {
+    sanitizeRules,
+    messages,
+    validatorInstance
+} from '@utils/validationUtils';
 
-const editProfile = (req, res, next) => {
+const editProfile = async (req, res, next) => {
     const rules = {
         firstName: 'string',
         lastName: 'string',
@@ -11,23 +15,26 @@ const editProfile = (req, res, next) => {
     };
 
     req.body = sanitize(req.body, sanitizeRules);
-    let data = req.body;
-    const [isEmpty] = Object.keys(req.body);
+    const { firstName, lastName, bio, email, avatar } = req.body;
+    let data = { firstName, lastName, bio, email, avatar };
+
+    const isEmpty = Object.values(data).find(element => element);
+
     if (!isEmpty)
         return res.status(422).jerror({
             message: 'Update at least a field'
         });
 
-    validateAll(data, rules, messages)
-        .then(() => {
-            next();
-        })
-        .catch(errors => {
-            res.status(422).jerror('ValidationFailed', errors);
-        });
+    try {
+        await validateAll(data, rules, messages);
+
+        return next();
+    } catch (errors) {
+        res.status(422).jerror('ValidationFailed', errors);
+    }
 };
 
-const checkId = (req, res, next) => {
+const checkId = async (req, res, next) => {
     const rules = {
         id: 'number|itExists:users,id'
     };
@@ -35,16 +42,16 @@ const checkId = (req, res, next) => {
     const data = req.params;
     const messages = {
         number: '{{ field }} is expected to be a an integer',
-        itExists: 'User Id does not exist'
+        'id.itExists': 'User Id does not exist'
     };
 
-    validateAll(data, rules, messages)
-        .then(() => {
-            next();
-        })
-        .catch(errors => {
-            res.status(422).jerror('ValidationFailed', errors);
-        });
+    try {
+        await validateAll(data, rules, messages);
+
+        return next();
+    } catch (errors) {
+        res.status(422).jerror('ValidationFailed', errors);
+    }
 };
 
 export default { editProfile, checkId };
