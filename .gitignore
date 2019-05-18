@@ -6,4 +6,3 @@ coverage
 .vscode
 yarn.lock
 build
-server/public/
