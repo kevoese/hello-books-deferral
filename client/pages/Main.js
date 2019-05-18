@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
-import About from './Home/About';
-import index from './Home/index';
-import Navbar from './Home/Navbar';
+import About from '@home/About';
+import index from '@home/index';
+import Navbar from '@home/Navbar';
+import ForgotPassword from '@home/ForgotPassword';
 
 export default function Main() {
     return (
@@ -11,6 +12,7 @@ export default function Main() {
                 <Navbar />
                 <Route exact path="/" component={index} />
                 <Route path="/about" component={About} />
+                <Route path="/forgot" component={ForgotPassword} />
             </BrowserRouter>
         </React.Fragment>
     );

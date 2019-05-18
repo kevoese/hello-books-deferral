@@ -20,6 +20,7 @@
                     "@server": "./server",
                     "@client": "./client",
                     "@pages": "./client/pages",
+                    "@home": "./client/pages/Home",
                     "@utils": "./server/utils",
                     "@models": "./server/models",
                     "@config": "./server/config",
