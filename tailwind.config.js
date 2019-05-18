@@ -1,14 +1,20 @@
+import { colors } from 'tailwindcss/defaultTheme';
+
 module.exports = {
     theme: {
-        fontFamily: {
-            raleway: ['Raleway'],
-            robotoMono: ['Roboto Mono']
-        },
         extend: {
             colors: {
-                'light-gray': '#F1F1F1',
-                'blue-1100': '#51bcf3'
+                gray: {
+                    ...colors.gray,
+                    '200': '#f1f1f1'
+                },
+                primary: '#51BCF3'
             }
+        },
+        inset: {
+            '1/3': '33.333%',
+            '1/4': '25%',
+            '1/5': '20%'
         }
     },
     variants: {},
