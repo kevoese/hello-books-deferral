@@ -23,12 +23,4 @@ router.get(
 
 router.get('/', isAuthenticated, fineController.getFines);
 
-router.delete(
-    '/:fineId',
-    isAuthenticated,
-    isAdmin,
-    fineValidator.checkId,
-    fineController.deleteFine
-);
-
 export default router;
