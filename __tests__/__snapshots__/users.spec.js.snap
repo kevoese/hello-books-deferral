@@ -29,6 +29,13 @@ Array [
 ]
 `;
 
+exports[`USER API ENDPOINTS super admin can change access level of normal users 2`] = `
+Array [
+  "status",
+  "data",
+]
+`;
+
 exports[`USER API ENDPOINTS super admin can delete a user 1`] = `
 Array [
   "status",
