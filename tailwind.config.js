@@ -2,6 +2,7 @@ import { colors } from 'tailwindcss/defaultTheme';
 
 module.exports = {
     theme: {
+<<<<<<< HEAD
         extend: {
             colors: {
                 gray: {
@@ -17,6 +18,11 @@ module.exports = {
             '1/5': '20%',
             '1/10': '10%',
             '3/10': '30%'
+=======
+        extend: {},
+        fontFamily: {
+            raleway: ['Raleway']
+>>>>>>> #166056907 homepage first sections (#44)
         }
     },
     variants: {},

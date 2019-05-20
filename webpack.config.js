@@ -8,7 +8,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
-    mode: ['staging', 'review', 'production'].includes(process.env.NODE_ENV) ? 'production' : 'development',
+    mode: ['staging', 'review', 'production'].includes(process.env.NODE_ENV)
+        ? 'production'
+        : 'development',
     entry: {
         index: [
             'webpack-hot-middleware/client?reload=true',

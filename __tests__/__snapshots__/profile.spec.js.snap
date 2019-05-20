@@ -29,16 +29,6 @@ Object {
 }
 `;
 
-exports[`PROFILES API ENDPOINTS PATCH update profile api/v1/profile should edit profile with valid inputs 1`] = `
-Array [
-  "firstName",
-  "lastName",
-  "email",
-  "bio",
-  "avatar",
-]
-`;
-
 exports[`PROFILES API ENDPOINTS PATCH update profile api/v1/profile should not edit profile if all field is empty 1`] = `
 Object {
   "code": Object {
