@@ -9,15 +9,6 @@ Object {
 }
 `;
 
-exports[`BOOK REQUEST API ENDPOINTS should get all book requests 1`] = `
-Object {
-  "data": Object {
-    "message": "Your request has been noted",
-  },
-  "status": "success",
-}
-`;
-
 exports[`BOOK REQUEST API ENDPOINTS should return an error if desciption field is not provided 1`] = `
 Object {
   "code": "ValidationFailed",

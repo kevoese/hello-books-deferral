@@ -36,5 +36,6 @@
             }
         ],
         "@babel/plugin-proposal-class-properties"
-    ]
+    ],
+    "ignore": ["server/public/**/*.js"]
 }

@@ -42,7 +42,7 @@ async function createAdminUser() {
         lastName: 'User',
         email: 'admin.user@gmail.com',
         email_confirm_code: null,
-        password: Bcrypt.hash('password', 10),
+        password: 'password',
         role: 'admin'
     });
 }
@@ -59,7 +59,7 @@ async function createPatron() {
         lastName: 'User',
         email: 'patron.user@gmail.com',
         email_confirm_code: null,
-        password: Bcrypt.hash('password', 10),
+        password: 'password',
         role: 'patron'
     });
 }
@@ -107,7 +107,7 @@ async function createSuperAdminUser() {
         lastName: 'Admin',
         email: 'super.admin@gmail.com',
         email_confirm_code: null,
-        password: Bcrypt.hash('password', 10),
+        password: 'password',
         role: 'super_admin'
     });
 }

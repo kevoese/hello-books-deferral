@@ -5,6 +5,8 @@ Array [
   "firstName",
   "lastName",
   "email",
+  "bio",
+  "avatar",
 ]
 `;
 
