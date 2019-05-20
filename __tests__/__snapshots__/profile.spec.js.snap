@@ -5,6 +5,8 @@ Array [
   "firstName",
   "lastName",
   "email",
+  "bio",
+  "avatar",
 ]
 `;
 
@@ -19,8 +21,8 @@ Object {
     },
     Object {
       "field": "id",
-      "message": "select \\"users\\".* from \\"users\\" where \\"id\\" = $1 - invalid input syntax for integer: \\"yui\\"",
-      "validation": "ENGINE_EXCEPTION",
+      "message": "User Id does not exist",
+      "validation": "itExists",
     },
   ],
   "status": "error",

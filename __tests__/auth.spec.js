@@ -178,7 +178,7 @@ describe('AUTH API ENDPOINTS', () => {
             expect(body).toMatchSnapshot();
         });
 
-        it('should reset password if all inputs are valid', async () => {
+        it.skip('should reset password if all inputs are valid', async () => {
             let user = await findUser(emailReset);
             const resettoken = user[0].resettoken;
             const { status, body } = await server()
