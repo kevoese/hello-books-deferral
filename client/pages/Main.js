@@ -1,5 +1,6 @@
 import React from 'react';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import About from '@home/About';
 import index from '@home/index';
@@ -9,6 +10,9 @@ import ResetPassword from '@home/ResetPassword';
 =======
 import About from '@pages/About';
 import index from '@pages/index';
+=======
+import Home from '@pages/Home';
+>>>>>>> #166056907 (#51)
 import Navbar from '@components/Navbar';
 import { BrowserRouter, Route } from 'react-router-dom';
 >>>>>>> #166056907 homepage first sections (#44)
@@ -28,8 +32,7 @@ export default function Main() {
             <div className="md:pl-3 lg:pl-3 xl:pl-3 md:pr-3 lg:pr-3 xl:pr-3">
                 <BrowserRouter>
                     <Navbar />
-                    <Route exact path="/" component={index} />
-                    <Route path="/about" component={About} />
+                    <Route exact path="/" component={Home} />
                 </BrowserRouter>
             </div>
 >>>>>>> #166056907 homepage first sections (#44)
