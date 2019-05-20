@@ -40,7 +40,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 Routes(app);
 
+<<<<<<< HEAD
+app.use(express.static(path.resolve(__dirname, 'public')));
+=======
 app.use(express.static(path.resolve(__dirname, 'public')))
+>>>>>>> master
 
 app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'public/index.html')));
 
