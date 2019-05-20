@@ -51,7 +51,7 @@ Object {
         "name": "James Bond",
       },
     ],
-    "total": 7,
+    "total": 3,
   },
   "status": "success",
 }
@@ -173,7 +173,7 @@ Object {
 exports[`AUTHOR API ENDPOINTS POST CREATE AUTHOR api/v1/authors should create author with valid inputs 1`] = `
 Object {
   "data": Object {
-    "id": 5,
+    "id": 1,
     "name": "John Doe",
   },
   "status": "success",

@@ -1,10 +1,8 @@
 import React from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
-import About from '@home/About';
-import index from '@home/index';
-import Navbar from '@home/Navbar';
-import ForgotPassword from '@home/ForgotPassword';
-import ResetPassword from '@home/ResetPassword';
+import About from '@pages/About';
+import index from '@pages/index';
+import Navbar from '@components/Navbar';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 export default function Main() {
     return (
