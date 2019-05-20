@@ -202,7 +202,7 @@ describe('DELETE BOOK(S) API ENDPOINT', () => {
     });
 });
 
-describe('BORROW BOOKS API ENDPOINT', () => {
+describe.skip('BORROW BOOKS API ENDPOINT', () => {
     afterAll(async () => {
         await databaseConnection('lending_requests').truncate();
         await databaseConnection('books').truncate();
