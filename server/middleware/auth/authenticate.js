@@ -1,4 +1,5 @@
 import User from '@models/User';
+import Author from '@models/Author';
 import jwt from 'jsonwebtoken';
 
 export const isAuthenticated = async (req, res, next) => {
@@ -74,10 +75,20 @@ export const userExists = async (req, res, next) => {
     next();
 };
 
+export const authorExists = async (req, res, next) => {
+    const { author_id } = req.body;
+    if (!author_id)
+        return res.status(400).jerror('error', 'author_id is required');
+    const author = await Author.query().findById(author_id);
+    if (!author) return res.status(404).jerror('error', 'Not Found');
+    next();
+};
+
 export default {
     isAuthenticated,
     isAdmin,
     isSuperAdmin,
     isPatron,
-    userExists
+    userExists,
+    authorExists
 };
