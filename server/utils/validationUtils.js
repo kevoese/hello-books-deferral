@@ -72,11 +72,6 @@ validations.itExists = async (data, field, message, args, get) => {
         if (table === 'users') {
             [found] = await User.query().where(column, value);
         }
-
-        if (table === 'authors') {
-            [found] = await Author.query().where(column, value);
-        }
-
         if (!found) throw message;
     } catch (e) {
         throw message;
