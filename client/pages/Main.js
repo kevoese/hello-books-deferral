@@ -1,6 +1,6 @@
 import React from 'react';
 import Home from '@pages/Home';
-import Books from '@pages/Books/index';
+import Books from '@pages/Books';
 import Navbar from '@components/Navbar';
 import { BrowserRouter, Route } from 'react-router-dom';
 
