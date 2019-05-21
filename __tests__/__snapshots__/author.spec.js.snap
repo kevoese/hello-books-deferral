@@ -29,16 +29,30 @@ Object {
     "results": Array [
       Object {
         "id": 3,
-        "name": "John Doe",
+        "name": "James Bond",
       },
     ],
-    "total": 5,
+    "total": 7,
   },
   "status": "success",
 }
 `;
 
 exports[`AUTHOR API ENDPOINTS GET ALL AUTHOR api/v1/authors should not get author if limit query is not a number 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "page",
+      "message": "page is expected to be a an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS GET ALL AUTHOR api/v1/authors should not get author if limit query is not a number 2`] = `
 Object {
   "code": "ValidationFailed",
   "message": Array [
@@ -93,7 +107,7 @@ Object {
 exports[`AUTHOR API ENDPOINTS POST CREATE AUTHOR api/v1/authors should create author with valid inputs 1`] = `
 Object {
   "data": Object {
-    "id": 3,
+    "id": 5,
     "name": "John Doe",
   },
   "status": "success",

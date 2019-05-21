@@ -1,3 +1,4 @@
+import config from '@config';
 import express from 'express';
 import consola from 'consola';
 import path from 'path';
@@ -9,7 +10,6 @@ import { createServer } from 'http';
 import { Model } from 'objection';
 import swaggerDocument from '@/swagger.json';
 import Routes from '@routes/v1';
-import config from '@config';
 import webpackConfig from '@/webpack.config';
 import WebpackDevMiddleware from 'webpack-dev-middleware';
 import WebpackHotMiddleware from 'webpack-hot-middleware';
@@ -20,16 +20,18 @@ export const app = express();
 
 export const databaseConnection = Knex(config.database[config.server.env]);
 
-const compiler = Webpack(webpackConfig);
+if (config.server.env == 'development') {
+    const compiler = Webpack(webpackConfig);
 
-app.use(
-    WebpackDevMiddleware(compiler, {
-        hot: true,
-        publicPath: webpackConfig.output.publicPath
-    })
-);
+    app.use(
+        WebpackDevMiddleware(compiler, {
+            hot: true,
+            publicPath: webpackConfig.output.publicPath
+        })
+    );
 
-app.use(WebpackHotMiddleware(compiler));
+    app.use(WebpackHotMiddleware(compiler));
+}
 
 Model.knex(databaseConnection);
 
@@ -38,11 +40,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 Routes(app);
 
-// app.use(Express.static(path.resolve(__dirname, 'public')))
+app.use(express.static(path.resolve(__dirname, 'public')))
 
-app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'public/index.html'))
-);
+app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'public/index.html')));
 
 /**
  *  setup Swagger

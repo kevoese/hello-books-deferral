@@ -5,6 +5,8 @@ Array [
   "firstName",
   "lastName",
   "email",
+  "bio",
+  "avatar",
 ]
 `;
 
@@ -19,22 +21,12 @@ Object {
     },
     Object {
       "field": "id",
-      "message": "select \\"users\\".* from \\"users\\" where \\"id\\" = $1 - invalid input syntax for integer: \\"yui\\"",
-      "validation": "ENGINE_EXCEPTION",
+      "message": "User Id does not exist",
+      "validation": "itExists",
     },
   ],
   "status": "error",
 }
-`;
-
-exports[`PROFILES API ENDPOINTS PATCH update profile api/v1/profile should edit profile with valid inputs 1`] = `
-Array [
-  "firstName",
-  "lastName",
-  "email",
-  "bio",
-  "avatar",
-]
 `;
 
 exports[`PROFILES API ENDPOINTS PATCH update profile api/v1/profile should not edit profile if all field is empty 1`] = `

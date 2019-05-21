@@ -7,7 +7,12 @@ import LendingRequest from '@models/LendingRequest';
 import supertest from 'supertest';
 import AuthorBook from '@models/AuthorBook';
 import { app, databaseConnection } from '@server/app';
-import { getUser, createUser, approvedBook } from '@tests/utils/helpers';
+import {
+    getUser,
+    getToken,
+    createUser,
+    approvedBook
+} from '@tests/utils/helpers';
 
 const server = () => supertest(app);
 const booksRoute = '/api/v1/books';
@@ -197,7 +202,7 @@ describe('DELETE BOOK(S) API ENDPOINT', () => {
     });
 });
 
-describe('BORROW BOOKS API ENDPOINT', () => {
+describe.skip('BORROW BOOKS API ENDPOINT', () => {
     afterAll(async () => {
         await databaseConnection('lending_requests').truncate();
         await databaseConnection('books').truncate();
@@ -210,10 +215,9 @@ describe('BORROW BOOKS API ENDPOINT', () => {
             copiesAvailable: 1
         });
 
-        const { body: response } = await server()
-            .post('/api/v1/auth/signup')
-            .send(getUser());
-        const patronToken = response.data.token;
+        const user = await createUser(getUser());
+
+        const patronToken = getToken(user);
 
         const { body, status } = await server()
             .get(`${booksRoute}/${bookId}/borrow`)
@@ -265,7 +269,7 @@ describe('BORROW BOOKS API ENDPOINT', () => {
         expect(body).toMatchSnapshot();
     });
 
-    it('not be able to borrow a book that is no longer available', async () => {
+    it.only('not be able to borrow a book that is no longer available', async () => {
         const { id: bookId } = await Book.query().insert({
             ...getBook({ isbn: '39280y0780301e23' }),
             copiesAvailable: 1
@@ -413,7 +417,7 @@ describe('BORROW BOOKS API ENDPOINT', () => {
     });
 });
 
-describe('LEND BOOKS API ENDPOINT', () => {
+describe.skip('LEND BOOKS API ENDPOINT', () => {
     const container = {};
 
     afterAll(async () => {
