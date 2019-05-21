@@ -48,7 +48,7 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new PurgecssPlugin({
+        false && new PurgecssPlugin({
             paths: glob.sync(
                 [
                     path.join(__dirname, 'client/**/*.js'),
@@ -63,7 +63,7 @@ module.exports = {
             filename: 'app.css',
             chunkFilename: '[id].css'
         })
-    ],
+    ].filter(Boolean),
     optimization: {
         minimizer: [
             new TerserPlugin(),
