@@ -1,9 +1,7 @@
 require('dotenv').config();
 const path = require('path');
-const glob = require('glob-all');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
-const PurgecssPlugin = require('purgecss-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
@@ -48,22 +46,13 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        false && new PurgecssPlugin({
-            paths: glob.sync(
-                [
-                    path.join(__dirname, 'client/**/*.js'),
-                    path.join(__dirname, 'client/**/*.css')
-                ],
-                { nodir: true }
-            )
-        }),
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
             filename: 'app.css',
             chunkFilename: '[id].css'
         })
-    ].filter(Boolean),
+    ],
     optimization: {
         minimizer: [
             new TerserPlugin(),
