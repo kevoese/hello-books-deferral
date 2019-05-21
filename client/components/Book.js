@@ -25,7 +25,7 @@ const Book = () => {
                     </p>
                 </div>
 
-                <div className="flex flex-col w-2/5 mt-24">
+                <div className="flex flex-col w-2/5 mt-24 items-end">
                     <p className="uppercase text-red-400 text-xs font-semibold font-robotoMono mt-2">
                         Unavailable
                     </p>
