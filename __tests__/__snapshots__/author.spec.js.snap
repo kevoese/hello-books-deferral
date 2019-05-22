@@ -9,6 +9,20 @@ Object {
 }
 `;
 
+exports[`AUTHOR API ENDPOINTS DELETE AUTHOR api/v1/authors should not delete author if author does not exist 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "id",
+      "message": "id not found",
+      "validation": "itExists",
+    },
+  ],
+  "status": "error",
+}
+`;
+
 exports[`AUTHOR API ENDPOINTS DELETE AUTHOR api/v1/authors should not delete author if id param is not a number 1`] = `
 Object {
   "code": "ValidationFailed",
@@ -17,6 +31,11 @@ Object {
       "field": "id",
       "message": "id must be an integer",
       "validation": "number",
+    },
+    Object {
+      "field": "id",
+      "message": "select \\"authors\\".* from \\"authors\\" where \\"id\\" = $1 - invalid input syntax for integer: \\"d\\"",
+      "validation": "ENGINE_EXCEPTION",
     },
   ],
   "status": "error",
@@ -80,7 +99,54 @@ Object {
 }
 `;
 
+exports[`AUTHOR API ENDPOINTS GET AUTHOR api/v1/authors should not get author if author does not exist 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "id",
+      "message": "id not found",
+      "validation": "itExists",
+    },
+  ],
+  "status": "error",
+}
+`;
+
 exports[`AUTHOR API ENDPOINTS GET AUTHOR api/v1/authors should not get author if id param is not a number 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "id",
+      "message": "id must be an integer",
+      "validation": "number",
+    },
+    Object {
+      "field": "id",
+      "message": "select \\"authors\\".* from \\"authors\\" where \\"id\\" = $1 - invalid input syntax for integer: \\"d\\"",
+      "validation": "ENGINE_EXCEPTION",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS GET AUTHOR api/v1/authors should not get author if id param is not a number 2`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "limit",
+      "message": "limit is expected to be a an integer",
+      "validation": "number",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS GET AUTHOR api/v1/authors should not get author if id param is not a number 3`] = `
 Object {
   "code": "ValidationFailed",
   "message": Array [
@@ -128,7 +194,45 @@ Object {
 }
 `;
 
+exports[`AUTHOR API ENDPOINTS UPDATE AUTHOR api/v1/authors should not update author if author does not exist 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "name",
+      "message": "name is required",
+      "validation": "required",
+    },
+    Object {
+      "field": "id",
+      "message": "id not found",
+      "validation": "itExists",
+    },
+  ],
+  "status": "error",
+}
+`;
+
 exports[`AUTHOR API ENDPOINTS UPDATE AUTHOR api/v1/authors should not update author if name field is empty 1`] = `
+Object {
+  "code": "ValidationFailed",
+  "message": Array [
+    Object {
+      "field": "name",
+      "message": "name is required",
+      "validation": "required",
+    },
+    Object {
+      "field": "id",
+      "message": "id not found",
+      "validation": "itExists",
+    },
+  ],
+  "status": "error",
+}
+`;
+
+exports[`AUTHOR API ENDPOINTS UPDATE AUTHOR api/v1/authors should not update author if name field is empty 2`] = `
 Object {
   "code": "ValidationFailed",
   "message": Array [

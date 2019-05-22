@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Main from '@pages/Main';
+
 import '@client/styles/main.css';
 
 const app = document.getElementById('app');

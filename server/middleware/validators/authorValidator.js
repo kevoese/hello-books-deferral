@@ -1,4 +1,5 @@
 import { validateAll, sanitize } from 'indicative';
+import { validatorInstance, messages } from '@utils/validationUtils';
 
 const addAuthor = (req, res, next) => {
     const rules = {
@@ -30,7 +31,8 @@ const getAllAuthorsValidation = (req, res, next) => {
         number: '{{ field }} is expected to be a an integer'
     };
 
-    validateAll(data, rules, messages)
+    validatorInstance
+        .validateAll(data, rules, messages)
         .then(() => {
             next();
         })
@@ -42,17 +44,14 @@ const getAllAuthorsValidation = (req, res, next) => {
 const updateAuthor = (req, res, next) => {
     const rules = {
         name: 'required|string',
-        id: 'required|number'
-    };
-    const messages = {
-        required: '{{ field }} is required to update an author',
-        number: '{{ field }} must be an integer'
+        id: 'required|number|itExists:authors,id'
     };
     let data = req.body;
     data = sanitize(data, { name: 'trim' });
     data.id = req.params.id;
 
-    validateAll(data, rules, messages)
+    validatorInstance
+        .validateAll(data, rules, messages)
         .then(() => {
             next();
         })
@@ -63,15 +62,12 @@ const updateAuthor = (req, res, next) => {
 
 const deleteOrGetAuthor = (req, res, next) => {
     const rules = {
-        id: 'required|number'
-    };
-    const messages = {
-        required: '{{ field }} is required to delete an author',
-        number: '{{ field }} must be an integer'
+        id: 'required|number|itExists:authors,id'
     };
     const data = req.params;
 
-    validateAll(data, rules, messages)
+    validatorInstance
+        .validateAll(data, rules, messages)
         .then(() => {
             next();
         })

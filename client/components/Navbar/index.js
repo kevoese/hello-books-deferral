@@ -1,6 +1,6 @@
-import classJoin from 'classnames';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import classJoin from 'classnames';
 
 const Navbar = () => {
     const [isVisible, changeVisibility] = useState(false);
@@ -70,7 +70,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                         className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark mr-4"
-                        to="/"
+                        to="/books"
                     >
                         Library Catalogue
                     </Link>
