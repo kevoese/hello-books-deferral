@@ -10,8 +10,8 @@ import {
 const signUp = (req, res, next) => {
     /* create validation rule for request fields */
     const rules = {
-        firstName: 'string|required',
-        lastName: 'string|required',
+        firstName: 'alpha|required',
+        lastName: 'alpha|required',
         email: 'required|string|email|unique:users,email',
         password: 'required|min:8|alpha_numeric'
     };
@@ -92,8 +92,8 @@ const resetPassword = (req, res, next) => {
 
 const createUser = (req, res, next) => {
     const rules = {
-        firstName: 'string|required',
-        lastName: 'string|required',
+        firstName: 'alpha|required',
+        lastName: 'alpha|required',
         email: 'required|string|email|unique:users,email'
     };
     let data = req.body;

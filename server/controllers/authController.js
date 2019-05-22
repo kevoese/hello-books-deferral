@@ -12,13 +12,7 @@ const signUp = async (req, res) => {
         email
     });
 
-    const token = user.getToken();
-
-    res.status(201).jsend({
-        message: 'User registered',
-        token,
-        user
-    });
+    res.status(201).jsend(await user.response());
 };
 
 const login = async (req, res) => {
@@ -42,12 +36,7 @@ const login = async (req, res) => {
         });
     }
 
-    const token = user.getToken();
-
-    res.jsend({
-        token,
-        user
-    });
+    res.jsend(await user.response());
 };
 
 const verifyEmail = async (req, res) => {
