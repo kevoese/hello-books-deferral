@@ -2,6 +2,7 @@ import config from '@config';
 import express from 'express';
 import consola from 'consola';
 import path from 'path';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import swagger from 'swagger-ui-express';
 import Knex from 'knex';
@@ -17,6 +18,8 @@ import WebpackHotMiddleware from 'webpack-hot-middleware';
 import 'express-jsend';
 
 export const app = express();
+
+app.use(cors());
 
 export const databaseConnection = Knex(config.database[config.server.env]);
 

@@ -21,6 +21,7 @@ const getBook = ({ isbn = '9789785205862' } = {}) => ({
     title: 'Fine Boys',
     coverType: 'PaperBack',
     isbn,
+    price: 500,
     description:
         'A novel depicting the real life story of Eghosa and his Warri friends...',
     publisher: 'Farfina Kachifo',

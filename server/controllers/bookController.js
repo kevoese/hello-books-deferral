@@ -8,6 +8,7 @@ const storeBooks = async (req, res) => {
         coverType,
         description,
         isbn,
+        price,
         publisher,
         year,
         copiesAvailable,
@@ -19,6 +20,7 @@ const storeBooks = async (req, res) => {
         coverType,
         description,
         isbn,
+        price,
         publisher,
         year,
         copiesAvailable
@@ -116,7 +118,7 @@ const extendBorrow = async (req, res) => {
     return res.status(200).jsend({
         message: `You have successfully extended the return of this book by ${
             req.body.days
-        } days`
+            } days`
     });
 };
 

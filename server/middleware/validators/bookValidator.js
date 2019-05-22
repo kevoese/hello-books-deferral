@@ -6,6 +6,7 @@ const addBook = (req, res, next) => {
         coverType: 'required|string',
         description: 'required|string',
         isbn: 'required|string|unique:books,isbn',
+        price: 'required|number',
         publisher: 'required|string',
         year: 'required|number',
         copiesAvailable: 'required|number'
