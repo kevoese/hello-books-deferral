@@ -2,7 +2,7 @@ import React from 'react';
 import Input from '@components/Input';
 
 const InputForm = props => {
-    const { name, labelName, errors, touched } = props
+    const { name, labelname, errors, touched } = props;
 
     return (
         <div>
@@ -11,7 +11,7 @@ const InputForm = props => {
                     className="font-raleway py-2 sm:w-5/12 w-full px-4 sm:px-0 text-base text-gray-550 text-left "
                     htmlFor={name}
                 >
-                    {labelName || name}
+                    {labelname || name}
                 </label>
                 <Input {...props} />
             </div>
