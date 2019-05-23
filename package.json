@@ -51,6 +51,7 @@
     "dependencies": {
         "@fullhuman/postcss-purgecss": "^1.2.0",
         "autoprefixer": "^9.5.1",
+        "axios": "^0.18.0",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.19.0",
         "classnames": "^2.2.6",
@@ -59,6 +60,7 @@
         "dotenv": "^7.0.0",
         "express": "^4.16.4",
         "express-jsend": "^0.1.0",
+        "formik": "^1.5.7",
         "friendly-mail": "^1.0.0",
         "husky": "^2.2.0",
         "indicative": "^5.0.8",
@@ -76,7 +78,8 @@
         "webpack": "^4.31.0",
         "webpack-cli": "^3.3.2",
         "webpack-dev-middleware": "^3.7.0",
-        "webpack-hot-middleware": "^2.25.0"
+        "webpack-hot-middleware": "^2.25.0",
+        "yup": "^0.27.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.4.4",

@@ -65,6 +65,27 @@ class User extends Model {
             });
         await this.sendResetEmail(token);
     }
+    /**
+     *
+     * Get a customer response object for the frontend
+     *
+     * @return {Promise}
+     *
+     */
+    async response() {
+        return {
+            user: {
+                firstName: this.firstName,
+                lastName: this.lastName,
+                email: this.email,
+                id: this.id,
+                avatar: this.avatar,
+                bio: this.bio,
+                role: this.role
+            },
+            token: await this.getToken()
+        };
+    }
 
     async sendResetEmail(token) {
         await new Mail('reset-password')

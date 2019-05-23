@@ -27,17 +27,21 @@ const addFavouriteAuthor = async (req, res) => {
 };
 
 const unFavouriteAuthor = async (req, res) => {
-    const { favourite_id } = req.params;
+    const { author_id } = req.params;
     const { id } = req.user;
 
-    const favourite = await Favourite.query().findById(favourite_id);
+    const favourite = await Favourite.query()
+        .where('user_id', id)
+        .where('favourite_id', author_id)
+        .where('favourite_type', 'author')
+        .first();
 
-    if (!favourite) return res.status(404).jerror('error', 'not found');
+    if (!favourite) return res.status(404).jerror('fail', 'not found');
 
     if (favourite.user_id !== id)
         return res.status(403).jerror('error', 'unAuthorized');
 
-    await Favourite.query().deleteById(favourite_id);
+    await Favourite.query().deleteById(favourite.id);
 
     return res.status(203).jsend({
         message: 'Author has been unFavourited'

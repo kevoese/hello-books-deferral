@@ -12,7 +12,7 @@ router.post(
 );
 
 router.delete(
-    '/author/:favourite_id',
+    '/author/:author_id',
     Auth.isAuthenticated,
     favouriteController.unFavouriteAuthor
 );

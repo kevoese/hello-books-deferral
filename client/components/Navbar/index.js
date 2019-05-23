@@ -37,7 +37,7 @@ const Navbar = () => {
             >
                 <div className="text-sm text-center m-auto pt-8 lg:pt-1 xl:pt-1">
                     <Link
-                        className="font-raleway block font-semibold md:text-lg lg:text-lg xl:text-lg text-sm mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark mr-4"
+                        className="font-raleway block font-semibold md:text-lg lg:text-lg xl:text-lg text-sm lg:mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
                         to="/"
                     >
                         Home
@@ -69,19 +69,19 @@ const Navbar = () => {
                         </div>
                     </Link>
                     <Link
-                        className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark mr-4"
+                        className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg lg:mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
                         to="/books"
                     >
                         Library Catalogue
                     </Link>
                     <Link
-                        className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
+                        className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg lg:mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
                         to="/About"
                     >
                         About
                     </Link>
                     <Link
-                        className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
+                        className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg lg:mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
                         to="/"
                     >
                         FAQs
@@ -90,7 +90,7 @@ const Navbar = () => {
                 <div className="text-sm text-center lg:mr-5 xl:mr-5">
                     <Link
                         className="font-raleway inline-block text-sm px-4 py-2 pr-10 pl-10 border-400 rounded-full text-blue-500 border border-blue-500 hover:border-transparent hover:bg-white mt-4 shadow lg:mt-0"
-                        to="/"
+                        to="/signin"
                     >
                         Sign In
                     </Link>
@@ -98,7 +98,7 @@ const Navbar = () => {
                 <div className="text-sm text-center">
                     <Link
                         className="font-raleway inline-block text-sm px-4 py-2 pr-10 pl-10 border-500 rounded-full text-white border border-blue-500 bg-blue-500 hover:border-white mt-4 shadow lg:mt-0"
-                        to="/"
+                        to="/signup"
                     >
                         Register
                     </Link>

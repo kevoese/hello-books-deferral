@@ -11,9 +11,8 @@ const BookRow = (props) => {
             {props.props[2] || ''}
             {props.props[3] || ''}
         </div>
-    )
-}
-
+    );
+};
 
 const Books = () => {
     const [page, setPage] = useState(1);
