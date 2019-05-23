@@ -23,3 +23,19 @@ export const SignInValidator = Yup.object().shape({
         .required('Password is required')
         .min(8, 'Password must be greater than 8 characters')
 });
+
+export const ForgotPasswordValidator = Yup.object().shape({
+    email: Yup.string()
+        .email()
+        .required('Required')
+});
+
+export const ResetPasswordValidator = Yup.object().shape({
+    password: Yup.string()
+        .required('Password is required')
+        .min(8, 'Password must be greater than 8 characters'),
+    passwordConfirmation: Yup.string().oneOf(
+        [Yup.ref('password'), null],
+        'Passwords must match'
+    )
+});

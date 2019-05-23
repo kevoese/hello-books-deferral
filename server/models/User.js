@@ -93,7 +93,7 @@ class User extends Model {
             .subject('You requested for a password reset.')
             .data({
                 name: this.firstName,
-                url: `${config.server.url}/api/v1/auth/reset/${token}`
+                url: `${config.server.url}/reset-password/${token}`
             })
             .send();
     }
