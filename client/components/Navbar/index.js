@@ -41,11 +41,11 @@ const Navbar = () => {
                         to="/"
                     >
                         Home
-                        <div className="m-auto lg:text-left xl:text-left">
+                        <div className=" lg:text-left xl:text-left">
                             <svg
                                 width="40"
                                 height="2"
-                                className="m-auto"
+                                className="lg:m-0 m-auto "
                                 viewBox="0 0 40 2"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -74,14 +74,9 @@ const Navbar = () => {
                     >
                         Library Catalogue
                     </Link>
+
                     <Link
-                        className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg lg:mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
-                        to="/About"
-                    >
-                        About
-                    </Link>
-                    <Link
-                        className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg lg:mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
+                        className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
                         to="/"
                     >
                         FAQs
