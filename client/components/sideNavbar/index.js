@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const SideNavbar = () => {
     return (
         <React.Fragment>
             <div className="w-full md:w-1/6 bg-gray-800 text-center text-gray-700">
-                <div className="flex pb-0 cursor-pointer">
+                <NavLink to="/dashboard" className="flex pb-0 cursor-pointer">
                     <div className="w-1/4 border-l-4 border-blue-500 text-center h-12 flex justify-center items-center">
                         <img
                             className="h-6 white fill-current"
@@ -15,7 +15,7 @@ const SideNavbar = () => {
                     <div className="w-3/4 h-12 flex justify-start items-center text-white ml-8">
                         Dashboard
                     </div>
-                </div>
+                </NavLink>
                 <div className="flex pb-0 cursor-pointer">
                     <div className="w-1/4  text-center h-12 flex justify-center items-center">
                         <img

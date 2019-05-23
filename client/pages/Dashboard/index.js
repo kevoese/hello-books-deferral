@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthNavbar from '@components/authNavbar/index';
 import SideNavbar from '@components/sideNavbar/index';
-import Button from '../../components/Button/index';
+import Footer from '../../components/Footer/index';
 
 const Dashboard = () => {
     return (
@@ -10,7 +10,7 @@ const Dashboard = () => {
             <div className="flex md:flex-row flex-wrap min-h-screen">
                 <SideNavbar />
                 <div className="w-full md:w-5/6 bg-gray-250 text-center text-gray-700 ">
-                    <div className="m-1">
+                    <div className="m-2">
                         <div className="h-32 bg-white flex py-4">
                             <div className="w-1/3 border-gray-100 border-r-2">
                                 <h2 className="text-5xl font-extrabold">1</h2>
@@ -25,14 +25,14 @@ const Dashboard = () => {
                                 <p>PENDING FINES</p>
                             </div>
                         </div>
-                        <div className="flex mt-1">
+                        <div className="flex mt-4">
                             <div className="w-4/6">
                                 <div className="shadow-lg mr-2 bg-white">
                                     <h2 className="text-left bg-white p-2 border-gray-100 border-b-2 ">
                                         BORROWED BOOKS (3)
                                     </h2>
 
-                                    <div className="flex justify-around">
+                                    <div className="flex justify-around mt-4">
                                         <div
                                             className="relative flex flex-col shadow-md h-60 w-3/4 mt-2 bg-transparent
               lg:h-72 lg:w-1/3 mx-4"
@@ -108,7 +108,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
 
-                                    <button className="bg-transparent text-blue-700 my-4 py-1 px-6 border border-blue-500  rounded-full">
+                                    <button className="bg-transparent text-blue-700 my-8 py-1 px-6 border border-blue-500  rounded-full">
                                         View All
                                     </button>
                                 </div>
@@ -191,7 +191,7 @@ const Dashboard = () => {
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <button className=" bg-blue-500 px-4 py-1 text-white rounded-full">
+                                                <button className=" bg-blue-500 px-4 mr-4 py-1 text-white rounded-full">
                                                     Get Now
                                                 </button>
                                             </div>
@@ -219,7 +219,7 @@ const Dashboard = () => {
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <button className=" bg-blue-500 px-4 py-1 text-white rounded-full">
+                                                <button className=" bg-blue-500 px-4 mr-4 py-1 text-white rounded-full">
                                                     Get Now
                                                 </button>
                                             </div>
@@ -247,14 +247,14 @@ const Dashboard = () => {
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <button className=" bg-blue-500 px-4 py-1 text-white rounded-full">
+                                                <button className=" bg-blue-500 px-4 mr-4 py-1 text-white rounded-full">
                                                     Get Now
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button className="bg-transparent text-blue-700 my-4 py-1 px-6 border border-blue-500  rounded-full">
+                                    <button className="bg-transparent text-blue-700 my-8 py-1 px-6 border border-blue-500  rounded-full">
                                         View All
                                     </button>
                                 </div>
@@ -313,7 +313,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
 
-                                    <button className="bg-transparent text-blue-700 my-4 py-1 px-6 border border-blue-500  rounded-full">
+                                    <button className="bg-transparent text-blue-700 my-8 py-1 px-6 border border-blue-500  rounded-full">
                                         View All
                                     </button>
                                 </div>
@@ -322,6 +322,7 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </React.Fragment>
     );
 };

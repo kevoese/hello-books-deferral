@@ -24,11 +24,14 @@ const Register = () => {
         <React.Fragment>
             <Navbar />
             <div
-                className="bg-no-repeat bg-center bg-cover  flex flex-col justify-center items-center sm:h-screen"
+                className="mt-0 lg:-mt-18 bg-no-repeat bg-center bg-cover flex flex-col items-center min-h-screen"
                 style={{ background: `url(/images/12.jpg)` }}
             >
-                <div className="relative inline-block px-0 py-5 sm:w-9/12 max-w-custom w-500">
-                    <h1 className=" text-5xl text-gray-550 text-center my-10 mt-0">
+                <div
+                    className="flex-grow flex flex-col items-center justify-center
+            relative inline-block px-0 my-18 sm:w-9/12 mb-8 max-w-custom w-500"
+                >
+                    <h1 className="font-raleway text-5xl text-gray-550 text-center my-10 mt-0">
                         Register
                     </h1>
                     <Formik
