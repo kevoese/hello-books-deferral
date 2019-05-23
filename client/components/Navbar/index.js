@@ -41,10 +41,11 @@ const Navbar = () => {
                         to="/"
                     >
                         Home
-                        <div className="m-auto lg:text-left xl:text-left">
+                        <div className=" lg:text-left xl:text-left">
                             <svg
                                 width="40"
                                 height="2"
+                                className="m-auto lg:m-0"
                                 viewBox="0 0 40 2"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
