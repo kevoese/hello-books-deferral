@@ -45,10 +45,7 @@ const Navbar = () => {
                             <svg
                                 width="40"
                                 height="2"
-<<<<<<< HEAD
                                 className="lg:m-0 m-auto "
-=======
->>>>>>> merge conflict fixed
                                 viewBox="0 0 40 2"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
