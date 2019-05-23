@@ -5,7 +5,6 @@ import context from '@context/authContext';
 import InputForm from '@components/InputForm';
 import Button from '@components/Button';
 import { RegisterValidator } from '@clientValidators/Auth';
-import Navbar from '@components/Navbar';
 
 const { AuthContext } = context;
 
@@ -22,7 +21,6 @@ const Register = () => {
     };
     return (
         <React.Fragment>
-            <Navbar />
             <div
                 className="mt-0 lg:-mt-18 bg-no-repeat bg-center bg-cover flex flex-col items-center min-h-screen"
                 style={{ background: `url(/images/12.jpg)` }}
