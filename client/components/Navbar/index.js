@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import classJoin from 'classnames';
 
 const Navbar = () => {
@@ -36,67 +36,46 @@ const Navbar = () => {
                 className={`${classToggle} w-full flex-grow lg:visible xl:visible lg:flex lg:items-center lg:w-auto`}
             >
                 <div className="text-sm text-center m-auto pt-8 lg:pt-1 xl:pt-1">
-                    <Link
+                    <NavLink
                         className="font-raleway block font-semibold md:text-lg lg:text-lg xl:text-lg text-sm lg:mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
                         to="/"
+                        exact
+                        activeClassName="border-blue-450 pb-1 border-b-2"
                     >
                         Home
-                        <div className=" lg:text-left xl:text-left">
-                            <svg
-                                width="40"
-                                height="2"
-                                className="lg:m-0 m-auto "
-                                viewBox="0 0 40 2"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <line
-                                    y1="1"
-                                    x2="26"
-                                    y2="1"
-                                    stroke="#009DEE"
-                                    strokeWidth="2"
-                                />
-                                <line
-                                    x1="30"
-                                    y1="1"
-                                    x2="40"
-                                    y2="1"
-                                    stroke="#009DEE"
-                                    strokeWidth="2"
-                                />
-                            </svg>
-                        </div>
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                         className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg lg:mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
                         to="/books"
+                        activeClassName="border-blue-450 pb-1 border-b-2"
                     >
                         Library Catalogue
-                    </Link>
+                    </NavLink>
 
-                    <Link
+                    <NavLink
                         className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
-                        to="/"
+                        to="/FAQ"
+                        exact
+                        activeClassName="border-blue-450 pb-1 border-b-2"
                     >
                         FAQs
-                    </Link>
+                    </NavLink>
                 </div>
                 <div className="text-sm text-center lg:mr-5 xl:mr-5">
-                    <Link
+                    <NavLink
                         className="font-raleway inline-block text-sm px-4 py-2 pr-10 pl-10 border-400 rounded-full text-blue-500 border border-blue-500 hover:border-transparent hover:bg-white mt-4 shadow lg:mt-0"
                         to="/signin"
                     >
                         Sign In
-                    </Link>
+                    </NavLink>
                 </div>
                 <div className="text-sm text-center">
-                    <Link
+                    <NavLink
                         className="font-raleway inline-block text-sm px-4 py-2 pr-10 pl-10 border-500 rounded-full text-white border border-blue-500 bg-blue-500 hover:border-white mt-4 shadow lg:mt-0"
                         to="/signup"
                     >
                         Register
-                    </Link>
+                    </NavLink>
                 </div>
             </div>
         </nav>
