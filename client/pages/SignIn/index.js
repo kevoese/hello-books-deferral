@@ -108,6 +108,11 @@ const SignIn = () => {
                     )}
                 </Formik>
             </div>
+            <div className="w-full bg-gray-550 absolute bottom-0 py-2 opacity-50">
+                <h5 className="text-center font-bold text-white">
+                    @ Copyright {new Date().getFullYear()}
+                </h5>
+            </div>
         </div>
     );
 };

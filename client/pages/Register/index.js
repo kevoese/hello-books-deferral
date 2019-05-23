@@ -21,11 +21,11 @@ const Register = () => {
     };
     return (
         <div
-            className="bg-no-repeat bg-center bg-cover  flex flex-col justify-center items-center sm:h-screen"
+            className="lg:-mt-18 md:-mx-3 bg-no-repeat bg-center bg-cover flex flex-col justify-center items-center h-screen"
             style={{ background: `url(/images/12.jpg)` }}
         >
-            <div className="relative inline-block px-0 py-5 sm:w-9/12 max-w-custom w-500">
-                <h1 className=" text-5xl text-gray-550 text-center my-10 mt-0">
+            <div className="relative inline-block px-0 py-5 sm:w-9/12 mb-8 max-w-custom w-500">
+                <h1 className=" text-5xl text-gray-550 text-center mt-10 mb-5 mt-0">
                     Register
                 </h1>
                 <Formik
@@ -144,6 +144,11 @@ const Register = () => {
                         </form>
                     )}
                 </Formik>
+            </div>
+            <div className="w-full bg-gray-550 absolute bottom-0 py-2 opacity-50">
+                <h5 className="text-center font-bold text-white">
+                    @ Copyright {new Date().getFullYear()}
+                </h5>
             </div>
         </div>
     );
