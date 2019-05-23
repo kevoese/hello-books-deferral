@@ -45,7 +45,6 @@ const Navbar = () => {
                             <svg
                                 width="40"
                                 height="2"
-                                className="m-auto"
                                 viewBox="0 0 40 2"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -74,12 +73,7 @@ const Navbar = () => {
                     >
                         Library Catalogue
                     </Link>
-                    <Link
-                        className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
-                        to="/About"
-                    >
-                        About
-                    </Link>
+
                     <Link
                         className="font-raleway block font-semibold  md:text-lg lg:text-lg xl:text-lg mr-8 mt-4 lg:inline-block lg:mt-0 text-dark-200 hover:text-dark"
                         to="/"
