@@ -2,9 +2,9 @@ import React, { useContext, useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import context from '@context/authContext';
-import InputForm from '@components/inputForm';
+import InputForm from '@components/InputForm';
 import Button from '@components/Button';
-import { RegisterValidator } from '@clientValidators/auth';
+import { RegisterValidator } from '@clientValidators/Auth';
 
 const { AuthContext } = context;
 

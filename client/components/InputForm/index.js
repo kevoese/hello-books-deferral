@@ -8,7 +8,7 @@ const InputForm = props => {
         <div>
             <div className="flex mt-4 mb-0 flex-wrap sm:flex-no-wrap">
                 <label
-                    className="font-raleway py-2 sm:w-5/12 w-full px-4 sm:px-0 text-base text-gray-550 text-left "
+                    className="font-raleway py-2 sm:w-5/12 w-full px-4 sm:px-0 text-base text-gray-550 text-center sm:text-left"
                     htmlFor={name}
                 >
                     {labelname || name}

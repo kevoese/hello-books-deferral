@@ -14,3 +14,12 @@ export const RegisterValidator = Yup.object().shape({
         'Passwords must match'
     )
 });
+
+export const SignInValidator = Yup.object().shape({
+    email: Yup.string()
+        .email()
+        .required('Required'),
+    password: Yup.string()
+        .required('Password is required')
+        .min(8, 'Password must be greater than 8 characters')
+});

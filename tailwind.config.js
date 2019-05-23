@@ -13,6 +13,9 @@ module.exports = {
                 blue: {
                     '550': '#51bcf3'
                 }
+            },
+            margin: {
+                '-18': '-4.5rem'
             }
         },
         boxShadow: {
