@@ -397,14 +397,14 @@ const Home = () => {
                         <img
                             className=" m-auto pt-5 pb-5 pr-10 pl-10 "
                             src="/images/figma_logo.png"
-                            alt="reading list"
+                            alt="logo"
                         />
                     </div>
                     <div className="flex flex-col w-4/4  m-auto">
                         <img
                             className=" m-auto pt-5 pb-5 pr-10 pl-10 "
                             src="/images/andela.png"
-                            alt="reading list"
+                            alt="logo"
                         />
                     </div>
 
@@ -412,14 +412,14 @@ const Home = () => {
                         <img
                             className=" m-auto pt-5 pb-5 pr-10 pl-10 "
                             src="/images/twilio_logo_red.png"
-                            alt="reading list"
+                            alt="logo"
                         />
                     </div>
                     <div className="flex flex-col w-4/4  m-auto">
                         <img
                             className=" m-auto pt-5 pb-5 pr-10 pl-10 "
                             src="/images/nescafe_logo.png"
-                            alt="reading list"
+                            alt="logo"
                         />
                     </div>
                 </div>
