@@ -1,3 +1,10 @@
+const {
+    colors,
+    boxShadow,
+    borderRadius,
+    margin
+} = require('tailwindcss/defaultTheme');
+
 module.exports = {
     theme: {
         fontFamily: {
@@ -7,12 +14,17 @@ module.exports = {
         extend: {
             colors: {
                 gray: {
+                    ...colors.gray,
                     '250': '#F1F1F1',
                     '550': 'rgba(36, 36, 36, 0.7)'
                 },
                 blue: {
+                    ...colors.blue,
                     '550': '#51bcf3'
                 }
+            },
+            margin: {
+                '-18': '-4.5rem'
             }
         },
         boxShadow: {
