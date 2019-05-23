@@ -39,7 +39,11 @@ const Home = () => {
             <div className="relative block lg:flex -mb-4  w-md mx-auto md:mr-28 md:ml-28 lg:mr-32 lg:ml-32  xl:mr-40 xl:ml-40  pt-10 pb-10 p-6 bg-white rounded-lg shadow-xl">
                 <div className="block lg:flex-initial xl:flex-initial xl:pl-10 lg:pl-10 w-full">
                     <input
+<<<<<<< HEAD
                         className="font-raleway w-full shadow appearance-none  border border-blue-500 rounded-l w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+=======
+                        className="font-raleway w-full shadow appearance-none  border border-blue-500 rounded rounded-r-none rounded-l-none w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+>>>>>>> merge conflict fixed
                         id="search"
                         type="text"
                         placeholder="Search e.g 'Harry Porter'"
@@ -47,7 +51,11 @@ const Home = () => {
                 </div>
                 <div className="block w-full lg:flex-1 xl:flex-1 xl:pr-10  lg:pr-10 ">
                     <Link
+<<<<<<< HEAD
                         className="font-raleway block w-full text-center text-sm px-4 py-2 pr-10 pl-10 border-500 rounded-r text-white border border-blue-500 bg-blue-500 hover:border-white mt-4 shadow lg:mt-0"
+=======
+                        className="font-raleway block w-full text-center text-sm px-4 py-2 pr-10 pl-10 border-500 rounded round text-white border border-blue-500 bg-blue-500 hover:border-white mt-4 shadow lg:mt-0"
+>>>>>>> merge conflict fixed
                         to="/"
                     >
                         Search
@@ -393,14 +401,22 @@ const Home = () => {
             {/* partners logo */}
             <div className="pt-20 pb-20">
                 <div className="flex flex-col lg:flex-row">
+<<<<<<< HEAD
                     <div className="flex flex-col w-4/4 m-auto">
+=======
+                    <div className="flex flex-col w-1/4 m-auto">
+>>>>>>> merge conflict fixed
                         <img
                             className=" m-auto pt-5 pb-5 pr-10 pl-10 "
                             src="/images/figma_logo.png"
                             alt="reading list"
                         />
                     </div>
+<<<<<<< HEAD
                     <div className="flex flex-col w-4/4  m-auto">
+=======
+                    <div className="flex flex-col w-2/4  m-auto">
+>>>>>>> merge conflict fixed
                         <img
                             className=" m-auto pt-5 pb-5 pr-10 pl-10 "
                             src="/images/andela.png"
@@ -408,14 +424,22 @@ const Home = () => {
                         />
                     </div>
 
+<<<<<<< HEAD
                     <div className="flex flex-col w-4/4  m-auto">
+=======
+                    <div className="flex flex-col w-2/4  m-auto">
+>>>>>>> merge conflict fixed
                         <img
                             className=" m-auto pt-5 pb-5 pr-10 pl-10 "
                             src="/images/twilio_logo_red.png"
                             alt="reading list"
                         />
                     </div>
+<<<<<<< HEAD
                     <div className="flex flex-col w-4/4  m-auto">
+=======
+                    <div className="flex flex-col w-2/4  m-auto">
+>>>>>>> merge conflict fixed
                         <img
                             className=" m-auto pt-5 pb-5 pr-10 pl-10 "
                             src="/images/nescafe_logo.png"
