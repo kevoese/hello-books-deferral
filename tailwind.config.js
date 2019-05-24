@@ -29,7 +29,8 @@ module.exports = {
             },
             margin: {
                 ...margin,
-                '-18': '-4.5rem'
+                '-18': '-4.5rem',
+                '18': '4.5rem'
             }
         },
         boxShadow: {
