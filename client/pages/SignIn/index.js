@@ -5,6 +5,7 @@ import context from '@context/authContext';
 import InputForm from '@components/InputForm';
 import Button from '@components/Button';
 import { SignInValidator } from '@clientValidators/Auth';
+import Navbar from '@components/Navbar';
 
 const { AuthContext } = context;
 
@@ -20,103 +21,108 @@ const SignIn = () => {
         setErrorState(true);
     };
     return (
-        <div
-            className="mt-0 lg:-mt-18 bg-no-repeat bg-center bg-cover flex flex-col items-center min-h-screen"
-            style={{ background: `url(/images/12.jpg)` }}
-        >
+        <React.Fragment>
+            <Navbar />
             <div
-                className="flex-grow flex flex-col items-center justify-center
-            relative inline-block px-0 my-18 sm:w-9/12 mb-8 max-w-custom w-500"
+                className="mt-0 lg:-mt-18 bg-no-repeat bg-center bg-cover flex flex-col items-center min-h-screen"
+                style={{ background: `url(/images/12.jpg)` }}
             >
-                <h1 className="font-raleway text-5xl text-gray-550 text-center my-10 mt-0">
-                    Sign in
-                </h1>
-                <Formik
-                    initialValues={{
-                        email: '',
-                        password: ''
-                    }}
-                    validationSchema={SignInValidator}
-                    onSubmit={(values, { setSubmitting, resetForm }) => {
-                        setErrorState(false);
-                        axios
-                            .post('/api/v1/auth/login', values)
-                            .then(res => {
-                                console.log(res);
-                                resetForm({
-                                    email: '',
-                                    password: ''
-                                });
-
-                                const user_token = res.data.data.token;
-                                const user_data = res.data.data.user;
-                                setAuth(prevAuth => {
-                                    prevAuth.token = user_token;
-                                    prevAuth.user = user_data;
-                                });
-                                localStorage.setItem('token', user_token);
-                                setSubmitting(false);
-                            })
-                            .catch(({ response }) => {
-                                console.log(response);
-                                handleError(response);
-                                setSubmitting(false);
-                            });
-                    }}
+                <div
+                    className="flex-grow flex flex-col items-center justify-center
+            relative inline-block px-0 my-18 sm:w-9/12 mb-8 max-w-custom w-500"
                 >
-                    {({
-                        values,
-                        errors,
-                        touched,
-                        handleChange,
-                        handleBlur,
-                        handleSubmit,
-                        isSubmitting
-                    }) => (
-                        <form
-                            onSubmit={handleSubmit}
-                            className="shadow-custom px-8 sm:px-16 py-8 sm:w-full rounded-54 bg-white text-center"
-                        >
-                            <div className="mb-8">
-                                <InputForm
-                                    errors={errors}
-                                    touched={touched}
-                                    handleChange={handleChange}
-                                    handleBlur={handleBlur}
-                                    name="email"
-                                    labelname="Email"
-                                    id="email"
-                                    type="email"
-                                    value={values.email}
-                                />
-                                <InputForm
-                                    errors={errors}
-                                    touched={touched}
-                                    handleChange={handleChange}
-                                    handleBlur={handleBlur}
-                                    name="password"
-                                    labelname="Password"
-                                    id="password"
-                                    type="password"
-                                    value={values.password}
-                                />
-                            </div>
-                            <Button isSubmitting={isSubmitting}>Sign in</Button>
-                            {errorState && (
-                                <div className="font-raleway py-3 pb-0  bottom-0  w-full px-4 text-lg sm:px-0 text-red-500 text-center ">
-                                    {errorMessage}
+                    <h1 className="font-raleway text-5xl text-gray-550 text-center my-10 mt-0">
+                        Sign in
+                    </h1>
+                    <Formik
+                        initialValues={{
+                            email: '',
+                            password: ''
+                        }}
+                        validationSchema={SignInValidator}
+                        onSubmit={(values, { setSubmitting, resetForm }) => {
+                            setErrorState(false);
+                            axios
+                                .post('/api/v1/auth/login', values)
+                                .then(res => {
+                                    console.log(res);
+                                    resetForm({
+                                        email: '',
+                                        password: ''
+                                    });
+
+                                    const user_token = res.data.data.token;
+                                    const user_data = res.data.data.user;
+                                    setAuth(prevAuth => {
+                                        prevAuth.token = user_token;
+                                        prevAuth.user = user_data;
+                                    });
+                                    localStorage.setItem('token', user_token);
+                                    setSubmitting(false);
+                                })
+                                .catch(({ response }) => {
+                                    console.log(response);
+                                    handleError(response);
+                                    setSubmitting(false);
+                                });
+                        }}
+                    >
+                        {({
+                            values,
+                            errors,
+                            touched,
+                            handleChange,
+                            handleBlur,
+                            handleSubmit,
+                            isSubmitting
+                        }) => (
+                            <form
+                                onSubmit={handleSubmit}
+                                className="shadow-custom px-8 sm:px-16 py-8 sm:w-full rounded-54 bg-white text-center"
+                            >
+                                <div className="mb-8">
+                                    <InputForm
+                                        errors={errors}
+                                        touched={touched}
+                                        handleChange={handleChange}
+                                        handleBlur={handleBlur}
+                                        name="email"
+                                        labelname="Email"
+                                        id="email"
+                                        type="email"
+                                        value={values.email}
+                                    />
+                                    <InputForm
+                                        errors={errors}
+                                        touched={touched}
+                                        handleChange={handleChange}
+                                        handleBlur={handleBlur}
+                                        name="password"
+                                        labelname="Password"
+                                        id="password"
+                                        type="password"
+                                        value={values.password}
+                                    />
                                 </div>
-                            )}
-                        </form>
-                    )}
-                </Formik>
+                                <Button isSubmitting={isSubmitting}>
+                                    Sign in
+                                </Button>
+                                {errorState && (
+                                    <div className="font-raleway py-3 pb-0  bottom-0  w-full px-4 text-lg sm:px-0 text-red-500 text-center ">
+                                        {errorMessage}
+                                    </div>
+                                )}
+                            </form>
+                        )}
+                    </Formik>
+                </div>
+                <div className="w-full bg-gray-550 py-2 opacity-50">
+                    <h5 className="text-center font-bold text-white">
+                        @ Copyright {new Date().getFullYear()}
+                    </h5>
+                </div>
             </div>
-            <div className="w-full bg-gray-550 py-2 opacity-50">
-                <h5 className="text-center font-bold text-white">
-                    @ Copyright {new Date().getFullYear()}
-                </h5>
-            </div>
-        </div>
+        </React.Fragment>
     );
 };
 

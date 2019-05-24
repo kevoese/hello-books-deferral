@@ -1,5 +1,6 @@
 import React from 'react';
 import Book from '@components/Book';
+import Navbar from '@components/Navbar';
 
 const BookRow = () => {
     return (
@@ -16,33 +17,36 @@ const BookRow = () => {
 
 const Books = () => {
     return (
-        <div className="m-6 ml-10 mr-20">
-            <div className="flex flex-col-reverse lg:flex-row mx-4">
-                <button
-                    className="flex flex-row items-center rounded p-2 mr-3 pr-10 pl-4 uppercase text-lg font-semibold
+        <React.Fragment>
+            <Navbar />
+            <div className="m-6 ml-10 mr-20">
+                <div className="flex flex-col-reverse lg:flex-row mx-4">
+                    <button
+                        className="flex flex-row items-center rounded p-2 mr-3 pr-10 pl-4 uppercase text-lg font-semibold
                 tracking-widest text-black-1000 bg-blue-550 hover:bg-blue-300 bg-blue-11000 w-40 mt-6 lg:mt-0 self-end"
-                >
-                    <div className="pt-1">
-                        <div className="border-t-2 border-black w-3 mb-1" />
-                        <div className="border-t-2 border-black w-3 mb-1" />
-                        <div className="border-t-2 border-black w-3 mb-1" />
-                    </div>
-                    <p className="ml-2 font-raleway">Filter</p>
-                </button>
-                <input
-                    type="text"
-                    placeholder="search for books"
-                    className="outline-none bg-gray-250 rounded-full w-full p-2 text-black-1000
+                    >
+                        <div className="pt-1">
+                            <div className="border-t-2 border-black w-3 mb-1" />
+                            <div className="border-t-2 border-black w-3 mb-1" />
+                            <div className="border-t-2 border-black w-3 mb-1" />
+                        </div>
+                        <p className="ml-2 font-raleway">Filter</p>
+                    </button>
+                    <input
+                        type="text"
+                        placeholder="search for books"
+                        className="outline-none bg-gray-250 rounded-full w-full p-2 text-black-1000
                 focus:rounded-full pl-6 font-semibold text-sm font-raleway bg-light-gray"
-                />
+                    />
+                </div>
+                <div>
+                    <BookRow />
+                    <BookRow />
+                    <BookRow />
+                    <BookRow />
+                </div>
             </div>
-            <div>
-                <BookRow />
-                <BookRow />
-                <BookRow />
-                <BookRow />
-            </div>
-        </div>
+        </React.Fragment>
     );
 };
 
