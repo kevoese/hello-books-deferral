@@ -10,7 +10,7 @@ const Navbar = () => {
     });
 
     return (
-        <nav className="flex items-center justify-between flex-wrap bg-white-500 pt-5 p-3">
+        <nav className="flex items-center justify-between flex-wrap bg-white-500 pt-5 p-3 z-40">
             <div className="flex items-center flex-shrink-0 text-dark mr-6">
                 <Link to="/">
                     <img className="w-full " src="/images/hello_books.png" />
@@ -71,7 +71,7 @@ const Navbar = () => {
                 </div>
                 <div className="text-sm text-center">
                     <NavLink
-                        className="font-raleway inline-block text-sm px-4 py-2 pr-10 pl-10 border-500 rounded-full text-white border border-blue-500 bg-blue-500 hover:border-white mt-4 shadow lg:mt-0"
+                        className="font-raleway inline-block text-sm px-4 py-2 pr-10 pl-10 border-500 rounded-full text-white border border-blue-500 bg-blue-500 hover:shadow-md mt-4 shadow lg:mt-0"
                         to="/signup"
                     >
                         Register

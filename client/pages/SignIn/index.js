@@ -21,12 +21,15 @@ const SignIn = () => {
     };
     return (
         <div
-            className="lg:-mt-18 bg-no-repeat bg-center bg-cover  flex flex-col justify-center items-center h-screen"
+            className="mt-0 lg:-mt-18 bg-no-repeat bg-center bg-cover flex flex-col items-center min-h-screen"
             style={{ background: `url(/images/12.jpg)` }}
         >
-            <div className="relative inline-block px-0 py-5 sm:w-9/12 max-w-custom w-500">
-                <h1 className=" text-5xl text-gray-550 text-center my-10 mt-0">
-                    SignIn
+            <div
+                className="flex-grow flex flex-col items-center justify-center
+            relative inline-block px-0 my-18 sm:w-9/12 mb-8 max-w-custom w-500"
+            >
+                <h1 className="font-raleway text-5xl text-gray-550 text-center my-10 mt-0">
+                    Sign in
                 </h1>
                 <Formik
                     initialValues={{
@@ -72,7 +75,7 @@ const SignIn = () => {
                     }) => (
                         <form
                             onSubmit={handleSubmit}
-                            className="shadow-custom px-16 py-8 sm:w-12/12 sm:rounded-54 bg-white text-center"
+                            className="shadow-custom px-8 sm:px-16 py-8 sm:w-full rounded-54 bg-white text-center"
                         >
                             <div className="mb-8">
                                 <InputForm
@@ -98,7 +101,7 @@ const SignIn = () => {
                                     value={values.password}
                                 />
                             </div>
-                            <Button isSubmitting={isSubmitting}>SignIn</Button>
+                            <Button isSubmitting={isSubmitting}>Sign in</Button>
                             {errorState && (
                                 <div className="font-raleway py-3 pb-0  bottom-0  w-full px-4 text-lg sm:px-0 text-red-500 text-center ">
                                     {errorMessage}
@@ -108,7 +111,7 @@ const SignIn = () => {
                     )}
                 </Formik>
             </div>
-            <div className="w-full bg-gray-550 absolute bottom-0 py-2 opacity-50">
+            <div className="w-full bg-gray-550 py-2 opacity-50">
                 <h5 className="text-center font-bold text-white">
                     @ Copyright {new Date().getFullYear()}
                 </h5>
