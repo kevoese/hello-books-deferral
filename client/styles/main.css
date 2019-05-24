@@ -4,6 +4,27 @@
 
 @tailwind utilities;
 
+.h-60 {
+    height: 15rem;
+}
+
+.bottom-2 {
+    bottom: 2rem;
+}
+
+.badge-overdue {
+  width: 0;
+  height: 0;
+  border-top: 70px solid #FC8C69;
+  border-left: 70px solid transparent;
+}
+
+.badge-text {
+    position: relative;
+    margin-left: -57px;
+    margin-top: -72px;
+}
+
 .h-72 {
     height: 18rem;
 }
