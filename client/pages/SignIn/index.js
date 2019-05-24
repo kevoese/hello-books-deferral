@@ -21,7 +21,7 @@ const SignIn = () => {
     };
     return (
         <div
-            className="lg:-mt-18 md:-mx-3 bg-no-repeat bg-center bg-cover  flex flex-col justify-center items-center h-screen"
+            className="lg:-mt-18 bg-no-repeat bg-center bg-cover  flex flex-col justify-center items-center h-screen"
             style={{ background: `url(/images/12.jpg)` }}
         >
             <div className="relative inline-block px-0 py-5 sm:w-9/12 max-w-custom w-500">

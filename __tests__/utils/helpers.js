@@ -11,7 +11,7 @@ export class Response {
         return this;
     }
 
-    jsend() { }
+    jsend() {}
 }
 
 export const getUser = () => ({
