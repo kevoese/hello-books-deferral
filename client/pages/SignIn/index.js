@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
+import { Link } from 'react-router-dom'
 import context from '@context/authContext';
 import InputForm from '@components/InputForm';
 import Button from '@components/Button';
 import { SignInValidator } from '@clientValidators/Auth';
-import Navbar from '@components/Navbar';
 
 const { AuthContext } = context;
 
@@ -22,7 +22,6 @@ const SignIn = () => {
     };
     return (
         <React.Fragment>
-            <Navbar />
             <div
                 className="mt-0 lg:-mt-18 bg-no-repeat bg-center bg-cover flex flex-col items-center min-h-screen"
                 style={{ background: `url(/images/12.jpg)` }}
@@ -104,6 +103,8 @@ const SignIn = () => {
                                         value={values.password}
                                     />
                                 </div>
+                                <Link className='text-gray-550' to='/forgot-password'>Forgot Password ?</Link>
+                                <br/>
                                 <Button isSubmitting={isSubmitting}>
                                     Sign in
                                 </Button>
@@ -112,6 +113,7 @@ const SignIn = () => {
                                         {errorMessage}
                                     </div>
                                 )}
+                                
                             </form>
                         )}
                     </Formik>

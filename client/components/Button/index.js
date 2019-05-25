@@ -5,7 +5,7 @@ const Button = ({ children, isSubmitting }) => {
         <button
             type="submit"
             disabled={isSubmitting}
-            className="font-raleway bg-blue-550 hover:shadow-md outline-none w-auto text-center text-base text-white rounded-full py-2 mt-4 px-10"
+            className="font-raleway focus:outline-none bg-blue-550 hover:shadow-md outline-none w-auto text-center text-base text-white rounded-full py-2 mt-4 px-10"
         >
             {children}
         </button>
