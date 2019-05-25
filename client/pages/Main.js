@@ -7,6 +7,7 @@ import AuthNavbar from '@components/authNavbar';
 import Register from '@pages/Register';
 import SignIn from '@pages/SignIn';
 import Dashboard from '@pages/Dashboard';
+import BorrowedBooks from '@pages/BorrowedBooks';
 import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 import context from '@context/authContext';
 import ForgotPassword from '@pages/ForgotPassword';
@@ -48,6 +49,7 @@ const App = ({ history }) => {
                 path="/admin/library"
                 component={AdminBooksDashboard}
             />
+            <Route path="/borrowed" component={BorrowedBooks} />
         </AuthProvider>
     );
 };
@@ -57,9 +59,11 @@ const AppWithRouter = withRouter(App);
 export default function Main() {
     return (
         <React.Fragment>
-            <BrowserRouter>
-                <AppWithRouter />
-            </BrowserRouter>
+            <div className="">
+                <BrowserRouter>
+                    <AppWithRouter />
+                </BrowserRouter>
+            </div>
         </React.Fragment>
     );
 }

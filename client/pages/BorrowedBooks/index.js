@@ -1,79 +1,227 @@
 import React, { useState, useEffect } from 'react';
-import AuthNavbar from '@components/authNavbar/index';
-import SideNavbar from '@components/sideNavbar/index';
-import Footer from '@components/Footer/index';
-import BorrowedBookRow from '@components/BorrowedBookRow/index';
+import AuthNavbar from '@components/authNavbar';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import SideNavbar from '@components/sideNavbar';
+import Footer from '@components/Footer';
+import BorrowedBookRow from '@components/BorrowedBookRow';
+import { getDateStr } from '@clientutils';
 import axios from 'axios';
+import classJoin from 'classnames';
+import Button from '@components/Button';
+import Loading from '@components/Loading';
 
 const BorrowedBooks = () => {
     const headings = [
         'Title',
-        'Author',
+        'Publisher',
         'Year',
         'Due Date',
         'Status',
         'Action'
     ];
-    const content = [
-        {
-            id: '1',
-            title: 'Game of thrones',
-            author: 'George R. R.',
-            year: '2019',
-            dueDate: '3rd nov 2019',
-            status: 'active'
-        },
-        {
-            id: '2',
-            title: 'Vue js',
-            author: 'Kati frantz',
-            year: '2019',
-            dueDate: '3rd nov 2019',
-            status: 'active'
-        },
-        {
-            id: '3',
-            title: 'Game of thrones',
-            author: 'George R. R.',
-            year: '2019',
-            dueDate: '3rd nov 2019',
-            status: 'expired'
-        }
-    ];
-    const [books, setbooks] = useState(content);
 
-    useEffect(() => {});
+    const [isLoading, setIsLoading] = useState(false);
+    const [bookData, setbookData] = useState([]);
+    const [bookId, setbookId] = useState();
+    const [response, setresponse] = useState({
+        status: false,
+        message: ' '
+    });
+    const [isVisible, changeVisibility] = useState(false);
+    const classToggle = classJoin({
+        block: isVisible,
+        hidden: !isVisible
+    });
 
-    const bookList = books.length ? (
-        books.map(book => {
-            const { title, author, year, dueDate, status } = book;
-            const bookObj = { title, author, year, dueDate, status };
+    useEffect(() => {
+        setIsLoading(true);
+        const options = {
+            method: 'GET',
+            headers: { 'x-access-token': localStorage.token },
+            url: '/api/v1/books/borrow'
+        };
+        axios(options)
+            .then(res => {
+                setbookData(() => res.data.data);
+                setIsLoading(false);
+            })
+            .catch(err => {
+                setIsLoading(false);
+            });
+    }, bookData);
+
+    const extendBook = bookId => {
+        changeVisibility(!isVisible);
+        setbookId(bookId);
+    };
+
+    const handleCut = resetForm => {
+        changeVisibility(!isVisible);
+        resetForm({ days: '' });
+    };
+    const bookList = bookData.length ? (
+        bookData.map(book => {
+            const { title, publisher, year, dueDate, status } = book;
+            const bookObj = {
+                title,
+                publisher,
+                year,
+                dueDate: dueDate && getDateStr(dueDate),
+                status,
+                action: 'extend'
+            };
 
             return (
                 <BorrowedBookRow
                     key={book.id}
+                    bookId={book.id}
                     action={'Extend'}
                     contents={Object.values(bookObj)}
+                    extendBook={extendBook}
                 />
             );
         })
+    ) : isLoading ? (
+        <Loading />
     ) : (
-        <BorrowedBookRow />
+        <h2 className="text-2xl py-2 text-center ">
+            You don't have any borrowed books
+        </h2>
     );
 
     return (
-        <div className="w-full md:w-5/6 bg-gray-20 text-center text-gray-700 px-4 py-4">
-            <header className="font-raleway font-bold text-black px-2 text-2xl text-left mb-4">
-                All Borrowed Books
-            </header>
-            <div className="px-2">
-                <BorrowedBookRow
-                    transform="uppercase font-semibold"
-                    contents={headings}
-                />
-                <div className="bg-white">{bookList}</div>
+        <React.Fragment>
+            <AuthNavbar />
+            <div className="flex md:flex-row flex-wrap min-h-screen">
+                <SideNavbar />
+                <div className=" relative w-full md:w-5/6 bg-gray-20 text-center text-gray-700 px-4 py-4">
+                    <header className="font-raleway font-bold text-black px-2 text-2xl text-left mb-4">
+                        All Borrowed Books
+                    </header>
+                    <div className="px-2">
+                        <BorrowedBookRow
+                            transform="uppercase font-semibold"
+                            contents={headings}
+                        />
+
+                        <div className="bg-white">{bookList}</div>
+                    </div>
+                    <div className={classToggle}>
+                        <div className="inset absolute inset-0 w-full h-full bg-gray-350" />
+                        <div className="absolute bg-transparent inset-0 h-full w-full flex flex-col justify-center items-center">
+                            <Formik
+                                initialValues={{ days: '' }}
+                                onSubmit={(
+                                    values,
+                                    { setFieldError, setSubmitting, resetForm }
+                                ) => {
+                                    const options = {
+                                        method: 'PATCH',
+                                        data: { days: values.days },
+                                        headers: {
+                                            'x-access-token': localStorage.token
+                                        },
+                                        url: `/api/v1/books/${bookId}/extend`
+                                    };
+                                    setSubmitting(true);
+                                    axios(options)
+                                        .then(res => {
+                                            setresponse({
+                                                status: true,
+                                                message: res.data.data.message
+                                            });
+                                            resetForm({
+                                                days: ''
+                                            });
+                                            setSubmitting(false);
+                                        })
+                                        .catch(e => {
+                                            setFieldError(
+                                                'days',
+                                                e.response.data.data.message
+                                            );
+                                            setSubmitting(false);
+                                        });
+                                }}
+                                validationSchema={Yup.object().shape({
+                                    days: Yup.number('Number in days').required(
+                                        'Please enter the number of days'
+                                    )
+                                })}
+                            >
+                                {props => {
+                                    const {
+                                        values,
+                                        touched,
+                                        errors,
+                                        isSubmitting,
+                                        handleChange,
+                                        handleBlur,
+                                        resetForm,
+                                        handleSubmit
+                                    } = props;
+                                    return (
+                                        <form
+                                            onSubmit={handleSubmit}
+                                            className="relative w-10/12 sm:w-1/2 py-8 pt-6 bg-white px-4 z-40"
+                                        >
+                                            <div
+                                                className="absolute top-1 right-1 h-4 w-4 bg-no-repeat bg-center bg-cover cursor-pointer"
+                                                onClick={() =>
+                                                    handleCut(resetForm)
+                                                }
+                                                style={{
+                                                    backgroundImage: `url(/images/cut.png)`
+                                                }}
+                                            />
+                                            {response.status ? (
+                                                <span className="text-lg text-green-600 font-robotoMono">
+                                                    {response.message}
+                                                </span>
+                                            ) : (
+                                                <div>
+                                                    <label
+                                                        htmlFor="days"
+                                                        className="font-raleway text:md w-10/12 text-left py-2"
+                                                    >
+                                                        Days to extend
+                                                    </label>
+                                                    <input
+                                                        id="days"
+                                                        name="days"
+                                                        placeholder="Enter the number of days"
+                                                        type="number"
+                                                        value={values.days}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        className="block border mt-2 rounded-10 py-1 px-2 text-sm border-gray-600 mx-auto font-robotoMono w-10/12"
+                                                    />
+                                                    {errors.days &&
+                                                        touched.days && (
+                                                            <div className="text-red-600">
+                                                                {errors.days}
+                                                            </div>
+                                                        )}
+                                                    <Button
+                                                        isSubmitting={
+                                                            isSubmitting
+                                                        }
+                                                    >
+                                                        Extend
+                                                    </Button>
+                                                </div>
+                                            )}
+                                        </form>
+                                    );
+                                }}
+                            </Formik>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+            <Footer />
+        </React.Fragment>
     );
 };
 

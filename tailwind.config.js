@@ -4,7 +4,8 @@ const {
     borderRadius,
     margin,
     maxWidth,
-    fontSize
+    fontSize,
+    inset
 } = require('tailwindcss/defaultTheme');
 
 module.exports = {
@@ -23,10 +24,12 @@ module.exports = {
                     '40': '#FAFAFA',
                     '50': '#FDFDFD',
                     '250': '#F1F1F1',
+                    '350': 'rgba(0, 0, 0, 0.4)',
                     '550': 'rgba(36, 36, 36, 0.7)',
                     '800': 'rgba(0, 0, 0, 0.82)',
                     '950': 'rgba(0, 0, 0, 0.07)',
-                    '960': 'rgba(0, 0, 0, 0.82)'
+                    '960': 'rgba(0, 0, 0, 0.82)',
+                    '950': 'rgba(0, 0, 0, 0.82)'
                 },
                 blue: {
                     ...colors.blue,
@@ -58,6 +61,10 @@ module.exports = {
         fontSize: {
             ...fontSize,
             xxs: '0.65rem'
+        },
+        inset: {
+            ...inset,
+            '1': '0.75rem'
         }
     },
     variants: {},

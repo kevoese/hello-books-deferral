@@ -1,11 +1,12 @@
 import React from 'react';
-import TableContent from '@components/TableContent/index.js';
+import TableContent from '@components/Tablecontent';
 
-const BookRow = ({ contents, transform, action }) => {
+const BookRow = props => {
+    const { contents } = props;
     const List = contents.length ? (
         contents.map((content, index) => {
             return (
-                <TableContent key={index} transform={transform}>
+                <TableContent key={index} index={index} {...props}>
                     {content}
                 </TableContent>
             );
@@ -16,13 +17,6 @@ const BookRow = ({ contents, transform, action }) => {
     return (
         <section className="border-b flex bg-transparent border-gray-300">
             {List}
-            {action ? (
-                <TableContent action transform={transform}>
-                    {action}
-                </TableContent>
-            ) : (
-                ''
-            )}
         </section>
     );
 };

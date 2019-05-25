@@ -20,10 +20,7 @@ const SideNavbar = () => {
                         Dashboard
                     </div>
                 </NavLink>
-                <NavLink
-                    to="/dashboard/borrowed"
-                    className="flex pb-0 cursor-pointer"
-                >
+                <NavLink to="/borrowed" className="flex pb-0 cursor-pointer">
                     <div className="w-1/4 text-center h-12 flex justify-center items-center">
                         <img
                             className="h-6  fill-current"
