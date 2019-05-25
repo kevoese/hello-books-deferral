@@ -3,7 +3,8 @@ const {
     boxShadow,
     borderRadius,
     margin,
-    maxWidth
+    maxWidth,
+    fontSize
 } = require('tailwindcss/defaultTheme');
 
 module.exports = {
@@ -46,6 +47,10 @@ module.exports = {
         maxWidth: {
             ...maxWidth,
             custom: '40rem'
+        },
+        fontSize: {
+            ...fontSize,
+            xxs: '0.65rem'
         }
     },
     variants: {},

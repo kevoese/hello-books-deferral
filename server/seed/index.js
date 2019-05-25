@@ -13,6 +13,7 @@ const getFakeBook = () => ({
     coverType: faker.random.word('string'),
     description: faker.random.words(4),
     isbn: faker.random.uuid(),
+    price: faker.finance.amount(),
     publisher: faker.fake('{{name.lastName}} {{name.firstName}}'),
     title: faker.random.words(4),
     year: faker.random.number(2011, 2019)

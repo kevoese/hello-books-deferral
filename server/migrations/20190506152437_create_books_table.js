@@ -7,6 +7,7 @@ exports.up = knex =>
         table.string('title').notNull();
         table.string('coverType').notNull();
         table.string('description').notNull();
+        table.float('price').notNull();
         table
             .string('isbn')
             .unique()

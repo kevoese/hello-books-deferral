@@ -175,9 +175,9 @@ const Home = () => {
 
                     {/* import slider component */}
                     <div className="w-full flex flex-col items-center lg:flex-row lg:h-80 lg:justify-between pt-16 pr-5 pl-5">
+                        {/* <Book />
                         <Book />
-                        <Book />
-                        <Book />
+                        <Book /> */}
                     </div>
 
                     <div className="m-auto text-center pt-16 pb-6">

@@ -1,4 +1,5 @@
 import Book from '@models/Book';
+import AuthorBook from '@models/AuthorBook';
 import LendingRequest from '@models/LendingRequest';
 import moment from 'moment';
 
@@ -8,6 +9,7 @@ const storeBooks = async (req, res) => {
         coverType,
         description,
         isbn,
+        price,
         publisher,
         year,
         copiesAvailable,
@@ -19,6 +21,7 @@ const storeBooks = async (req, res) => {
         coverType,
         description,
         isbn,
+        price,
         publisher,
         year,
         copiesAvailable
@@ -35,6 +38,7 @@ const getAllBooks = async (req, res) => {
     const { page, limit } = req.query;
 
     const books = await Book.query()
+        .eager('authors')
         .select()
         .page(page || 1, limit || 10);
 
