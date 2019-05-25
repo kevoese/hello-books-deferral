@@ -80,7 +80,7 @@ const Register = () => {
                         }) => (
                             <form
                                 onSubmit={handleSubmit}
-                                className="shadow-custom px-16 py-5 pb-8 sm:w-12/12 sm:rounded-54 bg-white text-center"
+                                className="shadow-custom px-16 py-5 pb-8 sm:w-full sm:rounded-54 bg-white text-center"
                             >
                                 <InputForm
                                     errors={errors}
