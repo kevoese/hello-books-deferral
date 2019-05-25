@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment, useLayoutEffect } from 'react';
 import axios from 'axios';
 import Book from '@components/Book';
 import Footer from '@components/Footer';
-import Navbar from '@components/Navbar';
 
 const BookRow = props => {
     return (
@@ -86,7 +85,6 @@ const Books = () => {
 
     return (
         <Fragment>
-            <Navbar />
             <div className="m-6 ml-4 mr-10">
                 <div className="flex flex-col-reverse bg-transparent lg:flex-row mx-4 w-full justify-center items-center">
                     <button

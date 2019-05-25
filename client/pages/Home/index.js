@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '@components/Footer';
 import Book from '@components/Book';
-import Navbar from '@components/Navbar';
 
 const Home = () => {
     return (
         <React.Fragment>
-            <Navbar />
             <div>
                 <div className="xl:flex lg:flex block p-5 m-10 mb-4">
                     <div className="block xl:flex-1 lg:flex-1  text-dark  ">
