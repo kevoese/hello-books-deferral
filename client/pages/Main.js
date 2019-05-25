@@ -13,11 +13,20 @@ import ResetPassword from '@pages/ResetPassword';
 
 const { AuthProvider } = context;
 
-
 const App = ({ history }) => {
     return (
         <AuthProvider>
-            {(['/', '/about', '/signin', 'register', 'forgot-password'].includes(history.location.pathname)  || history.location.pathname.match(/books/) || history.location.pathname.match(/reset-password/)) && <Navbar />}
+            {([
+                '/',
+                '/about',
+                '/signin',
+                'register',
+                'forgot-password'
+            ].includes(history.location.pathname) ||
+                history.location.pathname.match(/books/) ||
+                history.location.pathname.match(/reset-password/)) && (
+                <Navbar />
+            )}
             <Route exact path="/" component={Home} />
             <Route exact path="/books" component={Books} />
             <Route path="/signup" component={Register} />
@@ -26,10 +35,10 @@ const App = ({ history }) => {
             <Route path="/forgot-password" component={ForgotPassword} />
             <Route path="/reset-password/:token" component={ResetPassword} />
         </AuthProvider>
-    )
-}
+    );
+};
 
-const AppWithRouter = withRouter(App)
+const AppWithRouter = withRouter(App);
 
 export default function Main() {
     return (

@@ -46,7 +46,9 @@ const getAllBooks = async (req, res) => {
 };
 
 const getSingleBook = async (req, res) => {
-    const book = await Book.query().findById(req.params.id);
+    const book = await Book.query()
+        .eager('authors')
+        .findById(req.params.id);
 
     if (book) {
         return res.status(200).jsend(book);
