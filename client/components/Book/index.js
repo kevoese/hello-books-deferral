@@ -29,7 +29,9 @@ const Book = ({ id, title, copiesAvailable, authors, price }) => {
 
                     <div className="flex flex-col w-1/5 self-end">
                         <p className="uppercase text-red-400 font-semibold text-xs font-semibold font-robotoMono mt-2">
-                            {copiesAvailable === 0 ? 'UNAVAILABLE' : 'AVAILABLE'}
+                            {copiesAvailable === 0
+                                ? 'UNAVAILABLE'
+                                : 'AVAILABLE'}
                         </p>
                         <p className="font-semibold">N{price}</p>
                     </div>

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import context from '@context/authContext';
 import InputForm from '@components/InputForm';
 import Button from '@components/Button';
@@ -103,8 +103,13 @@ const SignIn = () => {
                                         value={values.password}
                                     />
                                 </div>
-                                <Link className='text-gray-550' to='/forgot-password'>Forgot Password ?</Link>
-                                <br/>
+                                <Link
+                                    className="text-gray-550"
+                                    to="/forgot-password"
+                                >
+                                    Forgot Password ?
+                                </Link>
+                                <br />
                                 <Button isSubmitting={isSubmitting}>
                                     Sign in
                                 </Button>
@@ -113,7 +118,6 @@ const SignIn = () => {
                                         {errorMessage}
                                     </div>
                                 )}
-                                
                             </form>
                         )}
                     </Formik>
