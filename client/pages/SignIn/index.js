@@ -9,8 +9,8 @@ import { SignInValidator } from '@clientValidators/Auth';
 
 const { AuthContext } = context;
 
-const SignIn = () => {
-    const [auth, setAuth] = useContext(AuthContext);
+const SignIn = props => {
+    const [auth, setAuth, isAuth, notGuest] = useContext(AuthContext);
     const [errorState, setErrorState] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -20,6 +20,7 @@ const SignIn = () => {
             : setErrorMessage('Network Error!');
         setErrorState(true);
     };
+
     return (
         <React.Fragment>
             <div
@@ -44,7 +45,6 @@ const SignIn = () => {
                             axios
                                 .post('/api/v1/auth/login', values)
                                 .then(res => {
-                                    console.log(res);
                                     resetForm({
                                         email: '',
                                         password: ''
@@ -52,15 +52,19 @@ const SignIn = () => {
 
                                     const user_token = res.data.data.token;
                                     const user_data = res.data.data.user;
-                                    setAuth(prevAuth => {
-                                        prevAuth.token = user_token;
-                                        prevAuth.user = user_data;
+                                    setAuth({
+                                        token: user_token,
+                                        user: user_data
                                     });
                                     localStorage.setItem('token', user_token);
+                                    localStorage.setItem(
+                                        'user',
+                                        JSON.stringify(user_data)
+                                    );
                                     setSubmitting(false);
+                                    props.history.push('/dashboard');
                                 })
                                 .catch(({ response }) => {
-                                    console.log(response);
                                     handleError(response);
                                     setSubmitting(false);
                                 });

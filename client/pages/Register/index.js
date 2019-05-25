@@ -8,8 +8,8 @@ import { RegisterValidator } from '@clientValidators/Auth';
 
 const { AuthContext } = context;
 
-const Register = () => {
-    const [auth, setAuth] = useContext(AuthContext);
+const Register = props => {
+    const [auth, setAuth, isAuth, notGuest] = useContext(AuthContext);
     const [errorState, setErrorState] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -19,8 +19,10 @@ const Register = () => {
             : setErrorMessage('Network Error!');
         setErrorState(true);
     };
+
     return (
         <React.Fragment>
+            {notGuest(props)}
             <div
                 className="mt-0 lg:-mt-18 bg-no-repeat bg-center bg-cover flex flex-col items-center min-h-screen"
                 style={{ background: `url(/images/12.jpg)` }}
@@ -56,12 +58,17 @@ const Register = () => {
 
                                     const user_token = res.data.data.token;
                                     const user_data = res.data.data.user;
-                                    setAuth(prevAuth => {
-                                        prevAuth.token = user_token;
-                                        prevAuth.user = user_data;
+                                    setAuth({
+                                        token: user_token,
+                                        user: user_data
                                     });
                                     localStorage.setItem('token', user_token);
+                                    localStorage.setItem(
+                                        'user',
+                                        JSON.stringify(user_data)
+                                    );
                                     setSubmitting(false);
+                                    props.history.push('/dashboard');
                                 })
                                 .catch(({ response }) => {
                                     handleError(response);

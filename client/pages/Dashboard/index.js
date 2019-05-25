@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AuthNavbar from '@components/authNavbar/index';
 import SideNavbar from '@components/sideNavbar/index';
 import Footer from '@components/Footer/index';
 

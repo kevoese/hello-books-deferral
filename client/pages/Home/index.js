@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '@components/Footer';
 import Book from '@components/Book';
+import Navbar from '@components/Navbar';
 
 const Home = () => {
     return (

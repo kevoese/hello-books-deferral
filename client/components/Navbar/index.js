@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import classJoin from 'classnames';
+import context from '@context/authContext';
+import SignedIn from '@components/SignedIn/index';
+import SignedOut from '@components/SignedOut/index';
+
+const { AuthContext } = context;
 
 const Navbar = () => {
+    const [auth, setAuth, isAuth] = useContext(AuthContext);
     const [isVisible, changeVisibility] = useState(false);
     const classToggle = classJoin({
         block: isVisible,
         hidden: !isVisible
     });
+
+    const view = isAuth() ? <SignedOut /> : <SignedIn />;
 
     return (
         <nav className="flex items-center justify-between flex-wrap bg-white-500 pt-5 p-3 z-40">
@@ -61,22 +69,7 @@ const Navbar = () => {
                         FAQs
                     </NavLink>
                 </div>
-                <div className="text-sm text-center lg:mr-5 xl:mr-5">
-                    <NavLink
-                        className="font-raleway inline-block text-sm px-4 py-2 pr-10 pl-10 border-400 rounded-full text-blue-500 border border-blue-500 hover:border-transparent hover:bg-white mt-4 shadow lg:mt-0"
-                        to="/signin"
-                    >
-                        Sign In
-                    </NavLink>
-                </div>
-                <div className="text-sm text-center">
-                    <NavLink
-                        className="font-raleway inline-block text-sm px-4 py-2 pr-10 pl-10 border-500 rounded-full text-white border border-blue-500 bg-blue-500 hover:shadow-md mt-4 shadow lg:mt-0"
-                        to="/signup"
-                    >
-                        Register
-                    </NavLink>
-                </div>
+                {view}
             </div>
         </nav>
     );

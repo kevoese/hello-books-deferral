@@ -5,12 +5,14 @@ import jwt from 'jsonwebtoken';
 const signUp = async (req, res) => {
     const { firstName, lastName, password, email } = req.body;
 
-    const user = await User.query().insert({
-        firstName,
-        lastName,
-        password,
-        email
-    });
+    const user = await User.query()
+        .insert({
+            firstName,
+            lastName,
+            password,
+            email
+        })
+        .returning('*');
 
     res.status(201).jsend(await user.response());
 };
