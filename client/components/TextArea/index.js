@@ -1,8 +1,14 @@
 import React from 'react';
 
-const Input = ({ classes, handleChange, handleBlur, ...rest }) => {
+const Textarea = ({
+    classes,
+    background,
+    handleChange,
+    handleBlur,
+    ...rest
+}) => {
     return (
-        <input
+        <textarea
             {...rest}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -12,4 +18,4 @@ const Input = ({ classes, handleChange, handleBlur, ...rest }) => {
     );
 };
 
-export default Input;
+export default Textarea;

@@ -7,6 +7,7 @@ import Navbar from '@components/Navbar';
 import AuthNavbar from '@components/authNavbar';
 import Register from '@pages/Register';
 import SignIn from '@pages/SignIn';
+import Profile from '@pages/Profile/index';
 import Dashboard from '@pages/Dashboard';
 import BorrowedBooks from '@pages/BorrowedBooks';
 import { BrowserRouter, Route, withRouter } from 'react-router-dom';
@@ -66,6 +67,7 @@ const App = ({ history }) => {
                 <Route path="/borrowed" component={BorrowedBooks} />
                 <Route path="/books/:bookId" component={BookDetails} />
                 <Route path="/borrowed" component={BorrowedBooks} />
+                <AuthRoute path="/profile" component={Profile} />
                 <AuthRoute path="/dashboard" component={Dashboard} />
             </AuthProvider>
         </ToastProvider>

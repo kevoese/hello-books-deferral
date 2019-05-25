@@ -9,14 +9,14 @@ router.get('/', isAuthenticated, profileController.getProfile);
 
 router.get(
     '/:id',
-    isAuthenticated,
+    /* isAuthenticated, */
     profileValidator.checkId,
     profileController.getProfile
 );
 
 router.patch(
     '/',
-    isAuthenticated,
+    /* isAuthenticated, */
     profileValidator.editProfile,
     profileController.editProfile
 );
