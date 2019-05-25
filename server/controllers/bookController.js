@@ -1,5 +1,4 @@
 import Book from '@models/Book';
-import AuthorBook from '@models/AuthorBook';
 import LendingRequest from '@models/LendingRequest';
 import moment from 'moment';
 
@@ -93,44 +92,30 @@ const requestBook = async (req, res) => {
     await LendingRequest.query().insert({
         user: id,
         book: req.params.id,
-        status: 'pending',
-        requestDate: moment(new Date())
+        timesExtended: 0,
+        returned: false,
+        requestDate: moment(new Date()),
+        returnDate: moment(
+            new Date(new Date().setDate(new Date().getDate() + 30))
+        )
     });
 
     return res.status(200).jsend({
-        message: 'Request received, you would be notified when approved'
-    });
-};
-
-const decideBookRequest = async (req, res) => {
-    const { id, email } = req.user;
-
-    await LendingRequest.query()
-        .patch({
-            status: 'approved',
-            approvedDate: moment(new Date()),
-            returned: false,
-            returnDate: moment(
-                new Date(new Date().setDate(new Date().getDate() + 30))
-            )
-        })
-        .where('user', req.params.userId)
-        .where('book', req.params.id);
-
-    return res.status(200).jsend({
-        message: 'Book request approved'
+        message:
+            'Request successful: Please pick this book at the library and return in 30 days from now, you can also extend the return date later'
     });
 };
 
 const extendBorrow = async (req, res) => {
-    const { lendId, oldReturnDate } = req.user;
+    const { lendId, oldReturnDate, timesExtended } = req.user;
 
     await LendingRequest.query().patchAndFetchById(lendId, {
         returnDate: moment(
             new Date(
                 oldReturnDate.setDate(oldReturnDate.getDate() + req.body.days)
             )
-        )
+        ),
+        timesExtended: timesExtended + 1
     });
 
     return res.status(200).jsend({

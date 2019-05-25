@@ -39,9 +39,8 @@ export const createAuthor = () =>
 export const approvedBook = (patronId, theBookId) => ({
     user: patronId,
     book: theBookId,
-    status: 'approved',
+    timesExtended: 0,
     requestDate: moment(new Date()),
-    approvedDate: moment(new Date()),
     returned: false,
     returnDate: moment(new Date(new Date().setDate(new Date().getDate() + 30)))
 });

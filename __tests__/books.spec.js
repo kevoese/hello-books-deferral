@@ -71,6 +71,7 @@ describe('BOOK API ENDPOINTS', () => {
             expect(status).toBe(422);
             expect(body).toMatchSnapshot();
         });
+
         it('should attach authors if provided in request', async () => {
             const book = getBook();
 
@@ -155,7 +156,7 @@ describe('GET ALL BOOKS API ENDPOINT', () => {
         expect(Object.keys(body.data)).toMatchSnapshot();
     });
 
-    it('should return message not exist when book requested doesnt exist', async () => {
+    it('should return message not exist when book requested does not exist', async () => {
         const { status, body } = await server().get(`${booksRoute}/987654`);
 
         expect(status).toBe(404);
@@ -243,8 +244,12 @@ describe.skip('BORROW BOOKS API ENDPOINT', () => {
         await LendingRequest.query().insert({
             user: patronId,
             book: bookId,
-            status: 'pending',
-            requestDate: moment(new Date())
+            timesExtended: 0,
+            returned: false,
+            requestDate: moment(new Date()),
+            returnDate: moment(
+                new Date(new Date().setDate(new Date().getDate() + 30))
+            )
         });
 
         const { body, status } = await server()
@@ -282,7 +287,7 @@ describe.skip('BORROW BOOKS API ENDPOINT', () => {
         const patronToken = response.data.token;
         const patronId = response.data.user.id;
 
-        await LendingRequest.query().insert(approvedBook(patronId, bookId));
+        await LendingRequest.query().insert(approvedBook(9999999, bookId));
 
         const { body, status } = await server()
             .get(`${booksRoute}/${bookId}/borrow`)
@@ -330,7 +335,7 @@ describe.skip('BORROW BOOKS API ENDPOINT', () => {
         await LendingRequest.query().insert(approvedBook(patronId, theBookId));
         await LendingRequest.query()
             .patch({
-                approvedDate: moment(
+                requestDate: moment(
                     new Date(new Date().setDate(new Date().getDate() - 35))
                 ),
                 returnDate: moment(
@@ -343,6 +348,60 @@ describe.skip('BORROW BOOKS API ENDPOINT', () => {
         const { body, status } = await server()
             .patch(`${booksRoute}/${theBookId}/extend`)
             .send({ days: 7 })
+            .set('x-access-token', `${patronToken}`);
+
+        expect(status).toBe(400);
+        expect(body).toMatchSnapshot();
+    });
+
+    it('should not be able to extend a book if number of times for extension >= 3', async () => {
+        const { id: theBookId } = await Book.query().insert({
+            ...getBook({ isbn: '392821-0487301e23' }),
+            copiesAvailable: 1
+        });
+
+        const { body: response } = await server()
+            .post('/api/v1/auth/signup')
+            .send(getUser());
+        const patronToken = response.data.token;
+        const patronId = response.data.user.id;
+
+        await LendingRequest.query().insert(approvedBook(patronId, theBookId));
+        await LendingRequest.query()
+            .patch({ timesExtended: 3 })
+            .where('book', theBookId)
+            .where('user', patronId);
+
+        const { body, status } = await server()
+            .patch(`${booksRoute}/${theBookId}/extend`)
+            .send({ days: 7 })
+            .set('x-access-token', `${patronToken}`);
+
+        expect(status).toBe(400);
+        expect(body).toMatchSnapshot();
+    });
+
+    it('should not be able to extend a book by more than 7 days', async () => {
+        const { id: theBookId } = await Book.query().insert({
+            ...getBook({ isbn: '392821-0487301e23' }),
+            copiesAvailable: 1
+        });
+
+        const { body: response } = await server()
+            .post('/api/v1/auth/signup')
+            .send(getUser());
+        const patronToken = response.data.token;
+        const patronId = response.data.user.id;
+
+        await LendingRequest.query().insert(approvedBook(patronId, theBookId));
+        await LendingRequest.query()
+            .patch({ timesExtended: 1 })
+            .where('book', theBookId)
+            .where('user', patronId);
+
+        const { body, status } = await server()
+            .patch(`${booksRoute}/${theBookId}/extend`)
+            .send({ days: 12 })
             .set('x-access-token', `${patronToken}`);
 
         expect(status).toBe(400);
@@ -364,7 +423,7 @@ describe.skip('BORROW BOOKS API ENDPOINT', () => {
         expect(body).toMatchSnapshot();
     });
 
-    it('should return validation error for book extension', async () => {
+    it('should return validation error for book extension that is not an ineteger', async () => {
         const { body: response } = await server()
             .post('/api/v1/auth/signup')
             .send(getUser());
@@ -414,142 +473,6 @@ describe.skip('BORROW BOOKS API ENDPOINT', () => {
             .set('x-access-token', `${patronToken}`);
 
         expect(status).toBe(400);
-        expect(body).toMatchSnapshot();
-    });
-});
-
-describe.skip('LEND BOOKS API ENDPOINT', () => {
-    const container = {};
-
-    afterAll(async () => {
-        await databaseConnection('lending_requests').truncate();
-        await databaseConnection('books').truncate();
-        server.close();
-    });
-
-    beforeAll(async () => {
-        const superUser = getUser();
-        const { body } = await server()
-            .post('/api/v1/auth/signup')
-            .send(superUser);
-        container.adminId = body.data.user.id;
-        container.adminToken = body.data.token;
-        await User.query().patchAndFetchById(container.adminId, {
-            role: 'admin'
-        });
-    });
-    it('should be able to accept the request for a book', async () => {
-        const { id: theBookId } = await Book.query().insert({
-            ...getBook({ isbn: 'uivb23n0-2mobn0vq' })
-        });
-
-        const { body: response } = await server()
-            .post('/api/v1/auth/signup')
-            .send(getUser());
-        const patronToken = response.data.token;
-        const patronId = response.data.user.id;
-
-        await LendingRequest.query().insert({
-            book: theBookId,
-            user: patronId,
-            status: 'pending',
-            requestDate: moment(new Date())
-        });
-
-        const { adminToken } = container;
-
-        const { body, status } = await server()
-            .patch(`${booksRoute}/${theBookId}/lend/${patronId}`)
-            .set('x-access-token', `${adminToken}`);
-
-        expect(status).toBe(200);
-        expect(body).toMatchSnapshot();
-    });
-
-    it('should not be able to accept the request for a book when borrow limit is exceeded', async () => {
-        const { id: firstBookId } = await Book.query().insert({
-            ...getBook({ isbn: 'bnmdwp932m2p0mlm' })
-        });
-        const { id: secondBookId } = await Book.query().insert({
-            ...getBook({ isbn: 'wbrlm23032mvpbv' })
-        });
-        const { id: thirdBookId } = await Book.query().insert({
-            ...getBook({ isbn: 'bnio asp-qwv 2wisvmo' })
-        });
-        const { id: fourthBookId } = await Book.query().insert({
-            ...getBook({ isbn: 'nebvwoimpas0qwvemp' })
-        });
-
-        const { adminToken } = container;
-
-        const { body: response } = await server()
-            .post('/api/v1/auth/signup')
-            .send(getUser());
-        const patronToken = response.data.token;
-        const patronId = response.data.user.id;
-
-        await LendingRequest.query().insert(
-            approvedBook(patronId, firstBookId)
-        );
-        await LendingRequest.query().insert(
-            approvedBook(patronId, secondBookId)
-        );
-        await LendingRequest.query().insert(
-            approvedBook(patronId, thirdBookId)
-        );
-
-        const { body, status } = await server()
-            .patch(`${booksRoute}/${fourthBookId}/lend/${patronId}`)
-            .set('x-access-token', `${adminToken}`);
-
-        expect(status).toBe(400);
-        expect(body).toMatchSnapshot();
-    });
-
-    it('should encounter validation error when deciding on a requested book', async () => {
-        const { adminToken } = container;
-
-        const { body, status } = await server()
-            .patch(`${booksRoute}/abc/lend/12`)
-            .set('x-access-token', `${adminToken}`);
-
-        expect(status).toBe(422);
-        expect(body).toMatchSnapshot();
-    });
-
-    it('should not be able to accept request for a book if the book is no longer available', async () => {
-        const { id: theBookId } = await Book.query().insert({
-            ...getBook({ isbn: 'vdneo2pbm40lsdvn' }),
-            copiesAvailable: 1
-        });
-
-        const { body: response } = await server()
-            .post('/api/v1/auth/signup')
-            .send(getUser());
-        const patronId = response.data.user.id;
-
-        const { body: otherResponse } = await server()
-            .post('/api/v1/auth/signup')
-            .send(getUser());
-        const toluId = otherResponse.data.user.id;
-
-        await LendingRequest.query().insert(approvedBook(toluId, theBookId));
-
-        // await LendingRequest.query().insert({book: theBookId, user: patronId, status: 'pending', requestDate: new Date() });
-        await LendingRequest.query().insert({
-            user: patronId,
-            book: theBookId,
-            status: 'pending',
-            requestDate: moment(new Date())
-        });
-
-        const { adminToken } = container;
-
-        const { body, status } = await server()
-            .patch(`${booksRoute}/${theBookId}/lend/${patronId}`)
-            .set('x-access-token', `${adminToken}`);
-
-        expect(status).toBe(404);
         expect(body).toMatchSnapshot();
     });
 });

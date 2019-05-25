@@ -33,16 +33,6 @@ router.get(
 );
 
 router.patch(
-    '/:id/lend/:userId',
-    bookValidator.bookUserValidation,
-    authenticate.isAuthenticated,
-    authenticate.isAdmin,
-    bookRequest.checkAvailiability,
-    bookRequest.borrowLimit,
-    bookController.decideBookRequest
-);
-
-router.patch(
     '/:id/extend',
     bookValidator.extendBorrow,
     authenticate.isAuthenticated,
