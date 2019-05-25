@@ -10,11 +10,10 @@ import {
 const signUp = (req, res, next) => {
     /* create validation rule for request fields */
     const rules = {
-        firstName: 'string|required',
-        lastName: 'string|required',
+        firstName: 'alpha|required',
+        lastName: 'alpha|required',
         email: 'required|string|email|unique:users,email',
-        password: 'required|min:8|alpha_numeric|confirmed',
-        settings: 'required'
+        password: 'required|min:8|alpha_numeric|confirmed'
     };
     /* sanitize data object */
     let data = req.body;
@@ -28,6 +27,21 @@ const signUp = (req, res, next) => {
         .catch(errors => {
             res.status(422).jerror('ValidationFailed', errors);
         });
+};
+
+const login = async (req, res, next) => {
+    const rules = { email: 'required|email', password: 'required' };
+
+    let data = req.body;
+    data = sanitize(data, { email: 'trim' });
+
+    try {
+        await validateAll(data, rules, messages);
+
+        return next();
+    } catch (errors) {
+        res.status(422).jerror('ValidationFailed', errors);
+    }
 };
 
 const sendResetLink = (req, res, next) => {
@@ -78,8 +92,8 @@ const resetPassword = (req, res, next) => {
 
 const createUser = (req, res, next) => {
     const rules = {
-        firstName: 'string|required',
-        lastName: 'string|required',
+        firstName: 'alpha|required',
+        lastName: 'alpha|required',
         email: 'required|string|email|unique:users,email'
     };
     let data = req.body;
@@ -96,4 +110,4 @@ const createUser = (req, res, next) => {
 };
 
 /* add other auth validators here */
-export default { signUp, sendResetLink, resetPassword, createUser };
+export default { signUp, login, sendResetLink, resetPassword, createUser };

@@ -44,6 +44,24 @@ Object {
 }
 `;
 
+exports[`AUTH API ENDPOINTS POST LOGIN api/v1/auth/login should reject login if email is not found  1`] = `
+Object {
+  "code": Object {
+    "error": "Email or password is invalid.",
+  },
+  "status": "error",
+}
+`;
+
+exports[`AUTH API ENDPOINTS POST LOGIN api/v1/auth/login should reject login if password is wrong  1`] = `
+Object {
+  "code": Object {
+    "error": "Email or password is invalid.",
+  },
+  "status": "error",
+}
+`;
+
 exports[`AUTH API ENDPOINTS POST PASSWORD RESET api/v1/auth/reset should not send mail if user email is invalid 1`] = `
 Object {
   "code": "ValidationFailed",
@@ -115,9 +133,8 @@ Object {
 
 exports[`AUTH API ENDPOINTS POST SIGN UP api/v1/auth/signup should sign up user with valid inputs 1`] = `
 Array [
-  "message",
-  "token",
   "user",
+  "token",
 ]
 `;
 

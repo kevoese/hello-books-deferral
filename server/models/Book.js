@@ -29,7 +29,7 @@ class Book extends Model {
 
     static relationMappings() {
         return {
-            book: {
+            authors: {
                 relation: Model.ManyToManyRelation,
                 modelClass: Author,
                 join: {

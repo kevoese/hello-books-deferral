@@ -13,19 +13,31 @@ const signUp = async (req, res) => {
         settings
     });
 
-    const token = jwt.sign(
-        { id: user.id, email: user.email },
-        config.auth.secret,
-        {
-            expiresIn: '12h'
-        }
-    );
+    res.status(201).jsend(await user.response());
+};
 
-    res.status(201).jsend({
-        message: 'User registered',
-        token,
-        user
-    });
+const login = async (req, res) => {
+    const { email, password } = req.body;
+
+    const user = await User.query()
+        .where({
+            email
+        })
+        .first();
+
+    if (!user) {
+        return res.status(400).jerror({
+            error: 'Email or password is invalid.'
+        });
+    }
+
+    if (!user.passwordsMatch(password)) {
+        return res.status(400).jerror({
+            error: 'Email or password is invalid.'
+        });
+    }
+
+    res.jsend(await user.response());
 };
 
 const verifyEmail = async (req, res) => {
@@ -96,6 +108,7 @@ const createUser = async (req, res) => {
 };
 
 export default {
+    login,
     signUp,
     verifyEmail,
     createUser,

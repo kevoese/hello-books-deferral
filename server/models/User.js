@@ -1,11 +1,26 @@
 import crypto from 'crypto';
 import config from '@config';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import Mail from 'friendly-mail';
 import { Model } from 'objection';
 
 class User extends Model {
     static tableName = 'users';
+
+    passwordsMatch(password) {
+        return bcrypt.compareSync(password, this.password);
+    }
+
+    getToken() {
+        return jwt.sign(
+            { id: this.id, email: this.email },
+            config.auth.secret,
+            {
+                expiresIn: '12h'
+            }
+        );
+    }
 
     async $beforeInsert(context) {
         await super.$beforeInsert(context);
@@ -50,6 +65,27 @@ class User extends Model {
             });
         await this.sendResetEmail(token);
     }
+    /**
+     *
+     * Get a customer response object for the frontend
+     *
+     * @return {Promise}
+     *
+     */
+    async response() {
+        return {
+            user: {
+                firstName: this.firstName,
+                lastName: this.lastName,
+                email: this.email,
+                id: this.id,
+                avatar: this.avatar,
+                bio: this.bio,
+                role: this.role
+            },
+            token: await this.getToken()
+        };
+    }
 
     async sendResetEmail(token) {
         await new Mail('reset-password')
@@ -57,7 +93,7 @@ class User extends Model {
             .subject('You requested for a password reset.')
             .data({
                 name: this.firstName,
-                url: `${config.server.url}/api/v1/auth/reset/${token}`
+                url: `${config.server.url}/reset-password/${token}`
             })
             .send();
     }

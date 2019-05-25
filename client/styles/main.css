@@ -1,0 +1,46 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.h-60 {
+    height: 15rem;
+}
+
+.bottom-2 {
+    bottom: 2rem;
+}
+
+.badge-overdue {
+  width: 0;
+  height: 0;
+  border-top: 70px solid #FC8C69;
+  border-left: 70px solid transparent;
+}
+
+.badge-text {
+    position: relative;
+    margin-left: -57px;
+    margin-top: -72px;
+}
+
+.h-72 {
+    height: 18rem;
+}
+
+.h-80 {
+    height: 20rem;
+}
+
+.h-86 {
+    height: 22rem;
+}
+
+.bottom-1 {
+    bottom: 1rem;
+}
+
+.w-72 {
+    width: 18rem;
+}

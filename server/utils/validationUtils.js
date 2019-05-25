@@ -4,14 +4,15 @@ import { Vanilla } from 'indicative/builds/formatters';
 import Validator from 'indicative/builds/validator';
 import User from '@models/User';
 import Fine from '@models/Fine';
+import Author from '@models/Author';
 
 /* custom user friendly error messages */
 export const messages = {
     required: '{{ field }} is required',
     string: '{{ field }} is not a string',
     unique: '{{ field }} must be unique',
+    number: '{{ field }} must be an integer',
     itExists: '{{ field }} not found',
-    mustContain: '{{ field }} content not accepted',
     email: '{{ field }} is invalid',
     min: '{{ field }} must be more than {{ argument.0 }}',
     alpha_numeric: 'only numbers and letters are allowed for {{ field }}',
@@ -61,19 +62,26 @@ validations.itExists = async (data, field, message, args, get) => {
     if (!value) return;
     const table = args[0];
     const column = args[1];
-
     /*check to see if a fine exist*/
-    let found = true;
 
-    if (table === 'fines') {
-        [found] = await Fine.query().where(column, value);
+    try {
+        let found = true;
+        if (table === 'fines') {
+            [found] = await Fine.query().where(column, value);
+        }
+
+        if (table === 'users') {
+            [found] = await User.query().where(column, value);
+        }
+
+        if (table === 'authors') {
+            [found] = await Author.query().where(column, value);
+        }
+
+        if (!found) throw message;
+    } catch (e) {
+        throw message;
     }
-
-    if (table === 'users') {
-        [found] = await User.query().where(column, value);
-    }
-
-    if (!found) throw message;
 };
 
 export const validatorInstance = Validator(

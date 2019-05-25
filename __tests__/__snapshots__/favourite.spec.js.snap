@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FAVOURITE API ENDPOINTS Should unfavourite an author 1`] = `
+Array [
+  "status",
+  "data",
+]
+`;
+
+exports[`FAVOURITE API ENDPOINTS it should favourite an author 1`] = `
+Array [
+  "status",
+  "data",
+]
+`;

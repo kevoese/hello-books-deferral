@@ -7,3 +7,4 @@ coverage
 yarn.lock
 vim.exe.stackdump
 build
+yarn.lock

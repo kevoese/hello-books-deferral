@@ -3,8 +3,8 @@ import { equals } from 'indicative/builds/validations';
 
 const update = (req, res, next) => {
     const rules = {
-        firstName: 'required|string',
-        lastName: 'required|string'
+        firstName: 'required|alpha',
+        lastName: 'required|alpha'
     };
     let data = req.body;
     data = sanitize(data, { name: 'trim' });

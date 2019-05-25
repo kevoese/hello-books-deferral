@@ -7,7 +7,7 @@ let userToken;
 let userId;
 let user;
 
-describe('PROFILES API ENDPOINTS', () => {
+describe.skip('PROFILES API ENDPOINTS', () => {
     beforeAll(async () => {
         await databaseConnection('users').truncate();
         await databaseConnection.migrate.latest();

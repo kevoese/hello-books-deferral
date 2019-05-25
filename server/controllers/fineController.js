@@ -30,14 +30,4 @@ const getFine = async (req, res) => {
     return res.status(200).jsend(userFine);
 };
 
-const deleteFine = async (req, res) => {
-    const { fineId } = req.params;
-
-    await Fine.query().deleteById(fineId);
-
-    return res.status(200).jsend({
-        message: 'Fine succesfully deleted'
-    });
-};
-
-export default { addFine, getFine, getFines, deleteFine };
+export default { addFine, getFine, getFines };

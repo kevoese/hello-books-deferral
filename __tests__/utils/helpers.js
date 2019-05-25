@@ -1,6 +1,7 @@
 import faker from 'faker';
 import moment from 'moment';
 import User from '@models/User';
+import Author from '@models/Author';
 import Fine from '@models/Fine';
 import jwt from 'jsonwebtoken';
 import config from '@config';
@@ -36,6 +37,11 @@ export const createUser = user =>
             in_app_notify: 0
         },
         role: user.role || 'patron'
+    });
+
+export const createAuthor = () =>
+    Author.query().insert({
+        name: 'John Doe'
     });
 
 export const approvedBook = (patronId, theBookId) => ({
