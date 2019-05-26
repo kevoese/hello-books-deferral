@@ -1,12 +1,10 @@
 import React from 'react';
-import AuthNavbar from '@components/authNavbar/index';
-import SideNavbar from '@components/sideNavbar/index';
-import Footer from '../../components/Footer/index';
+import SideNavbar from '@components/sideNavbar';
+import Footer from '@components/Footer';
 
 const Dashboard = () => {
     return (
         <React.Fragment>
-            <AuthNavbar />
             <div className="flex md:flex-row flex-wrap min-h-screen">
                 <SideNavbar />
                 <div className="w-full md:w-5/6 bg-gray-250 text-center text-gray-700 ">

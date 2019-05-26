@@ -4,7 +4,6 @@ import axios from 'axios';
 import InputForm from '@components/InputForm';
 import Button from '@components/Button';
 import { ResetPasswordValidator } from '@clientValidators/Auth';
-import Navbar from '@components/Navbar';
 
 const ResetPassword = ({ match, history }) => {
     return (
@@ -26,7 +25,10 @@ const ResetPassword = ({ match, history }) => {
                             passwordConfirmation: ''
                         }}
                         validationSchema={ResetPasswordValidator}
-                        onSubmit={(values, { setSubmitting, resetForm, setError }) => {
+                        onSubmit={(
+                            values,
+                            { setSubmitting, resetForm, setError }
+                        ) => {
                             values.token = match.params.token;
                             axios
                                 .patch('/api/v1/auth/reset', values)
@@ -37,10 +39,15 @@ const ResetPassword = ({ match, history }) => {
                                     });
                                     setSubmitting(false);
                                     // flash success
-                                    history.push('/signin')
+                                    history.push('/signin');
                                 })
                                 .catch(({ response }) => {
-                                    response.data && response.data.message && response.data.message[0] && setError(response.data.message[0].message);
+                                    response.data &&
+                                        response.data.message &&
+                                        response.data.message[0] &&
+                                        setError(
+                                            response.data.message[0].message
+                                        );
                                     setSubmitting(false);
                                 });
                         }}
