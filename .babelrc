@@ -20,7 +20,7 @@
                     "@auth": "./server/middleware/auth",
                     "@book": "./server/middleware/book",
                     "@client": "./client",
-                    "@clientutils": "./client/utils",
+                    "@clientUtils": "./client/utils",
                     "@components": "./client/components",
                     "@context": "./client/context",
                     "@controllers": "./server/controllers",
