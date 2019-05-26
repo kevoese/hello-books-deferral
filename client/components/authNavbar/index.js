@@ -6,6 +6,10 @@ const { AuthContext } = context;
 
 const AuthNavbar = () => {
     const [auth, setAuth] = useContext(AuthContext);
+    const img =
+        auth.user && auth.user.avatar !== null
+            ? auth.user.avatar
+            : 'https://via.placeholder.com/150';
     return (
         <nav className="flex items-center justify-between flex-wrap bg-white-500 p-3 shadow-lg">
             <div className="flex items-center flex-shrink-0 text-dark mr-6">
@@ -24,10 +28,7 @@ const AuthNavbar = () => {
                     </div>
                 </div>
 
-                <img
-                    className="h-12 rounded-full"
-                    src={auth && auth.user.avatar || 'https://via.placeholder.com/150'}
-                />
+                <img className="h-12 rounded-full" src={img} />
             </div>
         </nav>
     );

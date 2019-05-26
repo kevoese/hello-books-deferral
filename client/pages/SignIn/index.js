@@ -10,7 +10,7 @@ import { SignInValidator } from '@clientValidators/Auth';
 const { AuthContext } = context;
 
 const SignIn = props => {
-    const [auth, setAuth, isAuth, notGuest] = useContext(AuthContext);
+    const [auth, setAuth] = useContext(AuthContext);
     const [errorState, setErrorState] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 

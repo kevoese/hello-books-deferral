@@ -9,7 +9,7 @@ import { RegisterValidator } from '@clientValidators/Auth';
 const { AuthContext } = context;
 
 const Register = props => {
-    const [auth, setAuth, isAuth, notGuest] = useContext(AuthContext);
+    const [auth, setAuth] = useContext(AuthContext);
     const [errorState, setErrorState] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -22,7 +22,6 @@ const Register = props => {
 
     return (
         <React.Fragment>
-            {notGuest(props)}
             <div
                 className="mt-0 lg:-mt-18 bg-no-repeat bg-center bg-cover flex flex-col items-center min-h-screen"
                 style={{ background: `url(/images/12.jpg)` }}

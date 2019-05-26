@@ -16,23 +16,27 @@ const AuthProvider = props => {
         return false;
     };
 
-    const notGuest = prop_value => {
-        if (auth.user) {
-            let { from } = prop_value.location.state || {
-                from: { pathname: '/dashboard' }
-            };
-            return <Redirect to={from} />;
+    const isAdmin = () => {
+        if (
+            (auth.user && auth.user.role === 'admin') ||
+            (auth.user && auth.user.role === 'super_admin')
+        ) {
+            return true;
         }
+        return false;
     };
 
-    // const isAdmin = () => {
-    //     if(this.auth.user.role === 'admin') {
-    //         return true;
-    //     }
-    //     return false;
-    // }
+    const isSuperAdmin = () => {
+        if (auth.user && auth.user.role === 'super_admin') {
+            return true;
+        }
+        return false;
+    };
+
     return (
-        <AuthContext.Provider value={[auth, setAuth, isAuth, notGuest]}>
+        <AuthContext.Provider
+            value={[auth, setAuth, isAuth, isAdmin, isSuperAdmin]}
+        >
             {props.children}
         </AuthContext.Provider>
     );

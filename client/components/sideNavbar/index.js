@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import context from '@context/authContext';
+import { Redirect } from 'react-router-dom';
 
 const { AuthContext } = context;
 
@@ -11,6 +12,7 @@ const SideNavbar = () => {
         setAuth({ token: null, user: null });
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        <Redirect to="/" />;
     };
     return (
         <React.Fragment>

@@ -2,20 +2,16 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import classJoin from 'classnames';
 import context from '@context/authContext';
-import SignedIn from '@components/SignedIn/index';
-import SignedOut from '@components/SignedOut/index';
+import IsLoggedIn from '@components/IsLoggedIn';
 
 const { AuthContext } = context;
 
 const Navbar = () => {
-    const [auth, setAuth, isAuth] = useContext(AuthContext);
     const [isVisible, changeVisibility] = useState(false);
     const classToggle = classJoin({
         block: isVisible,
         hidden: !isVisible
     });
-
-    const view = isAuth() ? <SignedOut /> : <SignedIn />;
 
     return (
         <nav className="flex items-center justify-between flex-wrap bg-white-500 pt-5 p-3 z-40">
@@ -69,7 +65,7 @@ const Navbar = () => {
                         FAQs
                     </NavLink>
                 </div>
-                {view}
+                <IsLoggedIn />
             </div>
         </nav>
     );

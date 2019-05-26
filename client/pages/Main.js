@@ -19,7 +19,6 @@ import AdminDashboard from '@pages/AdminDashboard';
 import AdminBooksDashboard from '@pages/AdminBooksDashboard';
 import { Redirect } from 'react-router-dom';
 
-
 const { AuthProvider, AuthContext } = context;
 const { ToastProvider } = toastContext;
 
@@ -95,6 +94,28 @@ const AuthRoute = ({ component: Component, props, ...rest }) => {
     );
 };
 
+const AdminRoute = ({ component: Component, props, ...rest }) => {
+    const [auth, setAuth, isAuth, isAdmin] = useContext(AuthContext);
+
+    return (
+        <Route
+            {...rest}
+            render={props =>
+                isAdmin() ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: '/dashboard',
+                            state: { from: props.location }
+                        }}
+                    />
+                )
+            }
+        />
+    );
+};
+
 const OnlyGuestRoute = ({ component: Component, props, ...rest }) => {
     const [auth, setAuth, isAuth] = useContext(AuthContext);
 
@@ -116,7 +137,6 @@ const OnlyGuestRoute = ({ component: Component, props, ...rest }) => {
         />
     );
 };
-
 
 const AppWithRouter = withRouter(App);
 

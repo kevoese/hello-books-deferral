@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SideNavbar from '@components/sideNavbar/index';
+import AdminSideNav from '@components/AdminSideNav';
 import Footer from '@components/Footer/index';
 
 const Dashboard = () => {
     return (
         <React.Fragment>
             <div className="flex md:flex-row flex-wrap min-h-screen">
-                <SideNavbar />
+                <AdminSideNav />
                 <div className="w-full md:w-5/6 bg-gray-20 text-center text-gray-700 ">
                     <div className="m-2">
                         <div className="h-32 bg-white flex py-4">
