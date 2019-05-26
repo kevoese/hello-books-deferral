@@ -32,7 +32,7 @@ const App = ({ history }) => {
                 ([
                     '/dashboard',
                     '/admin-dashboard',
-                    '/admin-libraryCatalogue'
+                    '/admin/library'
                 ] && <AuthNavbar />)}
 
             <Route exact path="/" component={Home} />
@@ -45,7 +45,7 @@ const App = ({ history }) => {
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/admin-dashboard" component={AdminDashboard} />
             <Route
-                path="/admin-libraryCatalogue"
+                path="/admin/library"
                 component={AdminBooksDashboard}
             />
         </AuthProvider>

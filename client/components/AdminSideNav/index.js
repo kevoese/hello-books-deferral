@@ -26,7 +26,7 @@ const AdminSideNav = () => {
                     </span>
                 </NavLink>
                 <NavLink
-                    to="/admin-libraryCatalogue"
+                    to="/admin/library"
                     className="flex pb-0 cursor-pointer"
                     activeClassName="border-l-4 border-blue-450  font-bold text-white"
                 >
