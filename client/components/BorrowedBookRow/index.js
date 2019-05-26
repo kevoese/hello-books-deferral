@@ -15,7 +15,7 @@ const BookRow = props => {
         <TableContent>No content</TableContent>
     );
     return (
-        <section className="border-b flex bg-transparent border-gray-300">
+        <section className="border-b flex bg-transparent hover:bg-gray-10 border-gray-300">
             {List}
         </section>
     );

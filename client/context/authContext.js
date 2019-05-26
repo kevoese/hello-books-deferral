@@ -26,6 +26,16 @@ const AuthProvider = props => {
         return false;
     };
 
+    const isPatron = () => {
+        if (
+            (auth.user && auth.user.role === 'patron')
+        ) {
+            return true;
+        }
+        return false;
+    };
+    
+
     const isSuperAdmin = () => {
         if (auth.user && auth.user.role === 'super_admin') {
             return true;
@@ -35,7 +45,7 @@ const AuthProvider = props => {
 
     return (
         <AuthContext.Provider
-            value={[auth, setAuth, isAuth, isAdmin, isSuperAdmin]}
+            value={[auth, setAuth, isAuth, isAdmin, isSuperAdmin, isPatron]}
         >
             {props.children}
         </AuthContext.Provider>

@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import context from '@context/authContext';
 
 const { AuthContext } = context;
 
-const SignedIn = ({ auth }) => {
+const SignedIn = ({ auth, isPatron }) => {
     return (
         <React.Fragment>
             <div className="text-sm text-center lg:mr-5 xl:mr-5">
@@ -20,9 +20,11 @@ const SignedIn = ({ auth }) => {
                                 'https://via.placeholder.com/150'
                             }
                         />
-                        <span className="ml-4 font-raleway text-lg">
-                            {auth.user.firstName}
-                        </span>
+                        <Link to={isPatron() ? '/dashboard' : '/admin-dashboard'}>
+                            <span className="ml-4 font-raleway text-lg">
+                                Hello, {auth.user.firstName}
+                            </span>
+                        </Link>
                     </NavLink>
                 </div>
             </div>
@@ -54,9 +56,9 @@ const SignedOut = () => (
 );
 
 const IsLoggedIn = () => {
-    const [auth, setAuth, isAuth] = useContext(AuthContext);
+    const [auth, setAuth, isAuth, isAdmin, isSuperAdmin, isPatron] = useContext(AuthContext);
 
-    const view = isAuth() ? <SignedIn auth={auth} /> : <SignedOut />;
+    const view = isAuth() ? <SignedIn auth={auth} isPatron={isPatron}  /> : <SignedOut />;
     return <React.Fragment>{view}</React.Fragment>;
 };
 

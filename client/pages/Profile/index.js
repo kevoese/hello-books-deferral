@@ -14,7 +14,7 @@ let initialFormValues = {
     lastName: '',
     email: '',
     bio: '',
-    avatar: '/images/userimage.png'
+    avatar: 'https://via.placeholder.com/150'
 };
 let userId;
 let selectedImage = '';
@@ -22,7 +22,7 @@ const Profile = () => {
     const inputEl = useRef(null);
     const { AuthContext } = context;
     const { ToastContext } = toastcontext;
-    const [auth] = useContext(AuthContext);
+    const [auth, setAuth] = useContext(AuthContext);
     const [toast, showToast] = useContext(ToastContext);
 
     if (auth.user) {
@@ -31,7 +31,7 @@ const Profile = () => {
             lastName: auth.user.lastName || '',
             email: auth.user.email || '',
             bio: auth.user.bio || '',
-            avatar: auth.user.avatar || '/images/userimage.png'
+            avatar: auth.user.avatar || 'https://via.placeholder.com/150'
         };
         userId = auth.user.id;
     }
@@ -45,6 +45,12 @@ const Profile = () => {
         const files = event.target.files;
         if (files && files[0]) {
             selectedImage = files[0];
+
+            if (!selectedImage.type.match(/image/)) {
+                showToast('error', 'Please select only an image.')
+                return
+            }
+            
             setprofileImageName(event.target.value.split(/(\\|\/)/g).pop());
             const reader = new FileReader();
             reader.onload = e => setProfileImage(e.target.result);
@@ -119,6 +125,14 @@ const Profile = () => {
                                             'success',
                                             'Profile updated Successfully'
                                         );
+                                        setAuth({
+                                            token: auth.token,
+                                            user: res.data.data
+                                        })
+                                        localStorage.setItem(
+                                            'user',
+                                            JSON.stringify(res.data.data)
+                                        );
                                         resetForm({
                                             firstName:
                                                 res.data.data.firstName || '',
@@ -130,7 +144,7 @@ const Profile = () => {
                                         selectedImage = '';
                                         setProfileImage(
                                             res.data.data.avatar ||
-                                                '/images/userimage.png'
+                                                'https://via.placeholder.com/150'
                                         );
                                     } catch (e) {
                                         showToast(
@@ -256,12 +270,12 @@ const Profile = () => {
                                                 </button>
                                                 <h4>{profileImageName}</h4>
                                                 {profileImage !=
-                                                    '/images/userimage.png' && (
+                                                    'https://via.placeholder.com/150' && (
                                                     <Button
                                                         clicked={() => {
                                                             selectedImage = '';
                                                             setProfileImage(
-                                                                '/images/userimage.png'
+                                                                auth.user.avatar || 'https://via.placeholder.com/150'
                                                             );
                                                             setprofileImageName(
                                                                 ''
