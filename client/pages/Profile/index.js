@@ -22,7 +22,7 @@ const Profile = () => {
     const inputEl = useRef(null);
     const { AuthContext } = context;
     const [auth] = useContext(AuthContext);
-    console.log(auth.user);
+
     if (auth.user) {
         initialFormValues = {
             firstName: auth.user.firstName || '',
@@ -40,7 +40,6 @@ const Profile = () => {
     const CLOUDINARY_UPLOAD_PRESET = 'hwmdjyvu';
 
     const selectProfileImage = event => {
-        console.log(event.target.value);
         const files = event.target.files;
         if (files && files[0]) {
             selectedImage = files[0];
@@ -73,7 +72,6 @@ const Profile = () => {
                                     { setStatus, setSubmitting, resetForm }
                                 ) => {
                                     try {
-                                        console.log(profileImage);
                                         if (selectedImage) {
                                             const formdata = new FormData();
                                             formdata.append(
@@ -95,7 +93,6 @@ const Profile = () => {
                                                     data: formdata
                                                 }
                                             );
-                                            console.log(cloudinaryResponse);
                                             values.avatar =
                                                 cloudinaryResponse.data.secure_url;
                                         }
@@ -108,7 +105,6 @@ const Profile = () => {
                                             `/api/v1/profile/${userId}`,
                                             values
                                         );
-                                        console.log(res);
                                         resetForm({
                                             firstName:
                                                 res.data.data.firstName || '',
@@ -123,7 +119,6 @@ const Profile = () => {
                                                 '/images/userimage.png'
                                         );
                                     } catch (e) {
-                                        console.log(e);
                                         setStatus(e);
                                         setSubmitting(false);
                                     }

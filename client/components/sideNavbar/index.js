@@ -76,6 +76,17 @@ const SideNavbar = () => {
                         My Profile
                     </div>
                 </div>
+                <NavLink to="/profile" className="flex pb-0 cursor-pointer">
+                    <div className="w-1/4  text-center h-12 flex justify-center items-center">
+                        <img
+                            className="h-6  fill-current"
+                            src="/images/user.svg"
+                        />
+                    </div>
+                    <div className="w-3/4 h-12 flex justify-start items-center ml-8">
+                        My Profile
+                    </div>
+                </NavLink>
                 <div className="flex pb-0 cursor-pointer" onClick={signOut}>
                     <div className="w-1/4  text-center h-12 flex justify-center items-center">
                         <img
