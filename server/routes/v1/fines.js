@@ -14,6 +14,14 @@ router.post(
 );
 
 router.get(
+    '/allFines',
+    isAuthenticated,
+    isAdmin,
+    fineValidator.getAllFines,
+    fineController.getAllFines
+);
+
+router.get(
     '/:fineId',
     isAuthenticated,
     isAdmin,

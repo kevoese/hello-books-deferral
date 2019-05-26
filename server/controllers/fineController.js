@@ -6,6 +6,16 @@ const getFines = async (req, res) => {
     return res.jsend(userFines);
 };
 
+const getAllFines = async (req, res) => {
+    const { page, limit } = req.query;
+
+    const fines = await Fine.query()
+        .select()
+        .page(page || 1, limit || 1);
+
+    return res.status(200).jsend(fines);
+};
+
 const addFine = async (req, res) => {
     const { description, amount, type } = req.body;
     const user_id = req.params.userId;
@@ -30,4 +40,4 @@ const getFine = async (req, res) => {
     return res.status(200).jsend(userFine);
 };
 
-export default { addFine, getFine, getFines };
+export default { addFine, getFine, getFines, getAllFines };

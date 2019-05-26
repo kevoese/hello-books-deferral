@@ -30,6 +30,26 @@ const addFine = (req, res, next) => {
         });
 };
 
+const getAllFines = (req, res, next) => {
+    const rules = {
+        page: 'number',
+        limit: 'number'
+    };
+
+    const data = req.query;
+    const messages = {
+        number: '{{ field }} is expected to be a an integer'
+    };
+
+    validateAll(data, rules, messages)
+        .then(() => {
+            next();
+        })
+        .catch(errors => {
+            res.status(422).jerror('ValidationFailed', errors);
+        });
+};
+
 const checkId = (req, res, next) => {
     const rules = {
         fineId: 'required|number|itExists:fines,id'
@@ -51,4 +71,4 @@ const checkId = (req, res, next) => {
         });
 };
 
-export default { addFine, checkId };
+export default { addFine, checkId, getAllFines };
