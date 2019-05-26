@@ -1,49 +1,58 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-const SideNavbar = () => {
+const AdminSideNav = () => {
     return (
         <React.Fragment>
-            <div className="relative w-full md:w-1/6 bg-gray-960 text-center  text-gray-500">
+            <div className="w-full md:w-1/6 bg-gray-800 text-center  text-gray-20">
+                <div className="flex pb-0 ">
+                    <div className="w-1/4 bg-gray-950 text-center h-8 flex justify-center items-center" />
+                    <div className="w-3/4 h-8 flex justify-start items-center text-white ml-8 " />
+                </div>
+
                 <NavLink
-                    to="/dashboard"
-                    exact
+                    to="/admin-dashboard"
                     className="flex pb-0 cursor-pointer"
+                    activeClassName="border-l-4 border-blue-450  font-bold text-white"
                 >
-                    <div className="w-1/4 text-center h-12 flex justify-center items-center">
+                    <div className="w-1/4 bg-gray-950 text-center h-12 flex justify-center items-center">
                         <img
                             className="h-6 white fill-current"
                             src="/images/home-4-line.svg"
                         />
                     </div>
-                    <div className="w-3/4 h-12 flex justify-start items-center ml-8">
-                        Dashboard
-                    </div>
+                    <span className="w-3/4 h-12 flex justify-start items-center    ml-8 ">
+                        Admin Dashboard
+                    </span>
                 </NavLink>
-                <NavLink to="/borrowed" className="flex pb-0 cursor-pointer">
-                    <div className="w-1/4 text-center h-12 flex justify-center items-center">
+                <NavLink
+                    to="/admin/library"
+                    className="flex pb-0 cursor-pointer"
+                    activeClassName="border-l-4 border-blue-450  font-bold text-white"
+                >
+                    <div className="w-1/4  bg-gray-950 text-center h-12 flex justify-center items-center">
                         <img
                             className="h-6  fill-current"
                             src="/images/book.svg"
                         />
                     </div>
-                    <div className="w-3/4 h-12 flex justify-start items-center ml-8">
-                        Borrowed Books
+                    <div className="w-3/4 h-12 flex justify-start items-center   ml-8">
+                        Books
                     </div>
                 </NavLink>
                 <div className="flex pb-0 cursor-pointer">
-                    <div className="w-1/4  text-center h-12 flex justify-center items-center">
+                    <div className="w-1/4 bg-gray-950 text-center h-12 flex justify-center items-center">
                         <img
                             className="h-6  fill-current"
                             src="/images/b-books.svg"
                         />
                     </div>
                     <div className="w-3/4 h-12 flex justify-start items-center ml-8">
-                        Favourite Books
+                        Borrowed Books
                     </div>
                 </div>
                 <div className="flex pb-0 cursor-pointer">
-                    <div className="w-1/4  text-center h-12 flex justify-center items-center">
+                    <div className="w-1/4 bg-gray-950  text-center h-12 flex justify-center items-center">
                         <img
                             className="h-6  fill-current"
                             src="/images/fines.svg"
@@ -54,7 +63,7 @@ const SideNavbar = () => {
                     </div>
                 </div>
                 <div className="flex pb-0 cursor-pointer">
-                    <div className="w-1/4  text-center h-12 flex justify-center items-center">
+                    <div className="w-1/4 bg-gray-950  text-center h-12 flex justify-center items-center">
                         <img
                             className="h-6  fill-current"
                             src="/images/user.svg"
@@ -64,10 +73,13 @@ const SideNavbar = () => {
                         My Profile
                     </div>
                 </div>
-                <div className="absolute w-3/12 h-full bg-gray-30 inset-y-0 left-0" />
+                <div className="flex pb-0 ">
+                    <div className="w-1/4 h-screen bg-gray-950 text-center h-8 flex justify-center items-center" />
+                    <div className="w-3/4  flex justify-start items-center text-white ml-8 " />
+                </div>
             </div>
         </React.Fragment>
     );
 };
 
-export default SideNavbar;
+export default AdminSideNav;

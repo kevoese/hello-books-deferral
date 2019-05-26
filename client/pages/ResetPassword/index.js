@@ -4,7 +4,6 @@ import axios from 'axios';
 import InputForm from '@components/InputForm';
 import Button from '@components/Button';
 import { ResetPasswordValidator } from '@clientValidators/Auth';
-import Navbar from '@components/Navbar';
 
 const ResetPassword = ({ match, history }) => {
     return (

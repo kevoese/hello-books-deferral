@@ -1,15 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import AuthNavbar from '@components/authNavbar/index';
 import SideNavbar from '@components/sideNavbar/index';
-import Footer from '../../components/Footer/index';
+import Footer from '@components/Footer/index';
 
 const Dashboard = () => {
     return (
         <React.Fragment>
-            <AuthNavbar />
             <div className="flex md:flex-row flex-wrap min-h-screen">
                 <SideNavbar />
-                <div className="w-full md:w-5/6 bg-gray-250 text-center text-gray-700 ">
+                <div className="w-full md:w-5/6 bg-gray-20 text-center text-gray-700 ">
                     <div className="m-2">
                         <div className="h-32 bg-white flex py-4">
                             <div className="w-1/3 border-gray-100 border-r-2">
@@ -33,20 +33,14 @@ const Dashboard = () => {
                                     </h2>
 
                                     <div className="flex justify-around mt-4">
-                                        <div
-                                            className="relative flex flex-col shadow-md h-60 w-3/4 mt-2 bg-transparent
-              lg:h-72 lg:w-1/3 mx-4"
-                                        >
+                                        <div className="relative flex flex-col shadow-md h-60 w-3/4 mt-2 bg-transparent lg:h-72 lg:w-1/3 mx-4">
                                             <div className="flex justify-center mt-6">
                                                 <img
                                                     src="/images/notebook.png"
                                                     className="h-24 w-24 justify-center z-30"
                                                 />
                                             </div>
-                                            <div
-                                                className="absolute inset-x-0 bottom-2 border border-gray-100 h-32 mb-2 mx-4 
-                  flex flex-row p-2 justify-between"
-                                            >
+                                            <div className="absolute inset-x-0 bottom-2 border border-gray-100 h-32 mb-2 mx-4 flex flex-row p-2 justify-between">
                                                 <div className="flex flex-col w-3/5 mt-12">
                                                     <p className="text-left tracking-wider font-semibold text-base font-robotoMono">
                                                         Vuejs cookbook
@@ -68,10 +62,7 @@ const Dashboard = () => {
                                             </button>
                                         </div>
 
-                                        <div
-                                            className="relative flex flex-col shadow-md h-60 w-3/4 mt-2 bg-transparent
-              lg:h-72 lg:w-1/3 mx-4"
-                                        >
+                                        <div className="relative flex flex-col shadow-md h-60 w-3/4 mt-2 bg-transparent lg:h-72 lg:w-1/3 mx-4">
                                             <div className="flex justify-center mt-6">
                                                 <img
                                                     src="/images/notebook.png"
@@ -83,10 +74,7 @@ const Dashboard = () => {
                                                     overdue
                                                 </div>
                                             </div>
-                                            <div
-                                                className="absolute inset-x-0 bottom-2 border border-gray-100 h-32 mb-2 mx-4 
-                  flex flex-row p-2 justify-between"
-                                            >
+                                            <div className="absolute inset-x-0 bottom-2 border border-gray-100 h-32 mb-2 mx-4 flex flex-row p-2 justify-between">
                                                 <div className="flex flex-col w-3/5 mt-12">
                                                     <p className="text-left tracking-wider font-semibold text-base font-robotoMono">
                                                         Vuejs cookbook
@@ -107,10 +95,11 @@ const Dashboard = () => {
                                             </button>
                                         </div>
                                     </div>
-
-                                    <button className="bg-transparent text-blue-700 my-8 py-1 px-6 border border-blue-500  rounded-full">
-                                        View All
-                                    </button>
+                                    <Link to="/borrowed">
+                                        <button className="bg-transparent cursor-pointer text-blue-700 my-8 py-1 px-6 border border-blue-500  rounded-full">
+                                            View All
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="w-2/6">

@@ -25,6 +25,13 @@ router.get(
     bookController.requestBook
 );
 
+router.get(
+    '/borrow',
+    authenticate.isAuthenticated,
+    authenticate.isPatron,
+    bookController.borrowedBooks
+);
+
 router.patch(
     '/:id/lend/:userId',
     bookValidator.bookUserValidation,

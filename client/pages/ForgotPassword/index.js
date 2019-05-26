@@ -4,12 +4,10 @@ import axios from 'axios';
 import InputForm from '@components/InputForm';
 import Button from '@components/Button';
 import { ForgotPasswordValidator } from '@clientValidators/Auth';
-import Navbar from '@components/Navbar';
 
 const ForgotPassword = () => {
     return (
         <React.Fragment>
-            <Navbar />
             <div
                 className="mt-0 lg:-mt-18 bg-no-repeat bg-center bg-cover flex flex-col items-center min-h-screen"
                 style={{ background: `url(/images/12.jpg)` }}

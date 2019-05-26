@@ -45,6 +45,20 @@ const getAllBooks = async (req, res) => {
     return res.status(200).jsend(books);
 };
 
+const borrowedBooks = async (req, res) => {
+    const borrowed = await LendingRequest.query()
+        .where('user', req.user.id)
+        .where('status', 'pending');
+    const bookIds = borrowed.map(request => request.book);
+    const books = await Book.query().whereIn('id', bookIds);
+    const allBorrowedBooks = books.map(book => {
+        const request = borrowed.find(request => request.book === book.id);
+        const status = new Date() > request.returnDate ? 'expired' : 'pending';
+        return { ...book, dueDate: request.returnDate, status };
+    });
+    return res.status(200).jsend(allBorrowedBooks);
+};
+
 const getSingleBook = async (req, res) => {
     const book = await Book.query()
         .eager('authors')
@@ -133,5 +147,6 @@ export default {
     deleteSingleBook,
     requestBook,
     decideBookRequest,
-    extendBorrow
+    extendBorrow,
+    borrowedBooks
 };
