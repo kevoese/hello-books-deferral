@@ -1,65 +1,58 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import AuthNavbar from '@components/authNavbar';
 import SideNavbar from '@components/sideNavbar';
 import { ProfileValidator } from '@clientValidators/Profile';
+import context from '@context/authContext';
 import Button from '@components/Button';
 import InputForm from '@components/InputForm';
 import Footer from '@components/Footer';
 
-const EmptyFormValues = {
+let initialFormValues = {
     firstName: '',
     lastName: '',
     email: '',
-    bio: ''
+    bio: '',
+    avatar: '/images/userimage.png'
 };
+let userId;
 let selectedImage = '';
 const Profile = () => {
-    const [errorState, setErrorState] = useState(false);
-    const [profileImage, setProfileImage] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [initialFormValues, setInitialFormValues] = useState(EmptyFormValues);
+    const inputEl = useRef(null);
+    const { AuthContext } = context;
+    const [auth] = useContext(AuthContext);
+    console.log(auth.user);
+    if (auth.user) {
+        initialFormValues = {
+            firstName: auth.user.firstName || '',
+            lastName: auth.user.lastName || '',
+            email: auth.user.email || '',
+            bio: auth.user.bio || '',
+            avatar: auth.user.avatar || '/images/userimage.png'
+        };
+        userId = auth.user.id;
+    }
+    const [profileImage, setProfileImage] = useState(initialFormValues.avatar);
+    const [profileImageName, setprofileImageName] = useState('');
     const CLOUDINARY_URL =
         'https://api.cloudinary.com/v1_1/deferral-hello-books/upload';
     const CLOUDINARY_UPLOAD_PRESET = 'hwmdjyvu';
 
     const selectProfileImage = event => {
-        console.log(event.target.files);
-        if (event.target.files && event.target.files[0])
-            selectedImage = event.target.files[0];
+        console.log(event.target.value);
+        const files = event.target.files;
+        if (files && files[0]) {
+            selectedImage = files[0];
+            setprofileImageName(event.target.value.split(/(\\|\/)/g).pop());
+            const reader = new FileReader();
+            reader.onload = e => setProfileImage(e.target.result);
+            reader.readAsDataURL(files[0]);
+        }
     };
-
-    const handleError = response => {
-        response
-            ? setErrorMessage(response.data.code.error)
-            : setErrorMessage('Network Error!');
-        setErrorState(true);
-    };
-
-    useEffect(() => {
-        axios
-            .get('/api/v1/profile/1')
-            .then(res => {
-                console.log(res.data.data);
-                const firstName = res.data.data.firstName || '';
-                const lastName = res.data.data.lastName || '';
-                const email = res.data.data.email || '';
-                const bio = res.data.data.bio || '';
-                setProfileImage(
-                    res.data.data.avatar || '/images/userimage.png'
-                );
-                setInitialFormValues({ firstName, lastName, email, bio });
-            })
-            .catch(({ response }) => {
-                console.log(response);
-                setInitialFormValues(EmptyFormValues);
-            });
-    }, []);
 
     return (
         <React.Fragment>
-            <AuthNavbar />
             <div className="flex md:flex-row flex-wrap min-h-screen">
                 <SideNavbar />
                 <div className="w-full font-raleway md:w-5/6 bg-gray-250 text-gray-700">
@@ -73,13 +66,12 @@ const Profile = () => {
                         <div className="w-full">
                             <Formik
                                 enableReinitialize={true}
-                                initialValues={initialFormValues}
+                                initialValues={{}}
                                 validationSchema={ProfileValidator}
                                 onSubmit={async (
                                     values,
-                                    { setSubmitting, resetForm }
+                                    { setStatus, setSubmitting, resetForm }
                                 ) => {
-                                    setErrorState(false);
                                     try {
                                         console.log(profileImage);
                                         if (selectedImage) {
@@ -107,8 +99,13 @@ const Profile = () => {
                                             values.avatar =
                                                 cloudinaryResponse.data.secure_url;
                                         }
+                                        if (
+                                            initialFormValues.email ==
+                                            values.email
+                                        )
+                                            delete values.email;
                                         const res = await axios.patch(
-                                            '/api/v1/profile',
+                                            `/api/v1/profile/${userId}`,
                                             values
                                         );
                                         console.log(res);
@@ -127,7 +124,7 @@ const Profile = () => {
                                         );
                                     } catch (e) {
                                         console.log(e);
-                                        handleError(e);
+                                        setStatus(e);
                                         setSubmitting(false);
                                     }
                                 }}
@@ -208,26 +205,59 @@ const Profile = () => {
                                                     Update Profile
                                                 </Button>
                                             </div>
-                                            {errorState && (
-                                                <div className="font-raleway py-3 pb-0  bottom-0  w-full px-4 text-lg sm:px-0 text-red-500 text-center ">
-                                                    {errorMessage}
-                                                </div>
+                                            {!!status && (
+                                                <FormError>{status}</FormError>
                                             )}
                                         </div>
                                         <div className="sm:w-2/5 p-10 sm:pl-5 w-100">
-                                            <img
-                                                className="mx-auto"
-                                                src={profileImage}
-                                                alt="reading list"
-                                            />
-                                            <div className="w-full mt-5 text-center">
+                                            <div className="w-48 h-48 rounded-full bg-gray-250  overflow-hidden mx-auto relative">
+                                                <img
+                                                    className="absolute m-auto inset-0 object-cover"
+                                                    src={profileImage}
+                                                    alt="user image"
+                                                />
+                                            </div>
+                                            <div className="w-full relative -mt-5 text-center">
                                                 <input
                                                     type="file"
-                                                    className=""
+                                                    ref={inputEl}
+                                                    className="hidden"
                                                     onChange={
                                                         selectProfileImage
                                                     }
                                                 />
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        inputEl.current.click()
+                                                    }
+                                                    className=""
+                                                >
+                                                    <img
+                                                        className=""
+                                                        src={
+                                                            '/images/upload.png'
+                                                        }
+                                                        alt="user image"
+                                                    />
+                                                </button>
+                                                <h4>{profileImageName}</h4>
+                                                {profileImage !=
+                                                    '/images/userimage.png' && (
+                                                    <Button
+                                                        clicked={() => {
+                                                            selectedImage = '';
+                                                            setProfileImage(
+                                                                '/images/userimage.png'
+                                                            );
+                                                            setprofileImageName(
+                                                                ''
+                                                            );
+                                                        }}
+                                                    >
+                                                        Clear
+                                                    </Button>
+                                                )}
                                             </div>
                                         </div>
                                     </form>
