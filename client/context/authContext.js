@@ -5,7 +5,7 @@ const AuthContext = createContext();
 const AuthProvider = props => {
     const [auth, setAuth] = useState({
         token: localStorage.token || null,
-        user: null
+        email: localStorage.email || null
     });
     return (
         <AuthContext.Provider value={[auth, setAuth]}>

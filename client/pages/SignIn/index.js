@@ -57,6 +57,10 @@ const SignIn = () => {
                                         prevAuth.user = user_data;
                                     });
                                     localStorage.setItem('token', user_token);
+                                    localStorage.setItem(
+                                        'email',
+                                        user_data.email
+                                    );
                                     setSubmitting(false);
                                 })
                                 .catch(({ response }) => {

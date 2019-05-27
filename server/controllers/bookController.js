@@ -1,7 +1,10 @@
+import Paystack from 'paystack';
+import config from '@config';
 import Book from '@models/Book';
-import AuthorBook from '@models/AuthorBook';
 import LendingRequest from '@models/LendingRequest';
 import moment from 'moment';
+
+const paystack = Paystack(config.paystack.secret);
 
 const storeBooks = async (req, res) => {
     const {
