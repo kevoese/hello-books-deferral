@@ -251,13 +251,10 @@ const AdminBooksDashboard = () => {
                                         },
                                         data: formdata
                                     });
-
-                                    console.log(cloudinaryResponse);
                                     values.coverImage =
                                         cloudinaryResponse.data.secure_url;
                                 }
 
-                                console.log(values);
                                 if (values.coverImage) {
                                     axios
                                         .post('/api/v1/books', values)
