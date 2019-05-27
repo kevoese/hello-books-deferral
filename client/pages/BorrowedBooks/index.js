@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import SideNavbar from '@components/sideNavbar';
 import Footer from '@components/Footer';
 import BorrowedBookRow from '@components/BorrowedBookRow';
-import { getDateStr } from '@clientutils';
+import { getDateStr } from '@clientUtils';
 import axios from 'axios';
 import classJoin from 'classnames';
 import Button from '@components/Button';
@@ -92,7 +92,6 @@ const BorrowedBooks = () => {
 
     return (
         <React.Fragment>
-            <AuthNavbar />
             <div className="flex md:flex-row flex-wrap min-h-screen">
                 <SideNavbar />
                 <div className=" relative w-full md:w-5/6 bg-gray-20 text-center text-gray-700 px-4 py-4">

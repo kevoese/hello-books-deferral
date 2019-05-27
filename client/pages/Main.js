@@ -2,6 +2,7 @@ import React from 'react';
 import Home from '@pages/Home';
 import Books from '@pages/Books';
 import BookDetails from '@pages/BookDetails';
+import Fines from '@pages/Fines';
 import Navbar from '@components/Navbar';
 import AuthNavbar from '@components/authNavbar';
 import Register from '@pages/Register';
@@ -37,6 +38,7 @@ const App = ({ history }) => {
             <Route exact path="/books" component={Books} />
             <Route path="/signup" component={Register} />
             <Route path="/signin" component={SignIn} />
+            <Route path="/fines" component={Fines} />
             <Route path="/books/:bookId" component={BookDetails} />
             <Route path="/forgot-password" component={ForgotPassword} />
             <Route path="/reset-password/:token" component={ResetPassword} />

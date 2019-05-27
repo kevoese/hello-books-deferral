@@ -42,7 +42,7 @@ const SideNavbar = () => {
                         Favourite Books
                     </div>
                 </div>
-                <div className="flex pb-0 cursor-pointer">
+                <NavLink to="/fines" className="flex pb-0 cursor-pointer">
                     <div className="w-1/4  text-center h-12 flex justify-center items-center">
                         <img
                             className="h-6  fill-current"
@@ -52,7 +52,7 @@ const SideNavbar = () => {
                     <div className="w-3/4 h-12 flex justify-start items-center ml-8">
                         Fines
                     </div>
-                </div>
+                </NavLink>
                 <div className="flex pb-0 cursor-pointer">
                     <div className="w-1/4  text-center h-12 flex justify-center items-center">
                         <img
