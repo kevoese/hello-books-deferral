@@ -20,7 +20,7 @@ const Modal = ({ children, modalState }) => {
         <div className={modal}>
             <div className="absolute inset-0 w-full h-full">
                 <div className="fixed inset-0  w-full bg-gray-350" />
-                <div className="inset-0 w-full h-full flex flex-col justify-center items-center fixed ">
+                <div className="inset-0 w-full h-full flex flex-col justify-center items-center fixed  overflow-scroll  py-20">
                     {children}
                 </div>
             </div>

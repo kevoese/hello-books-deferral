@@ -48,7 +48,7 @@ const Fines = () => {
                 {items.length === 0 && (
                     <tbody>
                         <tr>
-                            <td colSpan='6'>No items</td>
+                            <td colSpan="6">No items</td>
                         </tr>
                     </tbody>
                 )}

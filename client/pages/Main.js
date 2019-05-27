@@ -37,11 +37,9 @@ const App = ({ history }) => {
                     history.location.pathname.match(/books/) ||
                     history.location.pathname.match(/reset-password/) ||
                     history.location.pathname.match(/signup/)) && <Navbar />) ||
-                    ([
-                        '/dashboard',
-                        '/admin-dashboard',
-                        '/admin/library'
-                    ] && <AuthNavbar />)}
+                    (['/dashboard', '/admin-dashboard', '/admin/library'] && (
+                        <AuthNavbar />
+                    ))}
 
                 {([
                     '/',
@@ -59,15 +57,21 @@ const App = ({ history }) => {
                 <Route exact path="/books" component={Books} />
                 <OnlyGuestRoute path="/signup" component={Register} />
                 <OnlyGuestRoute path="/signin" component={SignIn} />
-                <OnlyGuestRoute path="/reset-password/:token" component={ResetPassword} />
-                <OnlyGuestRoute path="/forgot-password" component={ForgotPassword} />
+                <OnlyGuestRoute
+                    path="/reset-password/:token"
+                    component={ResetPassword}
+                />
+                <OnlyGuestRoute
+                    path="/forgot-password"
+                    component={ForgotPassword}
+                />
                 <Route path="/books/:bookId" component={BookDetails} />
                 <Route path="/admin-dashboard" component={AdminDashboard} />
                 <Route path="/admin/library" component={AdminBooksDashboard} />
                 <Route path="/borrowed" component={BorrowedBooks} />
                 <Route path="/books/:bookId" component={BookDetails} />
                 <Route path="/borrowed" component={BorrowedBooks} />
-                <AuthRoute path="/profile" component={Profile} />
+                <Route path="/profile" component={Profile} />
                 <AuthRoute path="/dashboard" component={Dashboard} />
             </AuthProvider>
         </ToastProvider>

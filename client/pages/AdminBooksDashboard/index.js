@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import InputForm from '@components/InputForm';
@@ -46,6 +46,8 @@ const Table = items => {
     );
 };
 
+let selectedImage = '';
+
 const AdminBooksDashboard = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -55,6 +57,25 @@ const AdminBooksDashboard = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [modalState, setModalState] = useState(false);
     const [errorState, setErrorState] = useState(false);
+    const [coverImage, setCoverImage] = useState('/images/notebook.png');
+    const [coverImageName, setCoverImageName] = useState('');
+
+    const inputEl = useRef(null);
+
+    const CLOUDINARY_URL =
+        'https://api.cloudinary.com/v1_1/deferral-hello-books/upload';
+    const CLOUDINARY_UPLOAD_PRESET = 'hwmdjyvu';
+
+    const selectCoverImage = event => {
+        const files = event.target.files;
+        if (files && files[0]) {
+            selectedImage = files[0];
+            setCoverImageName(event.target.value.split(/(\\|\/)/g).pop());
+            const reader = new FileReader();
+            reader.onload = e => setCoverImage(e.target.result);
+            reader.readAsDataURL(files[0]);
+        }
+    };
 
     const loadBooks = data => {
         if (data.length < 1) {
@@ -152,11 +173,11 @@ const AdminBooksDashboard = () => {
                     </div>
                 </div>
             </div>
-            <Modal modalState={modalState}>
-                <div className=" rounded-10  w-6/12 bg-white">
-                    <div className="border-b flex flex-row  items-center ">
+            <Modal modalState={modalState} className=" ">
+                <div className=" rounded-10  w-6/12 bg-white overflow-scroll ">
+                    <div className="border-b flex flex-row  items-center  ">
                         <div className=" flex flex-1  p-2  mx-2 my-4">
-                            <h6 className="font-raleway m-auto text-3xl font-bold">
+                            <h6 className="font-raleway m-auto text-3xl font-bold ">
                                 {' '}
                                 Add New Book to Catalogue
                             </h6>
@@ -205,34 +226,61 @@ const AdminBooksDashboard = () => {
                                 description: '',
                                 copiesAvailable: '',
                                 price: '',
-                                publisher: ''
+                                publisher: '',
+                                coverImage
                             }}
                             validationSchema={AddBookValidator}
-                            onSubmit={(
+                            onSubmit={async (
                                 values,
                                 { setSubmitting, resetForm }
                             ) => {
                                 setErrorState(false);
-                                axios
-                                    .post('/api/v1/books', values)
-                                    .then(res => {
-                                        resetForm({
-                                            title: '',
-                                            author: '',
-                                            coverType: '',
-                                            year: '',
-                                            isbn: '',
-                                            description: '',
-                                            copiesAvailable: '',
-                                            price: '',
-                                            publisher: ''
-                                        });
-
-                                        setSubmitting(false);
-                                    })
-                                    .catch(({ response }) => {
-                                        setSubmitting(false);
+                                if (selectedImage) {
+                                    const formdata = new FormData();
+                                    formdata.append('file', selectedImage);
+                                    formdata.append(
+                                        'upload_preset',
+                                        CLOUDINARY_UPLOAD_PRESET
+                                    );
+                                    const cloudinaryResponse = await axios({
+                                        method: 'post',
+                                        url: CLOUDINARY_URL,
+                                        headers: {
+                                            'Content-Type':
+                                                'application/x-www-form-urlencoded'
+                                        },
+                                        data: formdata
                                     });
+
+                                    console.log(cloudinaryResponse);
+                                    values.coverImage =
+                                        cloudinaryResponse.data.secure_url;
+                                }
+
+                                console.log(values);
+                                if (values.coverImage) {
+                                    axios
+                                        .post('/api/v1/books', values)
+                                        .then(res => {
+                                            resetForm({
+                                                title: '',
+                                                author: '',
+                                                coverType: '',
+                                                year: '',
+                                                isbn: '',
+                                                description: '',
+                                                copiesAvailable: '',
+                                                price: '',
+                                                publisher: ''
+                                            });
+
+                                            setSubmitting(false);
+                                        })
+                                        .catch(({ response }) => {
+                                            console.log(response);
+                                            setSubmitting(false);
+                                        });
+                                }
                             }}
                         >
                             {({
@@ -244,123 +292,200 @@ const AdminBooksDashboard = () => {
                                 handleSubmit,
                                 isSubmitting
                             }) => (
-                                <form
-                                    onSubmit={handleSubmit}
-                                    className=" bg-white text-center"
-                                >
-                                    <div className="mb-8">
-                                        <InputForm
-                                            errors={errors}
-                                            touched={touched}
-                                            handleChange={handleChange}
-                                            handleBlur={handleBlur}
-                                            name="title"
-                                            labelname="Title"
-                                            id="title"
-                                            type="text"
-                                            value={values.title}
-                                        />
-                                        <InputForm
-                                            errors={errors}
-                                            touched={touched}
-                                            handleChange={handleChange}
-                                            handleBlur={handleBlur}
-                                            name="author"
-                                            labelname="Author"
-                                            id="author"
-                                            type="text"
-                                            value={values.author}
-                                        />
-                                        <InputForm
-                                            errors={errors}
-                                            touched={touched}
-                                            handleChange={handleChange}
-                                            handleBlur={handleBlur}
-                                            name="isbn"
-                                            labelname="ISBN"
-                                            id="isbn"
-                                            type="text"
-                                            value={values.isbn}
-                                        />
-                                        <InputForm
-                                            errors={errors}
-                                            touched={touched}
-                                            handleChange={handleChange}
-                                            handleBlur={handleBlur}
-                                            name="copiesAvailable"
-                                            labelname="Copies Available"
-                                            id="copiesAvailable"
-                                            type="number"
-                                            value={values.copiesAvailable}
-                                        />
+                                <form onSubmit={handleSubmit}>
+                                    <div className="flex flex-row bg-white text-center">
+                                        <div className="mb-8 p-4 sm:w-1/2">
+                                            <InputForm
+                                                block="true"
+                                                classes="bg-white border-2 "
+                                                errors={errors}
+                                                touched={touched}
+                                                handleChange={handleChange}
+                                                handleBlur={handleBlur}
+                                                name="title"
+                                                labelname="Title"
+                                                id="title"
+                                                type="text"
+                                                value={values.title}
+                                            />
+                                            <InputForm
+                                                block="true"
+                                                classes="bg-white border-2 "
+                                                errors={errors}
+                                                touched={touched}
+                                                handleChange={handleChange}
+                                                handleBlur={handleBlur}
+                                                name="author"
+                                                labelname="Author"
+                                                id="author"
+                                                type="text"
+                                                value={values.author}
+                                            />
+                                            <InputForm
+                                                block="true"
+                                                classes="bg-white border-2 "
+                                                errors={errors}
+                                                touched={touched}
+                                                handleChange={handleChange}
+                                                handleBlur={handleBlur}
+                                                name="isbn"
+                                                labelname="ISBN"
+                                                id="isbn"
+                                                type="text"
+                                                value={values.isbn}
+                                            />
+                                            <InputForm
+                                                block="true"
+                                                classes="bg-white border-2 "
+                                                errors={errors}
+                                                touched={touched}
+                                                handleChange={handleChange}
+                                                handleBlur={handleBlur}
+                                                name="copiesAvailable"
+                                                labelname="Copies Available"
+                                                id="copiesAvailable"
+                                                type="number"
+                                                value={values.copiesAvailable}
+                                            />
 
-                                        <InputForm
-                                            errors={errors}
-                                            touched={touched}
-                                            handleChange={handleChange}
-                                            handleBlur={handleBlur}
-                                            name="description"
-                                            labelname="Description"
-                                            id="description"
-                                            type="textarea"
-                                            row="3"
-                                            cols="5"
-                                            value={values.description}
-                                        />
+                                            <InputForm
+                                                block="true"
+                                                classes="bg-white border-2 h-20"
+                                                inputtype="textarea"
+                                                errors={errors}
+                                                touched={touched}
+                                                handleChange={handleChange}
+                                                handleBlur={handleBlur}
+                                                name="description"
+                                                labelname="Description"
+                                                id="description"
+                                                type="text"
+                                                value={values.description}
+                                            />
+                                        </div>
+                                        <div className="mb-8 p-4 w-full sm:w-1/2">
+                                            <InputForm
+                                                block="true"
+                                                classes="bg-white border-2 "
+                                                errors={errors}
+                                                touched={touched}
+                                                handleChange={handleChange}
+                                                handleBlur={handleBlur}
+                                                name="price"
+                                                labelname="Price"
+                                                id="price"
+                                                type="number"
+                                                value={values.price}
+                                            />
 
-                                        <InputForm
-                                            errors={errors}
-                                            touched={touched}
-                                            handleChange={handleChange}
-                                            handleBlur={handleBlur}
-                                            name="price"
-                                            labelname="Price"
-                                            id="price"
-                                            type="number"
-                                            value={values.price}
-                                        />
+                                            <InputForm
+                                                block="true"
+                                                classes="bg-white border-2 "
+                                                errors={errors}
+                                                touched={touched}
+                                                handleChange={handleChange}
+                                                handleBlur={handleBlur}
+                                                name="year"
+                                                labelname="Year"
+                                                id="year"
+                                                type="number"
+                                                value={values.year}
+                                            />
 
-                                        <InputForm
-                                            errors={errors}
-                                            touched={touched}
-                                            handleChange={handleChange}
-                                            handleBlur={handleBlur}
-                                            name="year"
-                                            labelname="Year"
-                                            id="year"
-                                            type="number"
-                                            value={values.year}
-                                        />
+                                            <InputForm
+                                                block="true"
+                                                classes="bg-white border-2 "
+                                                errors={errors}
+                                                touched={touched}
+                                                handleChange={handleChange}
+                                                handleBlur={handleBlur}
+                                                name="publisher"
+                                                labelname="Publisher"
+                                                id="publisher"
+                                                type="text"
+                                                value={values.publisher}
+                                            />
 
-                                        <InputForm
-                                            errors={errors}
-                                            touched={touched}
-                                            handleChange={handleChange}
-                                            handleBlur={handleBlur}
-                                            name="publisher"
-                                            labelname="Publisher"
-                                            id="publisher"
-                                            type="text"
-                                            value={values.publisher}
-                                        />
+                                            <InputForm
+                                                block="true"
+                                                inputtype="select"
+                                                values={[
+                                                    'Hard',
+                                                    'Soft',
+                                                    'Normal'
+                                                ]}
+                                                classes="bg-white border-2 "
+                                                errors={errors}
+                                                touched={touched}
+                                                handleChange={handleChange}
+                                                handleBlur={handleBlur}
+                                                name="coverType"
+                                                labelname="Cover Type"
+                                                id="coverType"
+                                                type="text"
+                                                value={values.coverType}
+                                            />
 
-                                        <InputForm
-                                            errors={errors}
-                                            touched={touched}
-                                            handleChange={handleChange}
-                                            handleBlur={handleBlur}
-                                            name="coverType"
-                                            labelname="coverType"
-                                            id="coverType"
-                                            type="text"
-                                            value={values.coverType}
-                                        />
+                                            <div className="font-raleway text-left text-gray-550 pt-4 pb-4">
+                                                <p>Add a Book Cover</p>
+                                            </div>
+
+                                            <div className="w-48 h-48 rounded-0 bg-gray-250  overflow-hidden mx-auto relative">
+                                                <img
+                                                    className="absolute m-auto "
+                                                    src={coverImage}
+                                                    alt="user image"
+                                                />
+                                            </div>
+                                            <div className="w-full relative -mt-5 text-center">
+                                                <input
+                                                    type="file"
+                                                    ref={inputEl}
+                                                    className="hidden"
+                                                    onChange={selectCoverImage}
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        inputEl.current.click()
+                                                    }
+                                                    className=""
+                                                >
+                                                    <img
+                                                        className=""
+                                                        src={
+                                                            '/images/upload.png'
+                                                        }
+                                                        alt="user image"
+                                                    />
+                                                </button>
+                                                <h4>{coverImageName}</h4>
+                                                {coverImage !=
+                                                    '/images/notebook.png' && (
+                                                    <Button
+                                                        clicked={() => {
+                                                            selectedImage = '';
+                                                            setCoverImage(
+                                                                '/images/notebook.png'
+                                                            );
+                                                            setCoverImageName(
+                                                                ''
+                                                            );
+                                                        }}
+                                                    >
+                                                        Clear
+                                                    </Button>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <br />
-                                    <Button isSubmitting={isSubmitting}>
-                                        Submit
-                                    </Button>
+                                    <div className=" text-center">
+                                        <Button isSubmitting={isSubmitting}>
+                                            Submit
+                                        </Button>
+                                    </div>
                                 </form>
                             )}
                         </Formik>
