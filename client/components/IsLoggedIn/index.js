@@ -11,7 +11,7 @@ const SignedIn = ({ auth, isPatron }) => {
                 <div className="text-sm text-center">
                     <NavLink
                         className="flex justify-center items-center"
-                        to="/dashboard"
+                        to={isPatron() ? '/dashboard' : '/admin-dashboard'}
                     >
                         <img
                             className="h-12 rounded-full"
@@ -20,11 +20,9 @@ const SignedIn = ({ auth, isPatron }) => {
                                 'https://via.placeholder.com/150'
                             }
                         />
-                        <Link to={isPatron() ? '/dashboard' : '/admin-dashboard'}>
-                            <span className="ml-4 font-raleway text-lg">
-                                Hello, {auth.user.firstName}
-                            </span>
-                        </Link>
+                        <span className="ml-4 font-raleway text-lg">
+                            Hello, {auth.user.firstName}
+                        </span>
                     </NavLink>
                 </div>
             </div>

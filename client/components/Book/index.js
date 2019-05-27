@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Book = ({ id, title, copiesAvailable, authors, price }) => {
+const Book = ({ id, title, copiesAvailable, authors, price, coverImage }) => {
     return (
         <div
             className="relative flex flex-col h-72 w-3/4 bg-transparent shadow-md mt-8
@@ -10,7 +10,7 @@ const Book = ({ id, title, copiesAvailable, authors, price }) => {
             <Link to={`/books/${id}`}>
                 <div className="flex justify-center mt-2">
                     <img
-                        src="/images/notebook.png"
+                        src={coverImage ? coverImage : '/images/notebook.png'}
                         className="h-40 w-40 justify-center z-30"
                     />
                 </div>
@@ -23,7 +23,7 @@ const Book = ({ id, title, copiesAvailable, authors, price }) => {
                             {title}
                         </p>
                         <p className="text-xxs text-gray-700 font-robotoMono tracking-tight">
-                            {authors[0].name}
+                            {authors && authors[0] && authors[0].name}
                         </p>
                     </div>
 

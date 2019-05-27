@@ -10,7 +10,9 @@ import TableRowItems from '@components/TableRow';
 import Modal from '@components/Modal';
 import Loading from '@components/Loading';
 import ToastContext from '@context/toastContext';
+import AuthContext from '@context/authContext';
 
+const { AuthContext: Auth } = AuthContext;
 const { ToastContext: Toast } = ToastContext;
 
 const Table = items => {
@@ -52,7 +54,7 @@ const Table = items => {
 let selectedImage = '';
 
 const AdminBooksDashboard = () => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const [limit, setLimit] = useState(10);
     const [authors, setAuthors] = useState([])
@@ -63,6 +65,7 @@ const AdminBooksDashboard = () => {
     const [errorState, setErrorState] = useState(false);
     const [coverImage, setCoverImage] = useState('/images/notebook.png');
     const [coverImageName, setCoverImageName] = useState('');
+    const [auth] = useContext(Auth);
 
     const inputEl = useRef(null);
 
@@ -278,6 +281,10 @@ const AdminBooksDashboard = () => {
                                         .post('/api/v1/books', {
                                             ...values,
                                             authors: [values.author]
+                                        }, {
+                                            headers: {
+                                                'x-access-token': auth.token
+                                            }
                                         })
                                         .then(res => {
                                             resetForm({

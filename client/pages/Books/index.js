@@ -18,7 +18,7 @@ const BookRow = props => {
 };
 
 const Books = () => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const [limit, setLimit] = useState(18);
     const [url, setUrl] = useState(`/api/v1/books?page=${page}&limit=${limit}`);

@@ -113,6 +113,31 @@ const bookRequestValidate = (req, res, next) => {
         });
 };
 
+const borrowBook = (req, res, next) => {
+    const rules = {
+        bookId: 'required|number',
+        reference: 'required'
+    };
+
+    const data = {
+        bookId: req.params.bookId,
+        reference: req.body.reference
+    };
+
+    const messages = {
+        required: '{{ field }} is required to borrow a book',
+        number: '{{ field }} is expected to be a an integer'
+    };
+
+    validateAll(data, rules, messages)
+        .then(() => {
+            next();
+        })
+        .catch(errors => {
+            res.status(422).jerror('ValidationFailed', errors);
+        });
+};
+
 const getAllBooksValidation = (req, res, next) => {
     const rules = {
         page: 'number',
@@ -139,5 +164,6 @@ export default {
     bookUserValidation,
     getAllBooksValidation,
     extendBorrow,
-    bookRequestValidate
+    bookRequestValidate,
+    borrowBook
 };
