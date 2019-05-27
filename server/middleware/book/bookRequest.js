@@ -5,7 +5,7 @@ import LendingRequest from '@models/LendingRequest';
 export const duplicateRequest = async (req, res, next) => {
     const { id } = req.user;
     const duplicateBooks = await LendingRequest.query()
-        .where('book', req.params.id)
+        .where('book', req.params.bookId)
         .where('user', id)
         .where('returned', false)
         .first();
@@ -22,7 +22,7 @@ export const duplicateRequest = async (req, res, next) => {
 export const checkAvailiability = async (req, res, next) => {
     const { role } = req.user;
 
-    const bookExists = await Book.query().findById(req.params.id);
+    const bookExists = await Book.query().findById(req.params.bookId);
     if (!bookExists) {
         return res.status(404).jerror({
             message:
@@ -33,7 +33,7 @@ export const checkAvailiability = async (req, res, next) => {
     const copiesAvailable = bookExists.copiesAvailable;
 
     const copiesBorrowed = await LendingRequest.query()
-        .where('book', req.params.id)
+        .where('book', req.params.bookId)
         .where('returned', false);
 
     if (copiesBorrowed && copiesAvailable === copiesBorrowed.length) {

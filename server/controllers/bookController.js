@@ -10,13 +10,14 @@ const storeBooks = async (req, res) => {
     const {
         title,
         coverType,
+        coverImage,
         description,
         isbn,
         price,
         publisher,
         year,
         copiesAvailable,
-        authors = []
+        authors
     } = req.body;
 
     const book = await Book.query().insert({
@@ -27,10 +28,11 @@ const storeBooks = async (req, res) => {
         price,
         publisher,
         year,
+        coverImage,
         copiesAvailable
     });
-
-    await book.attach(authors);
+    
+    await book.attach(authors || []);
 
     return res
         .status(201)
@@ -40,10 +42,10 @@ const storeBooks = async (req, res) => {
 const getAllBooks = async (req, res) => {
     const { page, limit } = req.query;
 
-    const books = await Book.query()
+    const books = await Book.query().orderBy('id', 'DESC')
         .eager('authors')
         .select()
-        .page(page || 1, limit || 10);
+        .page(page || 0, limit || 10);
 
     return res.status(200).jsend(books);
 };
@@ -67,13 +69,45 @@ const getSingleBook = async (req, res) => {
         .eager('authors')
         .findById(req.params.id);
 
-    if (book) {
-        return res.status(200).jsend(book);
-    } else {
+    if (! book) {
         return res.status(404).jsend({
             message: "Book requested doesn't exist"
         });
     }
+
+    let canBorrowBook = false
+
+    let lendingRequestForBook = false
+
+    let maxBorrowLimitReached = false
+
+    if (req.user) {
+        lendingRequestForBook = await LendingRequest.query()
+            .where('user', req.user.id)
+            .where('book', book.id)
+            .where('returned', false)
+            .first()
+
+        const copiesAvailable = book.copiesAvailable;
+    
+        const copiesBorrowed = await LendingRequest.query()
+            .where('book', book.id)
+            .where('returned', false);
+
+        const copiesBorrowedForUser = await LendingRequest.query()
+            .where('user', req.user.id)
+            .where('returned', false);
+
+            maxBorrowLimitReached = (copiesBorrowedForUser || []).length >= 3 
+        canBorrowBook = (!lendingRequestForBook && (copiesBorrowedForUser || []).length < 3 && ((copiesBorrowed || []).length < parseInt(copiesAvailable)))
+    }
+
+    return res.status(200).jsend({
+        ...book,
+        canBorrowBook,
+        existingBookRequest: !!lendingRequestForBook,
+        maxBorrowLimitReached
+    });
 };
 
 const deleteSingleBook = async (req, res) => {
@@ -91,18 +125,28 @@ const deleteSingleBook = async (req, res) => {
 };
 
 const requestBook = async (req, res) => {
-    const { id, email } = req.user;
+    const { id } = req.user;
 
-    await LendingRequest.query().insert({
-        user: id,
-        book: req.params.id,
-        status: 'pending',
-        requestDate: moment(new Date())
-    });
+    try {
+        const transaction = await paystack.transaction.verify(
+            req.body.reference
+        );
 
-    return res.status(200).jsend({
-        message: 'Request received, you would be notified when approved'
-    });
+        if (! transaction.status) throw new Error();
+
+        await LendingRequest.query().insert({
+            user: id,
+            book: req.params.bookId,
+            requestDate: moment(new Date()),
+            returned: false
+        });
+
+        return res.status(200).jsend({
+            message: 'Request completed successfully.'
+        });
+    } catch (e) {
+        return 'Payment verification failed';
+    }
 };
 
 const extendBorrow = async (req, res) => {

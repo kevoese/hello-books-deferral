@@ -20,15 +20,23 @@ router.get(
     bookController.getAllBooks
 );
 
-router.get(
-    '/:id/borrow',
-    bookValidator.getBookValidation,
+router.post(
+    '/:bookId/borrow',
+    bookValidator.borrowBook,
     authenticate.isAuthenticated,
     authenticate.isPatron,
     bookRequest.duplicateRequest,
     bookRequest.checkAvailiability,
     bookRequest.borrowLimit,
     bookController.requestBook
+);
+
+router.post('/', bookValidator.addBook, bookController.storeBooks);
+
+router.get(
+    '/',
+    bookValidator.getAllBooksValidation,
+    bookController.getAllBooks
 );
 
 router.get(
@@ -50,6 +58,7 @@ router.patch(
 router.get(
     '/:id',
     bookValidator.getBookValidation,
+    authenticate.isMaybeAuthenticated,
     bookController.getSingleBook
 );
 

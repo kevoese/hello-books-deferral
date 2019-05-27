@@ -10,7 +10,7 @@ const AuthProvider = props => {
         user: JSON.parse(localStorage.getItem('user')) || null
     });
     const isAuth = () => {
-        if (auth.user) {
+        if (auth && auth.user) {
             return true;
         }
         return false;

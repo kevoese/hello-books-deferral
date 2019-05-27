@@ -17,12 +17,17 @@ class Book extends Model {
                     book: this.id
                 });
 
-                if (authorBook) return;
+                if (authorBook && authorBook.length > 0) return;
 
                 await AuthorBook.query().insert({
                     author: authorId,
                     book: this.id
                 });
+
+                console.log(await AuthorBook.query().insert({
+                    author: authorId,
+                    book: this.id
+                }))
             }
         }
     }
