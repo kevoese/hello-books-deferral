@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '@components/Input';
 import Textarea from '@components/TextArea';
+import Select from '@components/SelectInput';
 
 const InputForm = props => {
     const { block, inputtype, name, labelname, errors, touched } = props;
@@ -24,7 +25,13 @@ const InputForm = props => {
                     block == 'true' ? '' : 'sm:w-8/12'
                 }`}
             >
-                {inputtype ? <Textarea {...props} /> : <Input {...props} />}
+                {inputtype === 'textarea' ? (
+                    <Textarea {...props} />
+                ) : inputtype === 'select' ? (
+                    <Select {...props} />
+                ) : (
+                    <Input {...props} />
+                )}
                 {errors[name] && touched[name] && (
                     <span className="font-raleway py-0 w-full px-4 text-sm sm:px-0 text-red-600 text-left pt-1">
                         {errors[name]}

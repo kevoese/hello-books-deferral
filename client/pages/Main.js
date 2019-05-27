@@ -72,7 +72,7 @@ const App = ({ history }) => {
                 <Route path="/borrowed" component={BorrowedBooks} />
                 <Route path="/books/:bookId" component={BookDetails} />
                 <Route path="/borrowed" component={BorrowedBooks} />
-                <AuthRoute path="/profile" component={Profile} />
+                <Route path="/profile" component={Profile} />
                 <AuthRoute path="/dashboard" component={Dashboard} />
             </AuthProvider>
         </ToastProvider>

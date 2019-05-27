@@ -62,7 +62,7 @@ const SignIn = props => {
                                         JSON.stringify(user_data)
                                     );
                                     setSubmitting(false);
-                                    props.history.push('/dashboard');
+                                    props.history.push(user_data.role === 'patron' ? '/dashboard' : '/admin-dashboard');
                                 })
                                 .catch(({ response }) => {
                                     handleError(response);
