@@ -5,9 +5,8 @@ import { Helmet } from 'react-helmet';
 import Footer from '@components/Footer';
 import AuthContext from '@context/authContext';
 import ToastContext from '@context/toastContext';
-import SideNavbar from '@components/sideNavbar';
-import FineRowData from '@components/FineRow';
 import AdminSideNav from '@components/AdminSideNav';
+import FineRowData from '@components/FineRow';
 
 const { AuthContext: Auth } = AuthContext;
 const { ToastContext: Toast } = ToastContext;

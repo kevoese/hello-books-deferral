@@ -48,7 +48,7 @@ const App = ({ history }) => {
 
                 <Toaster />
                 <Route exact path="/" component={Home} />
-                <AuthRoute path="/fines" component={Fines} />
+                <PatronRoute path="/fines" component={Fines} />
                 <Route exact path="/books" component={Books} />
                 <OnlyGuestRoute path="/signup" component={Register} />
                 <OnlyGuestRoute path="/signin" component={SignIn} />
@@ -68,11 +68,10 @@ const App = ({ history }) => {
                     path="/admin/library"
                     component={AdminBooksDashboard}
                 />
-                <Route path="/borrowed" component={BorrowedBooks} />
+                <PatronRoute path="/borrowed" component={BorrowedBooks} />
                 <Route path="/books/:bookId" component={BookDetails} />
-                <AuthRoute path="/borrowed" component={BorrowedBooks} />
                 <AuthRoute path="/profile" component={Profile} />
-                <AuthRoute path="/dashboard" component={Dashboard} />
+                <PatronRoute path="/dashboard" component={Dashboard} />
             </AuthProvider>
         </ToastProvider>
     );
@@ -113,6 +112,28 @@ const AdminRoute = ({ component: Component, props, ...rest }) => {
                     <Redirect
                         to={{
                             pathname: '/dashboard',
+                            state: { from: props.location }
+                        }}
+                    />
+                )
+            }
+        />
+    );
+};
+
+const PatronRoute = ({ component: Component, props, ...rest }) => {
+    const [auth, setAuth, isAuth, isAdmin, isSuperAdmin, isPatron] = useContext(AuthContext);
+
+    return (
+        <Route
+            {...rest}
+            render={props =>
+                isPatron() ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: '/',
                             state: { from: props.location }
                         }}
                     />

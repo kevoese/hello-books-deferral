@@ -18,7 +18,7 @@ const TableContent = ({
             onClick={handleClick}
             className={`font-raleway text-sm w-2/12 py-4 px-1 flex justify-center items-center bg-transparent ${transform ||
                 'capitalize'}  ${
-                actionKey ? 'text-blue-450 cursor-pointer' : ''
+                actionKey ? 'text-blue-450 cursor-pointer hover:font-bold' : ''
             }`}
         >
             {children}

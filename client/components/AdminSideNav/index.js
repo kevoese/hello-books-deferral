@@ -13,11 +13,7 @@ const AdminSideNav = () => {
     };
 
     const adminDash = (
-        <NavLink
-            to="/admin-dashboard"
-            className="flex pb-0 cursor-pointer"
-            activeClassName="border-l-4 border-blue-450  font-bold text-white"
-        >
+        <NavLink to="/admin-dashboard" className="flex pb-0 cursor-pointer">
             <div className="w-1/4 bg-gray-950 text-center h-12 flex justify-center items-center">
                 <img
                     className="h-6 white fill-current"
@@ -31,11 +27,7 @@ const AdminSideNav = () => {
     );
 
     const books = (
-        <NavLink
-            to="/admin/library"
-            className="flex pb-0 cursor-pointer"
-            activeClassName="border-l-4 border-blue-450  font-bold text-white"
-        >
+        <NavLink to="/admin/library" className="flex pb-0 cursor-pointer">
             <div className="w-1/4  bg-gray-950 text-center h-12 flex justify-center items-center">
                 <img className="h-6  fill-current" src="/images/book.svg" />
             </div>
@@ -49,7 +41,6 @@ const AdminSideNav = () => {
         <NavLink
             to="/borrowed"
             className="flex pb-0 cursor-pointer"
-            activeClassName="border-l-4 border-blue-450  font-bold text-white"
         >
             <div className="w-1/4 bg-gray-950 text-center h-12 flex justify-center items-center">
                 <img className="h-6  fill-current" src="/images/b-books.svg" />
@@ -70,46 +61,44 @@ const AdminSideNav = () => {
 
                 {isAdmin() ? adminDash : ''}
 
-                <NavLink
-                    to="/dashboard"
-                    className="flex pb-0 cursor-pointer"
-                    activeClassName="border-l-4 border-blue-450  font-bold text-white"
-                >
-                    <div className="w-1/4 bg-gray-950 text-center h-12 flex justify-center items-center">
-                        <img
-                            className="h-6 white fill-current"
-                            src="/images/home-4-line.svg"
-                        />
-                    </div>
-                    <span className="w-3/4 h-12 flex justify-start items-center    ml-8 ">
-                        Dashboard
-                    </span>
-                </NavLink>
+                {!isAdmin() && (
+                    <NavLink to="/dashboard" className="flex pb-0 cursor-pointer">
+                        <div className="w-1/4 bg-gray-950 text-center h-12 flex justify-center items-center">
+                            <img
+                                className="h-6 white fill-current"
+                                src="/images/home-4-line.svg"
+                            />
+                        </div>
+                        <span className="w-3/4 h-12 flex justify-start items-center    ml-8 ">
+                            Dashboard
+                        </span>
+                    </NavLink>
+                )}
 
                 {isAdmin() ? books : ''}
 
                 {!isAdmin() ? borrowedBooks : ''}
 
-                <NavLink
-                    to="/fines"
-                    className="flex pb-0 cursor-pointer"
-                    activeClassName="border-l-4 border-blue-450  font-bold text-white"
-                >
-                    <div className="w-1/4 bg-gray-950  text-center h-12 flex justify-center items-center">
-                        <img
-                            className="h-6  fill-current"
-                            src="/images/fines.svg"
-                        />
-                    </div>
-                    <div className="w-3/4 h-12 flex justify-start items-center ml-8">
-                        Fines
-                    </div>
-                </NavLink>
+                {!isAdmin() && (
+                    <NavLink
+                        to="/fines"
+                        className="flex pb-0 cursor-pointer"
+                    >
+                        <div className="w-1/4 bg-gray-950  text-center h-12 flex justify-center items-center">
+                            <img
+                                className="h-6  fill-current"
+                                src="/images/fines.svg"
+                            />
+                        </div>
+                        <div className="w-3/4 h-12 flex justify-start items-center ml-8">
+                            Fines
+                        </div>
+                    </NavLink>
+                )}
 
                 <NavLink
                     to="/profile"
                     className="flex pb-0 cursor-pointer"
-                    activeClassName="border-l-4 border-blue-450  font-bold text-white"
                 >
                     <div className="w-1/4 bg-gray-950  text-center h-12 flex justify-center items-center">
                         <img

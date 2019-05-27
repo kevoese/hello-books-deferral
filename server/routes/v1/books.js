@@ -6,7 +6,13 @@ import bookRequest from '@book/bookRequest';
 
 const router = express.Router();
 
-router.post('/', bookValidator.addBook, bookController.storeBooks);
+router.post(
+    '/',
+    bookValidator.addBook,
+    authenticate.isAuthenticated,
+    authenticate.isAdmin,
+    bookController.storeBooks
+);
 
 router.get(
     '/',
@@ -30,16 +36,6 @@ router.get(
     authenticate.isAuthenticated,
     authenticate.isPatron,
     bookController.borrowedBooks
-);
-
-router.patch(
-    '/:id/lend/:userId',
-    bookValidator.bookUserValidation,
-    authenticate.isAuthenticated,
-    authenticate.isAdmin,
-    bookRequest.checkAvailiability,
-    bookRequest.borrowLimit,
-    bookController.decideBookRequest
 );
 
 router.patch(

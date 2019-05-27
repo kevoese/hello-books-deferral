@@ -56,7 +56,8 @@ module.exports = {
         },
         maxWidth: {
             ...maxWidth,
-            custom: '40rem'
+            custom: '40rem',
+            '450': '450px'
         },
         fontSize: {
             ...fontSize,
@@ -64,7 +65,8 @@ module.exports = {
         },
         inset: {
             ...inset,
-            '1': '0.75rem'
+            '1': '0.75rem',
+            '4.5': '4.5rem'
         }
     },
     variants: {},

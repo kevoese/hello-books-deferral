@@ -6,10 +6,11 @@ const getUser = async id => {
         lastName,
         email,
         bio,
-        avatar
+        avatar,
+        role
     } = await User.query().findById(id);
 
-    return { firstName, lastName, email, bio, avatar };
+    return { firstName, lastName, email, bio, avatar, role };
 };
 
 const filterObj = obj => {

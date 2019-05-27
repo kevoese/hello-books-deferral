@@ -16,17 +16,6 @@ const Register = props => {
     const [errorMessage, setErrorMessage] = useState('');
     const [toast, showToast] = useContext(ToastContext);
 
-    const handleError = response => {
-        if (response) {
-            const errors = response.data.message;
-            for (let i = 0; i < errors.length; i++) {
-                setErrorMessage(errors[i].message);
-            }
-        } else {
-            setErrorMessage('Network Error!');
-        }
-        setErrorState(true);
-    };
 
     return (
         <React.Fragment>
@@ -50,7 +39,7 @@ const Register = props => {
                             passwordConfirmation: ''
                         }}
                         validationSchema={RegisterValidator}
-                        onSubmit={(values, { setSubmitting, resetForm }) => {
+                        onSubmit={(values, { setSubmitting, resetForm, setFieldError }) => {
                             setErrorState(false);
                             axios
                                 .post('/api/v1/auth/signup', values)
@@ -82,8 +71,14 @@ const Register = props => {
                                     props.history.push('/dashboard');
                                 })
                                 .catch(({ response }) => {
-                                    handleError(response);
-                                    showToast('error', response.data.code);
+                                    if (response.status === 422) {
+                                        for (let index = 0; index < response.data.message.length; index++) {
+                                            const element = response.data.message[index];
+                                            
+                                            setFieldError(element.field, element.message)
+                                        }
+                                    }
+
                                     setSubmitting(false);
                                 });
                         }}
