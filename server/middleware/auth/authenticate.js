@@ -53,7 +53,7 @@ export const isSuperAdmin = (req, res, next) => {
     next();
 };
 
-const isPatron = (req, res, next) => {
+export const isPatron = (req, res, next) => {
     const { role } = req.user;
 
     if (role !== 'patron') {

@@ -30,6 +30,28 @@ const addFine = (req, res, next) => {
         });
 };
 
+const payFine = (req, res, next) => {
+    const rules = {
+        fineId: 'required|number|itExists:fines,id',
+        reference: 'required'
+    };
+
+    const data = req.body;
+    const messages = {
+        required: '{{ field }} is required to pay for a fine',
+        number: '{{ field }} is expected to be a an integer',
+        itExists: 'Fine Id does not exist'
+    };
+
+    validateAll(data, rules, messages)
+        .then(() => {
+            next();
+        })
+        .catch(errors => {
+            res.status(422).jerror('ValidationFailed', errors);
+        });
+};
+
 const checkId = (req, res, next) => {
     const rules = {
         fineId: 'required|number|itExists:fines,id'
@@ -51,4 +73,4 @@ const checkId = (req, res, next) => {
         });
 };
 
-export default { addFine, checkId };
+export default { addFine, checkId, payFine };

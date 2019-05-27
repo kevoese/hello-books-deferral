@@ -1,4 +1,8 @@
+import config from '@config';
 import Fine from '@models/Fine';
+import Paystack from 'paystack';
+
+const paystack = Paystack(config.paystack.secret);
 
 const getFines = async (req, res) => {
     const userFines = await Fine.query().where({ user_id: req.user.id });
@@ -22,6 +26,31 @@ const addFine = async (req, res) => {
     });
 };
 
+const payFine = async (req, res) => {
+    const { fineId, reference } = req.body;
+
+    try {
+        const transaction = await paystack.transaction.verify(reference);
+
+        if (!transaction.status) throw new Error();
+
+        await Fine.query()
+            .patch({
+                status: 'paid',
+                paid_at: new Date()
+            })
+            .findById(fineId);
+
+        return res.jsend({
+            message: 'Fine paid successfully.'
+        });
+    } catch (e) {
+        res.status(400).jerror({
+            message: 'Payment verification failed.'
+        });
+    }
+};
+
 const getFine = async (req, res) => {
     const { fineId } = req.params;
 
@@ -30,4 +59,4 @@ const getFine = async (req, res) => {
     return res.status(200).jsend(userFine);
 };
 
-export default { addFine, getFine, getFines };
+export default { addFine, getFine, getFines, payFine };

@@ -9,7 +9,8 @@ const FineRowData = ({
     description,
     amount,
     status,
-    paid_at
+    paid_at,
+    handlePay
 }) => {
     return (
         <tr className="hover:bg-gray-10 border-b-2 border-gray-10 ">
@@ -26,12 +27,13 @@ const FineRowData = ({
                         {paid_at ? (
                             `Paid on ${paid_at && getDateStr(paid_at)}`
                         ) : (
-                            <Link
-                                to="/fines"
+                            <button
+                                type="button"
+                                onClick={() => handlePay(id, amount)}
                                 className=" bg-green-400 px-4 py-1 text-white rounded-full"
                             >
                                 Pay
-                            </Link>
+                            </button>
                         )}
                     </div>
                 </div>
