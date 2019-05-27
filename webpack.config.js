@@ -1,6 +1,7 @@
 require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -45,6 +46,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new Dotenv(),
         new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output

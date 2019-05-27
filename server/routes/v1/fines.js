@@ -1,9 +1,21 @@
 import express from 'express';
 import fineValidator from '@validators/fineValidator';
 import fineController from '@controllers/fineController';
-import { isAuthenticated, isAdmin } from '@middleware/auth/authenticate';
+import {
+    isAuthenticated,
+    isAdmin,
+    isPatron
+} from '@middleware/auth/authenticate';
 
 const router = express.Router();
+
+router.post(
+    '/pay',
+    isAuthenticated,
+    isPatron,
+    fineValidator.payFine,
+    fineController.payFine
+);
 
 router.post(
     '/:userId',
