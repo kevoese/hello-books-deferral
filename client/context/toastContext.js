@@ -20,8 +20,6 @@ const ToastProvider = props => {
                 message: null
             });
         }, 3000);
-
-        console.log('message', message);
     };
 
     return (

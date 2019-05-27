@@ -5,18 +5,26 @@ import context from '@context/authContext';
 import InputForm from '@components/InputForm';
 import Button from '@components/Button';
 import { RegisterValidator } from '@clientValidators/Auth';
+import toastcontext from '@context/toastContext';
 
 const { AuthContext } = context;
+const { ToastContext } = toastcontext;
 
 const Register = props => {
     const [auth, setAuth] = useContext(AuthContext);
     const [errorState, setErrorState] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [toast, showToast] = useContext(ToastContext);
 
     const handleError = response => {
-        response
-            ? setErrorMessage('Email Already exist')
-            : setErrorMessage('Network Error!');
+        if (response) {
+            const errors = response.data.message;
+            for (let i = 0; i < errors.length; i++) {
+                setErrorMessage(errors[i].message);
+            }
+        } else {
+            setErrorMessage('Network Error!');
+        }
         setErrorState(true);
     };
 
@@ -66,11 +74,16 @@ const Register = props => {
                                         'user',
                                         JSON.stringify(user_data)
                                     );
+                                    showToast(
+                                        'success',
+                                        'Registration Successful'
+                                    );
                                     setSubmitting(false);
                                     props.history.push('/dashboard');
                                 })
                                 .catch(({ response }) => {
                                     handleError(response);
+                                    showToast('error', response.data.code);
                                     setSubmitting(false);
                                 });
                         }}

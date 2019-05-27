@@ -6,13 +6,16 @@ import context from '@context/authContext';
 import InputForm from '@components/InputForm';
 import Button from '@components/Button';
 import { SignInValidator } from '@clientValidators/Auth';
+import toastcontext from '@context/toastContext';
 
 const { AuthContext } = context;
+const { ToastContext } = toastcontext;
 
 const SignIn = props => {
     const [auth, setAuth] = useContext(AuthContext);
     const [errorState, setErrorState] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [toast, showToast] = useContext(ToastContext);
 
     const handleError = response => {
         response
@@ -61,10 +64,15 @@ const SignIn = props => {
                                         'user',
                                         JSON.stringify(user_data)
                                     );
+                                    showToast('success', 'Login Successful');
                                     setSubmitting(false);
                                     props.history.push(user_data.role === 'patron' ? '/dashboard' : '/admin-dashboard');
                                 })
                                 .catch(({ response }) => {
+                                    showToast(
+                                        'error',
+                                        response.data.code.error
+                                    );
                                     handleError(response);
                                     setSubmitting(false);
                                 });

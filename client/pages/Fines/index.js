@@ -7,6 +7,7 @@ import AuthContext from '@context/authContext';
 import ToastContext from '@context/toastContext';
 import SideNavbar from '@components/sideNavbar';
 import FineRowData from '@components/FineRow';
+import AdminSideNav from '@components/AdminSideNav';
 
 const { AuthContext: Auth } = AuthContext;
 const { ToastContext: Toast } = ToastContext;
@@ -23,7 +24,7 @@ const Fines = () => {
     const [currentlyPayingFine, setCurrentlyPayingFine] = useState(null);
     const [makingPayment, setMakingPayment] = useState(false);
 
-    const handlePay = (id) => {
+    const handlePay = id => {
         setMakingPayment(true);
 
         setCurrentlyPayingFine(data.find(fine => fine.id === id));
@@ -189,7 +190,7 @@ const Fines = () => {
                 </form>
             )}
             <div className="flex md:flex-row flex-wrap min-h-screen">
-                <SideNavbar />
+                <AdminSideNav />
                 <div className="w-full md:w-5/6 bg-gray-10 text-center text-gray-700 ">
                     <div className="m-2">
                         <div className="mt-2 bg-transparent px-2 py-4 flex flex-row justify-between items-center ml-4 mr-4">
@@ -225,6 +226,7 @@ const Fines = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </Fragment>
     );
 };
