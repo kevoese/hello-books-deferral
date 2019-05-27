@@ -48,12 +48,12 @@ const getAllBooks = async (req, res) => {
 const borrowedBooks = async (req, res) => {
     const borrowed = await LendingRequest.query()
         .where('user', req.user.id)
-        .where('status', 'pending');
+        .where('returned', false);
     const bookIds = borrowed.map(request => request.book);
     const books = await Book.query().whereIn('id', bookIds);
     const allBorrowedBooks = books.map(book => {
         const request = borrowed.find(request => request.book === book.id);
-        const status = new Date() > request.returnDate ? 'expired' : 'pending';
+        const status = new Date() > request.returnDate ? 'expired' : 'active';
         return { ...book, dueDate: request.returnDate, status };
     });
     return res.status(200).jsend(allBorrowedBooks);
@@ -103,14 +103,15 @@ const requestBook = async (req, res) => {
 };
 
 const extendBorrow = async (req, res) => {
-    const { lendId, oldReturnDate } = req.user;
+    const { lendId, oldReturnDate, timesExtended } = req.user;
 
     await LendingRequest.query().patchAndFetchById(lendId, {
         returnDate: moment(
             new Date(
                 oldReturnDate.setDate(oldReturnDate.getDate() + req.body.days)
             )
-        )
+        ),
+        timesExtended: timesExtended + 1
     });
 
     return res.status(200).jsend({

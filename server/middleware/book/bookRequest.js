@@ -7,12 +7,12 @@ export const duplicateRequest = async (req, res, next) => {
     const duplicateBooks = await LendingRequest.query()
         .where('book', req.params.id)
         .where('user', id)
-        .where('status', 'pending' || 'approved')
+        .where('returned', false)
         .first();
 
     if (duplicateBooks) {
-        return res.status(403).json({
-            message: 'You have already made a request for this book'
+        return res.status(403).jerror({
+            message: 'You have already borrowed this book'
         });
     }
 
@@ -24,7 +24,7 @@ export const checkAvailiability = async (req, res, next) => {
 
     const bookExists = await Book.query().findById(req.params.id);
     if (!bookExists) {
-        return res.status(404).jsend({
+        return res.status(404).jerror({
             message:
                 'Not Found, Library does not have any book with the specified id'
         });
@@ -34,18 +34,10 @@ export const checkAvailiability = async (req, res, next) => {
 
     const copiesBorrowed = await LendingRequest.query()
         .where('book', req.params.id)
-        .where('status', 'approved')
         .where('returned', false);
 
     if (copiesBorrowed && copiesAvailable === copiesBorrowed.length) {
-        if (role !== 'patron') {
-            await LendingRequest.query()
-                .patch({ status: 'rejected' })
-                .where('user', req.params.userId)
-                .where('book', req.params.id);
-            // send notification to patron that request as been declined due to none availiability of books
-        }
-        return res.status(404).jsend({
+        return res.status(404).jerror({
             message:
                 'No copy of this book is available at the moment, please check back later'
         });
@@ -55,29 +47,14 @@ export const checkAvailiability = async (req, res, next) => {
 
 export const borrowLimit = async (req, res, next) => {
     const { id, email, role } = req.user;
-    let userId;
-
-    role != 'patron' ? (userId = req.params.userId) : (userId = id);
 
     const borrowedBooks = await LendingRequest.query()
-        .where('user', userId)
-        .where('status', 'approved')
+        .where('user', id)
         .where('returned', false);
 
     if (borrowedBooks && borrowedBooks.length >= 3 && role === 'patron') {
-        return res.status(400).jsend({
+        return res.status(400).jerror({
             message: 'You have reached the maximum borrow limit of 3'
-        });
-    }
-    if (borrowedBooks && borrowedBooks.length >= 3 && role !== 'patron') {
-        await LendingRequest.query()
-            .patch({ status: 'declined' })
-            .where('user', req.params.userId)
-            .where('book', req.params.id);
-        // Send notification to the Patron regarding why the request was declined
-        return res.status(400).jsend({
-            message:
-                'Request declined: Patron has reached the maximum borrow limit'
         });
     }
     next();
@@ -86,29 +63,43 @@ export const borrowLimit = async (req, res, next) => {
 export const withBook = async (req, res, next) => {
     const { id } = req.user;
     const bookId = req.params.id;
+    const { days } = req.body;
 
     const hasBook = await LendingRequest.query()
         .where('user', id)
         .where('book', bookId)
-        .where('status', 'approved')
         .where('returned', false)
         .first();
 
     if (!hasBook) {
-        return res.status(404).jsend({
-            message: 'You do not have any book with this id'
+        return res.status(404).jerror({
+            message: 'You do not have this book with you'
         });
     }
 
     if (moment(hasBook.returnDate) < moment(new Date())) {
-        return res.status(400).jsend({
+        return res.status(400).jerror({
             message:
-                'Return date already exceeded 30 days return limit, Please return the book to the library and make a new request'
+                'You already exceeded the return date before making this request, Please return the book to the library and make a new request'
+        });
+    }
+
+    if (hasBook && days > 7) {
+        return res.status(400).jerror({
+            message: 'You cannot extend a book for more than 7 days at a time'
+        });
+    }
+
+    if (hasBook && hasBook.timesExtended === 3) {
+        return res.status(400).jerror({
+            message:
+                'You cannot extend a borrow request more than 3 times, please return this book'
         });
     }
 
     req.user.lendId = hasBook.id;
     req.user.oldReturnDate = hasBook.returnDate;
+    req.user.timesExtended = hasBook.timesExtended;
 
     next();
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import AdminSideNav from '@components/AdminSideNav';
@@ -9,6 +9,7 @@ import axios from 'axios';
 import Button from '@components/Button';
 import Loading from '@components/Loading';
 import Modal from '@components/Modal';
+import toastcontext from '@context/toastContext';
 
 const BorrowedBooks = () => {
     const headings = [
@@ -23,14 +24,11 @@ const BorrowedBooks = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [bookData, setbookData] = useState([]);
     const [bookId, setbookId] = useState();
-    const [response, setresponse] = useState({
-        status: false,
-        message: ' '
-    });
     const [isVisible, changeVisibility] = useState(false);
+    const { ToastContext } = toastcontext;
+    const [toast, showToast] = useContext(ToastContext);
 
-    useEffect(() => {
-        setIsLoading(true);
+    const fetchData = () => {
         const options = {
             method: 'GET',
             headers: { 'x-access-token': localStorage.token },
@@ -44,6 +42,11 @@ const BorrowedBooks = () => {
             .catch(err => {
                 setIsLoading(false);
             });
+    }
+
+    useEffect(() => {
+        setIsLoading(true);
+        fetchData()
     }, []);
 
     const extendBook = bookId => {
@@ -119,20 +122,20 @@ const BorrowedBooks = () => {
                                 setSubmitting(true);
                                 axios(options)
                                     .then(res => {
-                                        setresponse({
-                                            status: true,
-                                            message: res.data.data.message
-                                        });
+                                        showToast('success', res.data.data.message)
                                         resetForm({
                                             days: ''
                                         });
+                                        fetchData();
                                         setSubmitting(false);
+                                        changeVisibility(false);
                                     })
                                     .catch(e => {
                                         setFieldError(
                                             'days',
-                                            e.response.data.data.message
+                                            e.response.data.code.message
                                         );
+                                        showToast('error', e.response.data.code.message);
                                         setSubmitting(false);
                                     });
                             }}
@@ -169,11 +172,7 @@ const BorrowedBooks = () => {
                                                 backgroundImage: `url(/images/cut.png)`
                                             }}
                                         />
-                                        {response.status ? (
-                                            <span className="text-lg text-green-600 font-robotoMono">
-                                                {response.message}
-                                            </span>
-                                        ) : (
+                                        {(
                                             <div>
                                                 <label
                                                     htmlFor="days"
