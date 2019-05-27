@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import AuthNavbar from '@components/authNavbar';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import SideNavbar from '@components/sideNavbar';
+import AdminSideNav from '@components/AdminSideNav';
 import Footer from '@components/Footer';
 import BorrowedBookRow from '@components/BorrowedBookRow';
 import { getDateStr } from '@clientUtils';
@@ -93,7 +93,7 @@ const BorrowedBooks = () => {
     return (
         <React.Fragment>
             <div className="flex md:flex-row flex-wrap min-h-screen">
-                <SideNavbar />
+                <AdminSideNav />
                 <div className=" relative w-full md:w-5/6 bg-gray-20 text-center text-gray-700 px-4 py-4">
                     <header className="font-raleway font-bold text-black px-2 text-2xl text-left mb-4">
                         All Borrowed Books

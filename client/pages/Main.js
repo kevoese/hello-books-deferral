@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Home from '@pages/Home';
 import Books from '@pages/Books';
 import BookDetails from '@pages/BookDetails';
@@ -17,8 +17,9 @@ import Toaster from '@components/Toaster';
 import toastContext from '@context/toastContext';
 import AdminDashboard from '@pages/AdminDashboard';
 import AdminBooksDashboard from '@pages/AdminBooksDashboard';
+import { Redirect } from 'react-router-dom';
 
-const { AuthProvider } = context;
+const { AuthProvider, AuthContext } = context;
 const { ToastProvider } = toastContext;
 
 const App = ({ history }) => {
@@ -35,26 +36,105 @@ const App = ({ history }) => {
                     history.location.pathname.match(/books/) ||
                     history.location.pathname.match(/reset-password/) ||
                     history.location.pathname.match(/signup/)) && <Navbar />) ||
-                    (['/dashboard', '/admin-dashboard', '/admin/library'] && (
-                        <AuthNavbar />
-                    ))}
-                {<Toaster />}
+                    ([
+                        '/dashboard',
+                        '/admin-dashboard',
+                        '/admin/library'
+                    ] && <AuthNavbar />)}
+
+                {([
+                    '/',
+                    '/about',
+                    '/signin',
+                    '/signup',
+                    '/forgot-password'
+                ].includes(history.location.pathname) ||
+                    history.location.pathname.match(/books/) ||
+                    history.location.pathname.match(/reset-password/)) && (
+                    <Navbar />
+                )}
+                <Toaster />
                 <Route exact path="/" component={Home} />
                 <Route exact path="/books" component={Books} />
-                <Route path="/signup" component={Register} />
-                <Route path="/signin" component={SignIn} />
+                <OnlyGuestRoute path="/signup" component={Register} />
+                <OnlyGuestRoute path="/signin" component={SignIn} />
+                <OnlyGuestRoute path="/reset-password/:token" component={ResetPassword} />
+                <OnlyGuestRoute path="/forgot-password" component={ForgotPassword} />
                 <Route path="/books/:bookId" component={BookDetails} />
-                <Route path="/forgot-password" component={ForgotPassword} />
-                <Route
-                    path="/reset-password/:token"
-                    component={ResetPassword}
-                />
-                <Route path="/dashboard" component={Dashboard} />
                 <Route path="/admin-dashboard" component={AdminDashboard} />
                 <Route path="/admin/library" component={AdminBooksDashboard} />
                 <Route path="/borrowed" component={BorrowedBooks} />
+                <Route path="/books/:bookId" component={BookDetails} />
+                <Route path="/borrowed" component={BorrowedBooks} />
+                <AuthRoute path="/dashboard" component={Dashboard} />
             </AuthProvider>
         </ToastProvider>
+    );
+};
+
+const AuthRoute = ({ component: Component, props, ...rest }) => {
+    const [auth, setAuth, isAuth] = useContext(AuthContext);
+
+    return (
+        <Route
+            {...rest}
+            render={props =>
+                isAuth() ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: '/signin',
+                            state: { from: props.location }
+                        }}
+                    />
+                )
+            }
+        />
+    );
+};
+
+const AdminRoute = ({ component: Component, props, ...rest }) => {
+    const [auth, setAuth, isAuth, isAdmin] = useContext(AuthContext);
+
+    return (
+        <Route
+            {...rest}
+            render={props =>
+                isAdmin() ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: '/dashboard',
+                            state: { from: props.location }
+                        }}
+                    />
+                )
+            }
+        />
+    );
+};
+
+const OnlyGuestRoute = ({ component: Component, props, ...rest }) => {
+    const [auth, setAuth, isAuth] = useContext(AuthContext);
+
+    return (
+        <Route
+            {...rest}
+            render={props =>
+                !isAuth() ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: '/dashboard',
+                            state: { from: props.location }
+                        }}
+                    />
+                )
+            }
+        />
     );
 };
 
