@@ -2,6 +2,29 @@ import User from '@models/User';
 import Author from '@models/Author';
 import jwt from 'jsonwebtoken';
 
+export const isMaybeAuthenticated = async (req, res, next) => {
+    const token = req.headers['x-access-token'];
+    if (!token) {
+        return next()
+    }
+    try {
+        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+        const { email } = decoded;
+        let user = await User.query()
+            .where('email', email)
+            .first();
+
+        if (!user) {
+            return next()
+        }
+
+        req.user = user;
+        next();
+    } catch (error) {
+        return next()
+    }
+}
+
 export const isAuthenticated = async (req, res, next) => {
     const token = req.headers['x-access-token'];
     if (!token) {
@@ -90,5 +113,6 @@ export default {
     isSuperAdmin,
     isPatron,
     userExists,
-    authorExists
+    authorExists,
+    isMaybeAuthenticated
 };

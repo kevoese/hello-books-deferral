@@ -8,7 +8,7 @@ const TableRowItems = ({ id, title, copiesAvailable, year, isbn, authors }) => {
                 {title}
             </td>
             <td className="py-6 font-raleway px-4  text-sm">
-                {(authors && authors[0].name) || ''}
+                {(authors && authors[0] && authors[0].name) || ''}
             </td>
             <td className="py-4 font-raleway px-4  text-sm">{year}</td>
             <td className="py-4 font-raleway px-4  text-sm">{isbn}</td>
