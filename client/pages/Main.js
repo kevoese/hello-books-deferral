@@ -37,21 +37,15 @@ const App = ({ history }) => {
                     history.location.pathname.match(/books/) ||
                     history.location.pathname.match(/reset-password/) ||
                     history.location.pathname.match(/signup/)) && <Navbar />) ||
-                    (['/dashboard', '/admin-dashboard', '/admin/library'] && (
-                        <AuthNavbar />
-                    ))}
+                    ([
+                        '/dashboard',
+                        '/admin-dashboard',
+                        '/admin/library',
+                        '/borrowed',
+                        '/profile',
+                        '/fines'
+                    ].includes(history.location.pathname) && <AuthNavbar />)}
 
-                {([
-                    '/',
-                    '/about',
-                    '/signin',
-                    '/signup',
-                    '/forgot-password'
-                ].includes(history.location.pathname) ||
-                    history.location.pathname.match(/books/) ||
-                    history.location.pathname.match(/reset-password/)) && (
-                    <Navbar />
-                )}
                 <Toaster />
                 <Route exact path="/" component={Home} />
                 <AuthRoute path="/fines" component={Fines} />
@@ -66,13 +60,18 @@ const App = ({ history }) => {
                     path="/forgot-password"
                     component={ForgotPassword}
                 />
-                <Route path="/books/:bookId" component={BookDetails} />
-                <Route path="/admin-dashboard" component={AdminDashboard} />
-                <Route path="/admin/library" component={AdminBooksDashboard} />
+                <AdminRoute
+                    path="/admin-dashboard"
+                    component={AdminDashboard}
+                />
+                <AdminRoute
+                    path="/admin/library"
+                    component={AdminBooksDashboard}
+                />
                 <Route path="/borrowed" component={BorrowedBooks} />
                 <Route path="/books/:bookId" component={BookDetails} />
-                <Route path="/borrowed" component={BorrowedBooks} />
-                <Route path="/profile" component={Profile} />
+                <AuthRoute path="/borrowed" component={BorrowedBooks} />
+                <AuthRoute path="/profile" component={Profile} />
                 <AuthRoute path="/dashboard" component={Dashboard} />
             </AuthProvider>
         </ToastProvider>

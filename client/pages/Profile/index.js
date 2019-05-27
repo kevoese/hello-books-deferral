@@ -1,13 +1,13 @@
 import React, { useState, useContext, useRef } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
-import AuthNavbar from '@components/authNavbar';
-import SideNavbar from '@components/sideNavbar';
 import { ProfileValidator } from '@clientValidators/Profile';
 import context from '@context/authContext';
+import toastcontext from '@context/toastContext';
 import Button from '@components/Button';
 import InputForm from '@components/InputForm';
 import Footer from '@components/Footer';
+import AdminSideNav from '@components/AdminSideNav';
 
 let initialFormValues = {
     firstName: '',
@@ -21,7 +21,9 @@ let selectedImage = '';
 const Profile = () => {
     const inputEl = useRef(null);
     const { AuthContext } = context;
+    const { ToastContext } = toastcontext;
     const [auth] = useContext(AuthContext);
+    const [toast, showToast] = useContext(ToastContext);
 
     if (auth.user) {
         initialFormValues = {
@@ -53,7 +55,7 @@ const Profile = () => {
     return (
         <React.Fragment>
             <div className="flex md:flex-row flex-wrap min-h-screen">
-                <SideNavbar />
+                <AdminSideNav />
                 <div className="w-full font-raleway md:w-5/6 bg-gray-250 text-gray-700">
                     <div className="m-8">
                         <h1 className="text-3xl font-bold">User Profile</h1>
@@ -65,7 +67,7 @@ const Profile = () => {
                         <div className="w-full">
                             <Formik
                                 enableReinitialize={true}
-                                initialValues={{}}
+                                initialValues={initialFormValues}
                                 validationSchema={ProfileValidator}
                                 onSubmit={async (
                                     values,
@@ -102,8 +104,20 @@ const Profile = () => {
                                         )
                                             delete values.email;
                                         const res = await axios.patch(
-                                            `/api/v1/profile/${userId}`,
-                                            values
+                                            `/api/v1/profile`,
+                                            values,
+                                            {
+                                                headers: {
+                                                    'x-access-token': `${
+                                                        auth.token
+                                                    }`
+                                                }
+                                            }
+                                        );
+
+                                        showToast(
+                                            'success',
+                                            'Profile updated Successfully'
                                         );
                                         resetForm({
                                             firstName:
@@ -119,6 +133,10 @@ const Profile = () => {
                                                 '/images/userimage.png'
                                         );
                                     } catch (e) {
+                                        showToast(
+                                            'error',
+                                            'An error must have occurred please try again'
+                                        );
                                         setStatus(e);
                                         setSubmitting(false);
                                     }
