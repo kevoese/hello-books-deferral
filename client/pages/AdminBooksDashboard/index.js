@@ -9,6 +9,9 @@ import AdminSideNav from '@components/AdminSideNav';
 import TableRowItems from '@components/TableRow';
 import Modal from '@components/Modal';
 import Loading from '@components/Loading';
+import ToastContext from '@context/toastContext';
+
+const { ToastContext: Toast } = ToastContext;
 
 const Table = items => {
     const detail = [];
@@ -52,6 +55,7 @@ const AdminBooksDashboard = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [limit, setLimit] = useState(10);
+    const [authors, setAuthors] = useState([])
     const [url, setUrl] = useState(`/api/v1/books?page=${page}&limit=${limit}`);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +66,15 @@ const AdminBooksDashboard = () => {
 
     const inputEl = useRef(null);
 
+    const [toast, showToast] = useContext(Toast);
+
+    useEffect(() => {
+        axios.get(`/api/v1/authors`)
+            .then(({ data: { data: { results } } }) => {
+                setAuthors(results.map(({ id, name }) => ({ value: id, label: name })))
+            })
+    }, [])
+
     const CLOUDINARY_URL =
         'https://api.cloudinary.com/v1_1/deferral-hello-books/upload';
     const CLOUDINARY_UPLOAD_PRESET = 'hwmdjyvu';
@@ -70,6 +83,11 @@ const AdminBooksDashboard = () => {
         const files = event.target.files;
         if (files && files[0]) {
             selectedImage = files[0];
+
+            if (!selectedImage.type.match(/image/)) {
+                showToast('error', 'Please select only an image.')
+                return
+            }
             setCoverImageName(event.target.value.split(/(\\|\/)/g).pop());
             const reader = new FileReader();
             reader.onload = e => setCoverImage(e.target.result);
@@ -257,7 +275,10 @@ const AdminBooksDashboard = () => {
 
                                 if (values.coverImage) {
                                     axios
-                                        .post('/api/v1/books', values)
+                                        .post('/api/v1/books', {
+                                            ...values,
+                                            authors: [values.author]
+                                        })
                                         .then(res => {
                                             resetForm({
                                                 title: '',
@@ -271,10 +292,14 @@ const AdminBooksDashboard = () => {
                                                 publisher: ''
                                             });
 
+
+                                            showToast('success', 'Book added to library.');
                                             setSubmitting(false);
+                                            setModalState(false);
+                                            fetchData();
                                         })
                                         .catch(({ response }) => {
-                                            console.log(response);
+                                            showToast('error', 'Some errors occured.');
                                             setSubmitting(false);
                                         });
                                 }
@@ -315,7 +340,8 @@ const AdminBooksDashboard = () => {
                                                 name="author"
                                                 labelname="Author"
                                                 id="author"
-                                                type="text"
+                                                inputtype="select"
+                                                options={authors}
                                                 value={values.author}
                                             />
                                             <InputForm
@@ -406,10 +432,19 @@ const AdminBooksDashboard = () => {
                                             <InputForm
                                                 block="true"
                                                 inputtype="select"
-                                                values={[
-                                                    'Hard',
-                                                    'Soft',
-                                                    'Normal'
+                                                options={[
+                                                    {
+                                                        label: 'Hard',
+                                                        value: 'Hard'
+                                                    },
+                                                    {
+                                                        label: 'Soft',
+                                                        value: 'Soft'
+                                                    },
+                                                    {
+                                                        label: 'Normal',
+                                                        value: 'Normal'
+                                                    }
                                                 ]}
                                                 classes="bg-white border-2 "
                                                 errors={errors}

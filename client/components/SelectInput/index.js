@@ -5,7 +5,7 @@ const Select = ({
     background,
     handleChange,
     handleBlur,
-    values,
+    options,
     ...rest
 }) => {
     return (
@@ -18,11 +18,10 @@ const Select = ({
         >
             <option defaultValue> Select an option </option>
 
-            {values.map((value, index) => {
+            {options.map(item => {
                 return (
-                    <option key={index} value={value}>
-                        {' '}
-                        {value}{' '}
+                    <option key={item.value} value={item.value}>
+                        {item.label}
                     </option>
                 );
             })}
