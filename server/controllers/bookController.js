@@ -102,26 +102,6 @@ const requestBook = async (req, res) => {
     });
 };
 
-const decideBookRequest = async (req, res) => {
-    const { id, email } = req.user;
-
-    await LendingRequest.query()
-        .patch({
-            status: 'approved',
-            approvedDate: moment(new Date()),
-            returned: false,
-            returnDate: moment(
-                new Date(new Date().setDate(new Date().getDate() + 30))
-            )
-        })
-        .where('user', req.params.userId)
-        .where('book', req.params.id);
-
-    return res.status(200).jsend({
-        message: 'Book request approved'
-    });
-};
-
 const extendBorrow = async (req, res) => {
     const { lendId, oldReturnDate } = req.user;
 
@@ -146,7 +126,6 @@ export default {
     getSingleBook,
     deleteSingleBook,
     requestBook,
-    decideBookRequest,
     extendBorrow,
     borrowedBooks
 };

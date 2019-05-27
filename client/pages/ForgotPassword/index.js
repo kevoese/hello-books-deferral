@@ -43,6 +43,10 @@ const ForgotPassword = () => {
                                     setSubmitting(false);
                                 })
                                 .catch(({ response }) => {
+                                    showToast(
+                                        'error',
+                                        response.data.message[0].message
+                                    );
                                     response.data &&
                                         response.data.message &&
                                         response.data.message[0] &&

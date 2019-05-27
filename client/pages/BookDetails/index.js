@@ -90,7 +90,12 @@ const BookDetails = props => {
         );
     }
 
-    return <Fragment>{detail}</Fragment>;
+    return (
+        <Fragment>
+            {detail}
+            <Footer />
+        </Fragment>
+    );
 };
 
 export default BookDetails;
