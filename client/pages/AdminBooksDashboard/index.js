@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '@components/Footer';
-import AdminSideNav from '@components/adminSideNav';
+import AdminSideNav from '@components/AdminSideNav';
 import TableRowItems from '@components/TableRow';
 
 const AdminBooksDashboard = () => {

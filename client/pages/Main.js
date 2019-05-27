@@ -30,12 +30,9 @@ const App = ({ history }) => {
                 history.location.pathname.match(/books/) ||
                 history.location.pathname.match(/reset-password/) ||
                 history.location.pathname.match(/signup/)) && <Navbar />) ||
-                ([
-                    '/dashboard',
-                    '/admin-dashboard',
-                    '/admin/library'
-                ] && <AuthNavbar />)}
-
+                (['/dashboard', '/admin-dashboard', '/admin/library'] && (
+                    <AuthNavbar />
+                ))}
             <Route exact path="/" component={Home} />
             <Route exact path="/books" component={Books} />
             <Route path="/signup" component={Register} />
@@ -45,10 +42,7 @@ const App = ({ history }) => {
             <Route path="/reset-password/:token" component={ResetPassword} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/admin-dashboard" component={AdminDashboard} />
-            <Route
-                path="/admin/library"
-                component={AdminBooksDashboard}
-            />
+            <Route path="/admin/library" component={AdminBooksDashboard} />
             <Route path="/borrowed" component={BorrowedBooks} />
         </AuthProvider>
     );
