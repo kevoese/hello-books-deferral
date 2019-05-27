@@ -21,7 +21,6 @@
                     "@book": "./server/middleware/book",
                     "@client": "./client",
                     "@clientUtils": "./client/utils",
-                    "@clientutils": "./client/utils",
                     "@components": "./client/components",
                     "@context": "./client/context",
                     "@controllers": "./server/controllers",

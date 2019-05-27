@@ -63,7 +63,9 @@ const borrowedBooks = async (req, res) => {
 };
 
 const getSingleBook = async (req, res) => {
-    const book = await Book.query().findById(req.params.id);
+    const book = await Book.query()
+        .eager('authors')
+        .findById(req.params.id);
 
     if (book) {
         return res.status(200).jsend(book);
@@ -89,18 +91,28 @@ const deleteSingleBook = async (req, res) => {
 };
 
 const requestBook = async (req, res) => {
-    const { id, email } = req.user;
+    const { id } = req.user;
 
-    await LendingRequest.query().insert({
-        user: id,
-        book: req.params.id,
-        status: 'pending',
-        requestDate: moment(new Date())
-    });
+    try {
+        const transaction = await paystack.transaction.verify(
+            req.body.reference
+        );
 
-    return res.status(200).jsend({
-        message: 'Request received, you would be notified when approved'
-    });
+        if (!transaction) throw new Error();
+
+        await LendingRequest.query().insert({
+            user: id,
+            book: req.params.bookId,
+            status: 'pending',
+            requestDate: moment(new Date())
+        });
+
+        return res.status(200).jsend({
+            message: 'Request received, you would be notified when approved'
+        });
+    } catch (e) {
+        return 'Payment verification failed';
+    }
 };
 
 const decideBookRequest = async (req, res) => {

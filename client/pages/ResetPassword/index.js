@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import InputForm from '@components/InputForm';
 import Button from '@components/Button';
 import { ResetPasswordValidator } from '@clientValidators/Auth';
+import context from '@context/toastContext';
 
+const { ToastContext } = context;
 const ResetPassword = ({ match, history }) => {
+    const [toast, showToast] = useContext(ToastContext);
+
     return (
         <React.Fragment>
             <div
@@ -38,7 +42,7 @@ const ResetPassword = ({ match, history }) => {
                                         passwordConfirmation: ''
                                     });
                                     setSubmitting(false);
-                                    // flash success
+                                    showToast('success', res.data.data.message);
                                     history.push('/signin');
                                 })
                                 .catch(({ response }) => {

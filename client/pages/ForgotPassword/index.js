@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import InputForm from '@components/InputForm';
 import Button from '@components/Button';
 import { ForgotPasswordValidator } from '@clientValidators/Auth';
+import context from '@context/toastContext';
+
+const { ToastContext } = context;
 
 const ForgotPassword = () => {
+    const [toast, showToast] = useContext(ToastContext);
+
     return (
         <React.Fragment>
             <div
@@ -26,7 +31,7 @@ const ForgotPassword = () => {
                         validationSchema={ForgotPasswordValidator}
                         onSubmit={(
                             values,
-                            { setStatus, setSubmitting, resetForm }
+                            { setSubmitting, resetForm, setError }
                         ) => {
                             axios
                                 .post('/api/v1/auth/reset', values)
@@ -34,17 +39,22 @@ const ForgotPassword = () => {
                                     resetForm({
                                         email: ''
                                     });
+                                    showToast('success', res.data.data.message);
                                     setSubmitting(false);
                                 })
                                 .catch(({ response }) => {
-                                    setStatus({
-                                        msg: response.data.message[0].message
-                                    });
+                                    response.data &&
+                                        response.data.message &&
+                                        response.data.message[0] &&
+                                        setError(
+                                            response.data.message[0].message
+                                        );
                                     setSubmitting(false);
                                 });
                         }}
                     >
                         {({
+                            error,
                             values,
                             errors,
                             status,
@@ -77,6 +87,11 @@ const ForgotPassword = () => {
                                 <Button isSubmitting={isSubmitting}>
                                     Reset
                                 </Button>
+                                {error && (
+                                    <div className="font-raleway py-3 pb-0  bottom-0  w-full px-4 text-lg sm:px-0 text-red-500 text-center ">
+                                        {error}
+                                    </div>
+                                )}
                             </form>
                         )}
                     </Formik>

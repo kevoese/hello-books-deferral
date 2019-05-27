@@ -1,7 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import context from '@context/authContext';
+import { Redirect } from 'react-router-dom';
+
+const { AuthContext } = context;
 
 const SideNavbar = () => {
+    const [auth, setAuth] = useContext(AuthContext);
+
+    const signOut = () => {
+        setAuth({ token: null, user: null });
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        <Redirect to="/" />;
+    };
     return (
         <React.Fragment>
             <div className="relative w-full md:w-1/6 bg-gray-960 text-center  text-gray-500">
@@ -42,7 +54,7 @@ const SideNavbar = () => {
                         Favourite Books
                     </div>
                 </div>
-                <div className="flex pb-0 cursor-pointer">
+                <NavLink to="/fines" className="flex pb-0 cursor-pointer">
                     <div className="w-1/4  text-center h-12 flex justify-center items-center">
                         <img
                             className="h-6  fill-current"
@@ -52,7 +64,7 @@ const SideNavbar = () => {
                     <div className="w-3/4 h-12 flex justify-start items-center ml-8">
                         Fines
                     </div>
-                </div>
+                </NavLink>
                 <div className="flex pb-0 cursor-pointer">
                     <div className="w-1/4  text-center h-12 flex justify-center items-center">
                         <img
@@ -64,7 +76,28 @@ const SideNavbar = () => {
                         My Profile
                     </div>
                 </div>
-                <div className="absolute w-3/12 h-full bg-gray-30 inset-y-0 left-0" />
+                <NavLink to="/profile" className="flex pb-0 cursor-pointer">
+                    <div className="w-1/4  text-center h-12 flex justify-center items-center">
+                        <img
+                            className="h-6  fill-current"
+                            src="/images/user.svg"
+                        />
+                    </div>
+                    <div className="w-3/4 h-12 flex justify-start items-center ml-8">
+                        My Profile
+                    </div>
+                </NavLink>
+                <div className="flex pb-0 cursor-pointer" onClick={signOut}>
+                    <div className="w-1/4  text-center h-12 flex justify-center items-center">
+                        <img
+                            className="h-6  fill-current"
+                            src="/images/logout.svg"
+                        />
+                    </div>
+                    <div className="w-3/4 h-12 flex justify-start items-center text-gray-500 ml-8">
+                        SignOut
+                    </div>
+                </div>
             </div>
         </React.Fragment>
     );

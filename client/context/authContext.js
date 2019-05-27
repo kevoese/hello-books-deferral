@@ -1,14 +1,42 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 
 const AuthContext = createContext();
 
 const AuthProvider = props => {
+    // localStorage.user
     const [auth, setAuth] = useState({
         token: localStorage.token || null,
-        email: localStorage.email || null
+        user: JSON.parse(localStorage.getItem('user')) || null
     });
+    const isAuth = () => {
+        if (auth.user) {
+            return true;
+        }
+        return false;
+    };
+
+    const isAdmin = () => {
+        if (
+            (auth.user && auth.user.role === 'admin') ||
+            (auth.user && auth.user.role === 'super_admin')
+        ) {
+            return true;
+        }
+        return false;
+    };
+
+    const isSuperAdmin = () => {
+        if (auth.user && auth.user.role === 'super_admin') {
+            return true;
+        }
+        return false;
+    };
+
     return (
-        <AuthContext.Provider value={[auth, setAuth]}>
+        <AuthContext.Provider
+            value={[auth, setAuth, isAuth, isAdmin, isSuperAdmin]}
+        >
             {props.children}
         </AuthContext.Provider>
     );
