@@ -1,15 +1,26 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import context from '@context/authContext';
 import Button from '@components/Button';
 import Footer from '@components/Footer';
 
 const BookDetails = props => {
     let detail;
     const bookId = props.match.params.bookId;
+    const user = useContext(AuthContext);
     const [url] = useState(`/api/v1/books/${bookId}`);
     const [data, setData] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+
+    const payNow = () => {
+        return makepayment({
+            key,
+            emal: user.email,
+            amount: data.price,
+            ref: data.id
+        });
+    };
 
     const fetchData = async () => {
         try {
@@ -81,7 +92,19 @@ const BookDetails = props => {
                             <p className="text-gray-700 text-base my-8">
                                 {data.description}
                             </p>
-                            <Button> Borrow </Button>
+                            {/* <Button> Borrow </Button> */}
+                            <form id="paystack-card-form">
+                                <script src="https://js.paystack.co/v1/inline.js" />
+
+                                <button
+                                    type="submit"
+                                    data-paystack="submit"
+                                    onClick={payNow}
+                                    className="bg-blue-400 hover:bg-blue-300 p-2 cursor-pointer rounded outline-none font-semibold text-white shadow-md"
+                                >
+                                    Submit
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

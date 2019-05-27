@@ -60,6 +60,7 @@ const Register = props => {
                                     });
                                     localStorage.setItem('token', user_token);
                                     localStorage.setItem(
+<<<<<<< HEAD
                                         'user',
                                         JSON.stringify(user_data)
                                     );
@@ -67,6 +68,12 @@ const Register = props => {
                                         'success',
                                         'Registration Successful'
                                     );
+=======
+                                        'email',
+                                        user_data.email
+                                    );
+
+>>>>>>> feat(users): Integrate Paystack to borrow books
                                     setSubmitting(false);
                                     props.history.push('/dashboard');
                                 })
