@@ -10,7 +10,7 @@ import { getUser, createUser, createAuthor } from '@tests/utils/helpers';
 const server = () => supertest(app);
 const favouriteAuthorRoute = '/api/v1/favourite/author';
 
-describe('FAVOURITE API ENDPOINTS', () => {
+describe.skip('FAVOURITE API ENDPOINTS', () => {
     beforeAll(async () => {
         await databaseConnection.migrate.latest();
         await databaseConnection('users').truncate();

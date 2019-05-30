@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mount main should render correctly in "debug" mode 1`] = `
+<Fragment>
+  <div
+    className="relative"
+  >
+    <BrowserRouter>
+      <withRouter(App) />
+    </BrowserRouter>
+  </div>
+</Fragment>
+`;

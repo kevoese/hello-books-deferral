@@ -16,7 +16,6 @@ const Register = props => {
     const [errorMessage, setErrorMessage] = useState('');
     const [toast, showToast] = useContext(ToastContext);
 
-
     return (
         <React.Fragment>
             <div
@@ -39,7 +38,10 @@ const Register = props => {
                             passwordConfirmation: ''
                         }}
                         validationSchema={RegisterValidator}
-                        onSubmit={(values, { setSubmitting, resetForm, setFieldError }) => {
+                        onSubmit={(
+                            values,
+                            { setSubmitting, resetForm, setFieldError }
+                        ) => {
                             setErrorState(false);
                             axios
                                 .post('/api/v1/auth/signup', values)
@@ -72,10 +74,19 @@ const Register = props => {
                                 })
                                 .catch(({ response }) => {
                                     if (response.status === 422) {
-                                        for (let index = 0; index < response.data.message.length; index++) {
-                                            const element = response.data.message[index];
-                                            
-                                            setFieldError(element.field, element.message)
+                                        for (
+                                            let index = 0;
+                                            index <
+                                            response.data.message.length;
+                                            index++
+                                        ) {
+                                            const element =
+                                                response.data.message[index];
+
+                                            setFieldError(
+                                                element.field,
+                                                element.message
+                                            );
                                         }
                                     }
 

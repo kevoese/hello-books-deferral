@@ -31,7 +31,7 @@ const storeBooks = async (req, res) => {
         coverImage,
         copiesAvailable
     });
-    
+
     await book.attach(authors || []);
 
     return res
@@ -42,7 +42,8 @@ const storeBooks = async (req, res) => {
 const getAllBooks = async (req, res) => {
     const { page, limit } = req.query;
 
-    const books = await Book.query().orderBy('id', 'DESC')
+    const books = await Book.query()
+        .orderBy('id', 'DESC')
         .eager('authors')
         .select()
         .page(page || 0, limit || 10);
@@ -69,27 +70,27 @@ const getSingleBook = async (req, res) => {
         .eager('authors')
         .findById(req.params.id);
 
-    if (! book) {
+    if (!book) {
         return res.status(404).jsend({
             message: "Book requested doesn't exist"
         });
     }
 
-    let canBorrowBook = false
+    let canBorrowBook = false;
 
-    let lendingRequestForBook = false
+    let lendingRequestForBook = false;
 
-    let maxBorrowLimitReached = false
+    let maxBorrowLimitReached = false;
 
     if (req.user) {
         lendingRequestForBook = await LendingRequest.query()
             .where('user', req.user.id)
             .where('book', book.id)
             .where('returned', false)
-            .first()
+            .first();
 
         const copiesAvailable = book.copiesAvailable;
-    
+
         const copiesBorrowed = await LendingRequest.query()
             .where('book', book.id)
             .where('returned', false);
@@ -98,8 +99,11 @@ const getSingleBook = async (req, res) => {
             .where('user', req.user.id)
             .where('returned', false);
 
-            maxBorrowLimitReached = (copiesBorrowedForUser || []).length >= 3 
-        canBorrowBook = (!lendingRequestForBook && (copiesBorrowedForUser || []).length < 3 && ((copiesBorrowed || []).length < parseInt(copiesAvailable)))
+        maxBorrowLimitReached = (copiesBorrowedForUser || []).length >= 3;
+        canBorrowBook =
+            !lendingRequestForBook &&
+            (copiesBorrowedForUser || []).length < 3 &&
+            (copiesBorrowed || []).length < parseInt(copiesAvailable);
     }
 
     return res.status(200).jsend({
@@ -132,7 +136,7 @@ const requestBook = async (req, res) => {
             req.body.reference
         );
 
-        if (! transaction.status) throw new Error();
+        if (!transaction.status) throw new Error();
 
         await LendingRequest.query().insert({
             user: id,
