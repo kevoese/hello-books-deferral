@@ -138,7 +138,10 @@ const requestBook = async (req, res) => {
             user: id,
             book: req.params.bookId,
             requestDate: moment(new Date()),
-            returned: false
+            returned: false,
+            returnDate: moment(
+                new Date(new Date().setDate(new Date().getDate() + 30))
+            )
         });
 
         return res.status(200).jsend({
