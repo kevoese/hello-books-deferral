@@ -47,10 +47,10 @@ const Profile = () => {
             selectedImage = files[0];
 
             if (!selectedImage.type.match(/image/)) {
-                showToast('error', 'Please select only an image.')
-                return
+                showToast('error', 'Please select only an image.');
+                return;
             }
-            
+
             setprofileImageName(event.target.value.split(/(\\|\/)/g).pop());
             const reader = new FileReader();
             reader.onload = e => setProfileImage(e.target.result);
@@ -128,7 +128,7 @@ const Profile = () => {
                                         setAuth({
                                             token: auth.token,
                                             user: res.data.data
-                                        })
+                                        });
                                         localStorage.setItem(
                                             'user',
                                             JSON.stringify(res.data.data)
@@ -275,7 +275,9 @@ const Profile = () => {
                                                         clicked={() => {
                                                             selectedImage = '';
                                                             setProfileImage(
-                                                                auth.user.avatar || 'https://via.placeholder.com/150'
+                                                                auth.user
+                                                                    .avatar ||
+                                                                    'https://via.placeholder.com/150'
                                                             );
                                                             setprofileImageName(
                                                                 ''

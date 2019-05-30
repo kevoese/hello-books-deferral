@@ -54,9 +54,15 @@ const SignedOut = () => (
 );
 
 const IsLoggedIn = () => {
-    const [auth, setAuth, isAuth, isAdmin, isSuperAdmin, isPatron] = useContext(AuthContext);
+    const [auth, setAuth, isAuth, isAdmin, isSuperAdmin, isPatron] = useContext(
+        AuthContext
+    );
 
-    const view = isAuth() ? <SignedIn auth={auth} isPatron={isPatron}  /> : <SignedOut />;
+    const view = isAuth() ? (
+        <SignedIn auth={auth} isPatron={isPatron} />
+    ) : (
+        <SignedOut />
+    );
     return <React.Fragment>{view}</React.Fragment>;
 };
 

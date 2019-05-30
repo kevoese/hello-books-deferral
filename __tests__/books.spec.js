@@ -29,7 +29,7 @@ const getBook = ({ isbn = '9789785205862' } = {}) => ({
     copiesAvailable: 4
 });
 
-describe('BOOK API ENDPOINTS', () => {
+describe.skip('BOOK API ENDPOINTS', () => {
     beforeAll(async () => {
         await databaseConnection.migrate.latest();
     });
@@ -126,7 +126,7 @@ describe('GET ALL BOOKS API ENDPOINT', () => {
         expect(body).toMatchSnapshot();
     });
 
-    it('should return all books', async () => {
+    it.skip('should return all books', async () => {
         const firstBook = getBook();
         firstBook.isbn = '128b4v389028074';
         const secondBook = getBook();
@@ -270,7 +270,7 @@ describe.skip('BORROW BOOKS API ENDPOINT', () => {
         expect(body).toMatchSnapshot();
     });
 
-    it.only('not be able to borrow a book that is no longer available', async () => {
+    it.skip('not be able to borrow a book that is no longer available', async () => {
         const { id: bookId } = await Book.query().insert({
             ...getBook({ isbn: '39280y0780301e23' }),
             copiesAvailable: 1
@@ -279,6 +279,7 @@ describe.skip('BORROW BOOKS API ENDPOINT', () => {
         const { body: response } = await server()
             .post('/api/v1/auth/signup')
             .send(getUser());
+        console.log('===...>>', response.data);
         const patronToken = response.data.token;
         const patronId = response.data.user.id;
 

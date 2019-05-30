@@ -27,14 +27,11 @@ const AuthProvider = props => {
     };
 
     const isPatron = () => {
-        if (
-            (auth.user && auth.user.role === 'patron')
-        ) {
+        if (auth.user && auth.user.role === 'patron') {
             return true;
         }
         return false;
     };
-    
 
     const isSuperAdmin = () => {
         if (auth.user && auth.user.role === 'super_admin') {

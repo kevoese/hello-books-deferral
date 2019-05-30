@@ -24,10 +24,12 @@ class Book extends Model {
                     book: this.id
                 });
 
-                console.log(await AuthorBook.query().insert({
-                    author: authorId,
-                    book: this.id
-                }))
+                console.log(
+                    await AuthorBook.query().insert({
+                        author: authorId,
+                        book: this.id
+                    })
+                );
             }
         }
     }

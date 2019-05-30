@@ -57,7 +57,7 @@ const AdminBooksDashboard = () => {
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const [limit, setLimit] = useState(10);
-    const [authors, setAuthors] = useState([])
+    const [authors, setAuthors] = useState([]);
     const [url, setUrl] = useState(`/api/v1/books?page=${page}&limit=${limit}`);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -72,11 +72,12 @@ const AdminBooksDashboard = () => {
     const [toast, showToast] = useContext(Toast);
 
     useEffect(() => {
-        axios.get(`/api/v1/authors`)
-            .then(({ data: { data: { results } } }) => {
-                setAuthors(results.map(({ id, name }) => ({ value: id, label: name })))
-            })
-    }, [])
+        axios.get(`/api/v1/authors`).then(({ data: { data: { results } } }) => {
+            setAuthors(
+                results.map(({ id, name }) => ({ value: id, label: name }))
+            );
+        });
+    }, []);
 
     const CLOUDINARY_URL =
         'https://api.cloudinary.com/v1_1/deferral-hello-books/upload';
@@ -88,8 +89,8 @@ const AdminBooksDashboard = () => {
             selectedImage = files[0];
 
             if (!selectedImage.type.match(/image/)) {
-                showToast('error', 'Please select only an image.')
-                return
+                showToast('error', 'Please select only an image.');
+                return;
             }
             setCoverImageName(event.target.value.split(/(\\|\/)/g).pop());
             const reader = new FileReader();
@@ -278,14 +279,18 @@ const AdminBooksDashboard = () => {
 
                                 if (values.coverImage) {
                                     axios
-                                        .post('/api/v1/books', {
-                                            ...values,
-                                            authors: [values.author]
-                                        }, {
-                                            headers: {
-                                                'x-access-token': auth.token
+                                        .post(
+                                            '/api/v1/books',
+                                            {
+                                                ...values,
+                                                authors: [values.author]
+                                            },
+                                            {
+                                                headers: {
+                                                    'x-access-token': auth.token
+                                                }
                                             }
-                                        })
+                                        )
                                         .then(res => {
                                             resetForm({
                                                 title: '',
@@ -299,14 +304,19 @@ const AdminBooksDashboard = () => {
                                                 publisher: ''
                                             });
 
-
-                                            showToast('success', 'Book added to library.');
+                                            showToast(
+                                                'success',
+                                                'Book added to library.'
+                                            );
                                             setSubmitting(false);
                                             setModalState(false);
                                             fetchData();
                                         })
                                         .catch(({ response }) => {
-                                            showToast('error', 'Some errors occured.');
+                                            showToast(
+                                                'error',
+                                                'Some errors occured.'
+                                            );
                                             setSubmitting(false);
                                         });
                                 }
