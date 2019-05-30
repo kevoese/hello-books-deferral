@@ -57,7 +57,7 @@ const AdminBooksDashboard = () => {
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const [limit, setLimit] = useState(10);
-    const [authors, setAuthors] = useState([])
+    const [authors, setAuthors] = useState([]);
     const [url, setUrl] = useState(`/api/v1/books?page=${page}&limit=${limit}`);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -72,11 +72,12 @@ const AdminBooksDashboard = () => {
     const [toast, showToast] = useContext(Toast);
 
     useEffect(() => {
-        axios.get(`/api/v1/authors`)
-            .then(({ data: { data: { results } } }) => {
-                setAuthors(results.map(({ id, name }) => ({ value: id, label: name })))
-            })
-    }, [])
+        axios.get(`/api/v1/authors`).then(({ data: { data: { results } } }) => {
+            setAuthors(
+                results.map(({ id, name }) => ({ value: id, label: name }))
+            );
+        });
+    }, []);
 
     const CLOUDINARY_URL =
         'https://api.cloudinary.com/v1_1/deferral-hello-books/upload';
@@ -88,8 +89,8 @@ const AdminBooksDashboard = () => {
             selectedImage = files[0];
 
             if (!selectedImage.type.match(/image/)) {
-                showToast('error', 'Please select only an image.')
-                return
+                showToast('error', 'Please select only an image.');
+                return;
             }
             setCoverImageName(event.target.value.split(/(\\|\/)/g).pop());
             const reader = new FileReader();
@@ -153,6 +154,7 @@ const AdminBooksDashboard = () => {
                                 <button
                                     className="font-raleway p-4 rounded-full bg-blue-450 shadow-xl "
                                     onClick={() => setModalState(true)}
+                                    data-testid="modal"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -179,6 +181,7 @@ const AdminBooksDashboard = () => {
                                             onClick={changePage}
                                             value="Previous Page"
                                             className="bg-blue-400 hover:bg-blue-300 p-2 cursor-pointer rounded outline-none font-semibold text-white shadow-md"
+                                            data-testid="nav-prev"
                                         />
                                         <input
                                             type="button"
@@ -186,6 +189,7 @@ const AdminBooksDashboard = () => {
                                             onClick={changePage}
                                             value="Next Page"
                                             className="bg-blue-400 hover:bg-blue-300 p-2 cursor-pointer rounded outline-none font-semibold text-white shadow-md"
+                                            data-testid="nav-next"
                                         />
                                     </div>
                                 </div>
@@ -278,14 +282,18 @@ const AdminBooksDashboard = () => {
 
                                 if (values.coverImage) {
                                     axios
-                                        .post('/api/v1/books', {
-                                            ...values,
-                                            authors: [values.author]
-                                        }, {
-                                            headers: {
-                                                'x-access-token': auth.token
+                                        .post(
+                                            '/api/v1/books',
+                                            {
+                                                ...values,
+                                                authors: [values.author]
+                                            },
+                                            {
+                                                headers: {
+                                                    'x-access-token': auth.token
+                                                }
                                             }
-                                        })
+                                        )
                                         .then(res => {
                                             resetForm({
                                                 title: '',
@@ -299,14 +307,19 @@ const AdminBooksDashboard = () => {
                                                 publisher: ''
                                             });
 
-
-                                            showToast('success', 'Book added to library.');
+                                            showToast(
+                                                'success',
+                                                'Book added to library.'
+                                            );
                                             setSubmitting(false);
                                             setModalState(false);
                                             fetchData();
                                         })
                                         .catch(({ response }) => {
-                                            showToast('error', 'Some errors occured.');
+                                            showToast(
+                                                'error',
+                                                'Some errors occured.'
+                                            );
                                             setSubmitting(false);
                                         });
                                 }
@@ -327,6 +340,7 @@ const AdminBooksDashboard = () => {
                                             <InputForm
                                                 block="true"
                                                 classes="bg-white border-2 "
+                                                data-testid="form-title"
                                                 errors={errors}
                                                 touched={touched}
                                                 handleChange={handleChange}
@@ -340,6 +354,7 @@ const AdminBooksDashboard = () => {
                                             <InputForm
                                                 block="true"
                                                 classes="bg-white border-2 "
+                                                data-testid="form-author"
                                                 errors={errors}
                                                 touched={touched}
                                                 handleChange={handleChange}
@@ -354,6 +369,7 @@ const AdminBooksDashboard = () => {
                                             <InputForm
                                                 block="true"
                                                 classes="bg-white border-2 "
+                                                data-testid="form-isbn"
                                                 errors={errors}
                                                 touched={touched}
                                                 handleChange={handleChange}
@@ -367,6 +383,7 @@ const AdminBooksDashboard = () => {
                                             <InputForm
                                                 block="true"
                                                 classes="bg-white border-2 "
+                                                data-testid="form-copiesavailable"
                                                 errors={errors}
                                                 touched={touched}
                                                 handleChange={handleChange}
@@ -381,6 +398,7 @@ const AdminBooksDashboard = () => {
                                             <InputForm
                                                 block="true"
                                                 classes="bg-white border-2 h-20"
+                                                data-testid="form-description"
                                                 inputtype="textarea"
                                                 errors={errors}
                                                 touched={touched}
@@ -397,6 +415,7 @@ const AdminBooksDashboard = () => {
                                             <InputForm
                                                 block="true"
                                                 classes="bg-white border-2 "
+                                                data-testid="form-price"
                                                 errors={errors}
                                                 touched={touched}
                                                 handleChange={handleChange}
@@ -411,6 +430,7 @@ const AdminBooksDashboard = () => {
                                             <InputForm
                                                 block="true"
                                                 classes="bg-white border-2 "
+                                                data-testid="form-year"
                                                 errors={errors}
                                                 touched={touched}
                                                 handleChange={handleChange}
@@ -425,6 +445,7 @@ const AdminBooksDashboard = () => {
                                             <InputForm
                                                 block="true"
                                                 classes="bg-white border-2 "
+                                                data-testid="form-publisher"
                                                 errors={errors}
                                                 touched={touched}
                                                 handleChange={handleChange}
@@ -439,6 +460,7 @@ const AdminBooksDashboard = () => {
                                             <InputForm
                                                 block="true"
                                                 inputtype="select"
+                                                data-testid="form-select"
                                                 options={[
                                                     {
                                                         label: 'Hard',
@@ -521,7 +543,10 @@ const AdminBooksDashboard = () => {
 
                                     <br />
                                     <div className=" text-center">
-                                        <Button isSubmitting={isSubmitting}>
+                                        <Button
+                                            dataTestId="add-book"
+                                            isSubmitting={isSubmitting}
+                                        >
                                             Submit
                                         </Button>
                                     </div>

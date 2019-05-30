@@ -135,7 +135,9 @@ const Fines = () => {
 
     const openPaystackModal = () => {
         PaystackPop.setup({
-            key: process.env.PAYSTACK_PUBLIC_KEY || 'pk_test_d31a88ae54f97266ce3612280802062c9d7eade5',
+            key:
+                process.env.PAYSTACK_PUBLIC_KEY ||
+                'pk_test_d31a88ae54f97266ce3612280802062c9d7eade5',
             email: auth.user.email,
             currency: 'NGN',
             amount: parseInt(currentlyPayingFine.amount) * 100,

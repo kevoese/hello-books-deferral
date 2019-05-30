@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Button from '@components/Button'
+import Button from '@components/Button';
 import { Helmet } from 'react-helmet';
 import AuthContext from '@context/authContext';
 import ToastContext from '@context/toastContext';
@@ -26,7 +26,9 @@ const BookDetails = props => {
 
     const payNow = () => {
         PaystackPop.setup({
-            key: process.env.PAYSTACK_PUBLIC_KEY || 'pk_test_d31a88ae54f97266ce3612280802062c9d7eade5',
+            key:
+                process.env.PAYSTACK_PUBLIC_KEY ||
+                'pk_test_d31a88ae54f97266ce3612280802062c9d7eade5',
             email: auth.user.email,
             currency: 'NGN',
             amount: parseInt(data.price) * 100,
@@ -58,16 +60,14 @@ const BookDetails = props => {
 
     const fetchData = async () => {
         try {
-            let options = {
-                
-            }
+            let options = {};
 
             if (auth) {
                 options = {
                     headers: {
                         'x-access-token': auth.token
                     }
-                }
+                };
             }
 
             const response = await axios.get(url, options);
@@ -127,7 +127,11 @@ const BookDetails = props => {
                             <div className="max-w-sm rounded overflow-hidden">
                                 <img
                                     className="w-4/5 -px-5 float-right"
-                                    src={data.coverImage ? data.coverImage : '/images/notebook.png'}
+                                    src={
+                                        data.coverImage
+                                            ? data.coverImage
+                                            : '/images/notebook.png'
+                                    }
                                     alt="Sunset in the mountains"
                                 />
                             </div>
@@ -154,11 +158,39 @@ const BookDetails = props => {
                                 <p className="text-gray-700 text-base my-8">
                                     {data.description}
                                 </p>
-                                {data.canBorrowBook && <Button clicked={makePayment}> Borrow </Button>}
-                                {(data.copiesAvailable && !isAuth())  ? <Button clicked={() => props.history.push('/signin')}> Sign in to Borrow </Button> : ''}
-                                {data.maxBorrowLimitReached && <span className='text-red-700 font-bold text-xl'>Maximum borrow limit has been reached.</span>} 
-                                <br/>
-                                {data.existingBookRequest && <Button clicked={() => props.history.push('/borrowed')}>Visit dashboard to extend.</Button>}
+                                {data.canBorrowBook && (
+                                    <Button clicked={makePayment}>
+                                        {' '}
+                                        Borrow{' '}
+                                    </Button>
+                                )}
+                                {data.copiesAvailable && !isAuth() ? (
+                                    <Button
+                                        clicked={() =>
+                                            props.history.push('/signin')
+                                        }
+                                    >
+                                        {' '}
+                                        Sign in to Borrow{' '}
+                                    </Button>
+                                ) : (
+                                    ''
+                                )}
+                                {data.maxBorrowLimitReached && (
+                                    <span className="text-red-700 font-bold text-xl">
+                                        Maximum borrow limit has been reached.
+                                    </span>
+                                )}
+                                <br />
+                                {data.existingBookRequest && (
+                                    <Button
+                                        clicked={() =>
+                                            props.history.push('/borrowed')
+                                        }
+                                    >
+                                        Visit dashboard to extend.
+                                    </Button>
+                                )}
                             </div>
                         </div>
                     </div>

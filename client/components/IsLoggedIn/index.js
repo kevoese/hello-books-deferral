@@ -35,6 +35,7 @@ const SignedOut = () => (
         <div className="flex">
             <div className="text-sm text-center lg:mr-5 xl:mr-5">
                 <NavLink
+                    data-testid="signin-test"
                     className="font-raleway inline-block text-sm px-4 py-2 pr-10 pl-10 border-400 rounded-full text-blue-500 border border-blue-500 hover:border-transparent hover:bg-white mt-4 shadow lg:mt-0"
                     to="/signin"
                 >
@@ -54,9 +55,15 @@ const SignedOut = () => (
 );
 
 const IsLoggedIn = () => {
-    const [auth, setAuth, isAuth, isAdmin, isSuperAdmin, isPatron] = useContext(AuthContext);
+    const [auth, setAuth, isAuth, isAdmin, isSuperAdmin, isPatron] = useContext(
+        AuthContext
+    );
 
-    const view = isAuth() ? <SignedIn auth={auth} isPatron={isPatron}  /> : <SignedOut />;
+    const view = isAuth() ? (
+        <SignedIn auth={auth} isPatron={isPatron} />
+    ) : (
+        <SignedOut />
+    );
     return <React.Fragment>{view}</React.Fragment>;
 };
 

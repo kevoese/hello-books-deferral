@@ -66,7 +66,11 @@ const SignIn = props => {
                                     );
                                     showToast('success', 'Login Successful');
                                     setSubmitting(false);
-                                    props.history.push(user_data.role === 'patron' ? '/dashboard' : '/admin-dashboard');
+                                    props.history.push(
+                                        user_data.role === 'patron'
+                                            ? '/dashboard'
+                                            : '/admin-dashboard'
+                                    );
                                 })
                                 .catch(({ response }) => {
                                     showToast(
@@ -102,6 +106,7 @@ const SignIn = props => {
                                         id="email"
                                         type="email"
                                         value={values.email}
+                                        data-testid="login-form-email"
                                     />
                                     <InputForm
                                         errors={errors}
@@ -113,6 +118,7 @@ const SignIn = props => {
                                         id="password"
                                         type="password"
                                         value={values.password}
+                                        data-testid="login-form-password"
                                     />
                                 </div>
                                 <Link
@@ -122,7 +128,10 @@ const SignIn = props => {
                                     Forgot Password ?
                                 </Link>
                                 <br />
-                                <Button isSubmitting={isSubmitting}>
+                                <Button
+                                    isSubmitting={isSubmitting}
+                                    dataTestId="login-form-submit"
+                                >
                                     Sign in
                                 </Button>
                                 {errorState && (

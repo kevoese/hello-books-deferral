@@ -22,6 +22,7 @@ const Navbar = () => {
             </div>
             <div className="block lg:hidden">
                 <button
+                    data-testid="nav-hamburger"
                     className="flex items-center px-3 py-2 border navToggler rounded text-dark-200 border-dark-500 hover:text-dark hover:border-dark"
                     onClick={() => changeVisibility(!isVisible)}
                 >

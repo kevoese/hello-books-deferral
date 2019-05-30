@@ -122,7 +122,9 @@ const AdminRoute = ({ component: Component, props, ...rest }) => {
 };
 
 const PatronRoute = ({ component: Component, props, ...rest }) => {
-    const [auth, setAuth, isAuth, isAdmin, isSuperAdmin, isPatron] = useContext(AuthContext);
+    const [auth, setAuth, isAuth, isAdmin, isSuperAdmin, isPatron] = useContext(
+        AuthContext
+    );
 
     return (
         <Route
