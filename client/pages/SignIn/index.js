@@ -66,7 +66,11 @@ const SignIn = props => {
                                     );
                                     showToast('success', 'Login Successful');
                                     setSubmitting(false);
-                                    props.history.push(user_data.role === 'patron' ? '/dashboard' : '/admin-dashboard');
+                                    props.history.push(
+                                        user_data.role === 'patron'
+                                            ? '/dashboard'
+                                            : '/admin-dashboard'
+                                    );
                                 })
                                 .catch(({ response }) => {
                                     showToast(

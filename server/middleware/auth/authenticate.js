@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 export const isMaybeAuthenticated = async (req, res, next) => {
     const token = req.headers['x-access-token'];
     if (!token) {
-        return next()
+        return next();
     }
     try {
         const decoded = await jwt.verify(token, process.env.JWT_SECRET);
@@ -15,15 +15,15 @@ export const isMaybeAuthenticated = async (req, res, next) => {
             .first();
 
         if (!user) {
-            return next()
+            return next();
         }
 
         req.user = user;
         next();
     } catch (error) {
-        return next()
+        return next();
     }
-}
+};
 
 export const isAuthenticated = async (req, res, next) => {
     const token = req.headers['x-access-token'];

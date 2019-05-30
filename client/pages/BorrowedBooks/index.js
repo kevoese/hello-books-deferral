@@ -42,11 +42,11 @@ const BorrowedBooks = () => {
             .catch(err => {
                 setIsLoading(false);
             });
-    }
+    };
 
     useEffect(() => {
         setIsLoading(true);
-        fetchData()
+        fetchData();
     }, []);
 
     const extendBook = bookId => {
@@ -122,7 +122,10 @@ const BorrowedBooks = () => {
                                 setSubmitting(true);
                                 axios(options)
                                     .then(res => {
-                                        showToast('success', res.data.data.message)
+                                        showToast(
+                                            'success',
+                                            res.data.data.message
+                                        );
                                         resetForm({
                                             days: ''
                                         });
@@ -135,7 +138,10 @@ const BorrowedBooks = () => {
                                             'days',
                                             e.response.data.code.message
                                         );
-                                        showToast('error', e.response.data.code.message);
+                                        showToast(
+                                            'error',
+                                            e.response.data.code.message
+                                        );
                                         setSubmitting(false);
                                     });
                             }}
@@ -172,7 +178,7 @@ const BorrowedBooks = () => {
                                                 backgroundImage: `url(/images/cut.png)`
                                             }}
                                         />
-                                        {(
+                                        {
                                             <div>
                                                 <label
                                                     htmlFor="days"
@@ -202,7 +208,7 @@ const BorrowedBooks = () => {
                                                     Extend
                                                 </Button>
                                             </div>
-                                        )}
+                                        }
                                     </form>
                                 );
                             }}

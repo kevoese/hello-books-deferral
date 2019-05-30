@@ -58,6 +58,11 @@ Object {
       "validation": "required",
     },
     Object {
+      "field": "price",
+      "message": "price is required to create a book",
+      "validation": "required",
+    },
+    Object {
       "field": "publisher",
       "message": "publisher is required to create a book",
       "validation": "required",
@@ -270,10 +275,16 @@ Array [
   "title",
   "coverType",
   "description",
+  "price",
   "isbn",
   "publisher",
   "year",
   "copiesAvailable",
+  "coverImage",
+  "authors",
+  "canBorrowBook",
+  "existingBookRequest",
+  "maxBorrowLimitReached",
 ]
 `;
 

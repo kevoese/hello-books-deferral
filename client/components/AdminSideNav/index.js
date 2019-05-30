@@ -38,10 +38,7 @@ const AdminSideNav = () => {
     );
 
     const borrowedBooks = (
-        <NavLink
-            to="/borrowed"
-            className="flex pb-0 cursor-pointer"
-        >
+        <NavLink to="/borrowed" className="flex pb-0 cursor-pointer">
             <div className="w-1/4 bg-gray-950 text-center h-12 flex justify-center items-center">
                 <img className="h-6  fill-current" src="/images/b-books.svg" />
             </div>
@@ -62,7 +59,10 @@ const AdminSideNav = () => {
                 {isAdmin() ? adminDash : ''}
 
                 {!isAdmin() && (
-                    <NavLink to="/dashboard" className="flex pb-0 cursor-pointer">
+                    <NavLink
+                        to="/dashboard"
+                        className="flex pb-0 cursor-pointer"
+                    >
                         <div className="w-1/4 bg-gray-950 text-center h-12 flex justify-center items-center">
                             <img
                                 className="h-6 white fill-current"
@@ -80,10 +80,7 @@ const AdminSideNav = () => {
                 {!isAdmin() ? borrowedBooks : ''}
 
                 {!isAdmin() && (
-                    <NavLink
-                        to="/fines"
-                        className="flex pb-0 cursor-pointer"
-                    >
+                    <NavLink to="/fines" className="flex pb-0 cursor-pointer">
                         <div className="w-1/4 bg-gray-950  text-center h-12 flex justify-center items-center">
                             <img
                                 className="h-6  fill-current"
@@ -96,10 +93,7 @@ const AdminSideNav = () => {
                     </NavLink>
                 )}
 
-                <NavLink
-                    to="/profile"
-                    className="flex pb-0 cursor-pointer"
-                >
+                <NavLink to="/profile" className="flex pb-0 cursor-pointer">
                     <div className="w-1/4 bg-gray-950  text-center h-12 flex justify-center items-center">
                         <img
                             className="h-6  fill-current"
