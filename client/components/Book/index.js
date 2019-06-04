@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Book = ({ id, title, copiesAvailable, authors, price, coverImage }) => {
     return (
         <div
-            className="relative flex flex-col h-72 w-3/4 bg-transparent shadow-md mt-8
+            className="bookCard relative flex flex-col h-72 w-3/4 bg-transparent shadow-md mt-8
         lg:h-64 lg:w-1/3 mx-4 cursor-pointer"
         >
             <Link to={`/books/${id}`}>

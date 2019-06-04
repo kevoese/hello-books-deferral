@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`input Form component should render the input and label in flex col when block props is true 1`] = `
+<div
+  className="flex mt-4 mb-0 flex-wrap sm:flex-no-wrap flex-col"
+>
+  <label
+    className="font-raleway py-2  w-full px-4 mr-4 sm:px-0 text-base text-gray-550 text-left "
+    htmlFor="password"
+  >
+    password
+  </label>
+  <div
+    className="flex flex-col w-full "
+  >
+    <Select
+      block="true"
+      errors={Object {}}
+      inputtype="select"
+      name="password"
+      touched={Object {}}
+    />
+  </div>
+</div>
+`;
+
+exports[`input Form component should render the input-form with a select and not an input when inputtype is select 1`] = `
+<div
+  className="flex mt-4 mb-0 flex-wrap sm:flex-no-wrap "
+>
+  <label
+    className="font-raleway py-2  w-full px-4 mr-4 sm:px-0 text-base text-gray-550 text-left sm:w-4/12"
+    htmlFor="password"
+  >
+    password
+  </label>
+  <div
+    className="flex flex-col w-full sm:w-8/12"
+  >
+    <Select
+      errors={Object {}}
+      inputtype="select"
+      name="password"
+      touched={Object {}}
+    />
+  </div>
+</div>
+`;
+
+exports[`input Form component should render the input-form with a span when errors are available 1`] = `
+<div
+  className="flex mt-4 mb-0 flex-wrap sm:flex-no-wrap "
+>
+  <label
+    className="font-raleway py-2  w-full px-4 mr-4 sm:px-0 text-base text-gray-550 text-left sm:w-4/12"
+    htmlFor="test"
+  >
+    test
+  </label>
+  <div
+    className="flex flex-col w-full sm:w-8/12"
+  >
+    <Input
+      errors={
+        Object {
+          "test": "this is a test",
+        }
+      }
+      name="test"
+      touched={
+        Object {
+          "test": "this is a test",
+        }
+      }
+    />
+    <span
+      className="font-raleway py-0 w-full px-4 text-sm sm:px-0 text-red-600 text-left pt-1"
+    >
+      this is a test
+    </span>
+  </div>
+</div>
+`;
+
+exports[`input Form component should render the input-form with a textarea and not an input when inputtype is textarea 1`] = `
+<div
+  className="flex mt-4 mb-0 flex-wrap sm:flex-no-wrap "
+>
+  <label
+    className="font-raleway py-2  w-full px-4 mr-4 sm:px-0 text-base text-gray-550 text-left sm:w-4/12"
+    htmlFor="password"
+  >
+    password
+  </label>
+  <div
+    className="flex flex-col w-full sm:w-8/12"
+  >
+    <Textarea
+      errors={Object {}}
+      inputtype="textarea"
+      name="password"
+      touched={Object {}}
+    />
+  </div>
+</div>
+`;
+
+exports[`input Form component should render the input-form without a span when errors are not available 1`] = `
+<div
+  className="flex mt-4 mb-0 flex-wrap sm:flex-no-wrap "
+>
+  <label
+    className="font-raleway py-2  w-full px-4 mr-4 sm:px-0 text-base text-gray-550 text-left sm:w-4/12"
+    htmlFor="test"
+  >
+    test
+  </label>
+  <div
+    className="flex flex-col w-full sm:w-8/12"
+  >
+    <Input
+      errors={Object {}}
+      name="test"
+      touched={Object {}}
+    />
+  </div>
+</div>
+`;
+
+exports[`input Form component testing mount 1`] = `
+<InputForm
+  errors={Object {}}
+  name="password"
+  touched={Object {}}
+>
+  <div
+    className="flex mt-4 mb-0 flex-wrap sm:flex-no-wrap "
+  >
+    <label
+      className="font-raleway py-2  w-full px-4 mr-4 sm:px-0 text-base text-gray-550 text-left sm:w-4/12"
+      htmlFor="password"
+    >
+      password
+    </label>
+    <div
+      className="flex flex-col w-full sm:w-8/12"
+    >
+      <Input
+        errors={Object {}}
+        name="password"
+        touched={Object {}}
+      >
+        <input
+          className="font-robotoMono outline-none h-8 text-base px-4 text-gray-550 bg-gray-250 w-full rounded-10"
+          errors={Object {}}
+          name="password"
+          touched={Object {}}
+        />
+      </Input>
+    </div>
+  </div>
+</InputForm>
+`;

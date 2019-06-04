@@ -1,0 +1,7 @@
+{
+    "baseUrl": "http://localhost:4001",
+    "env": {
+        "NODE_ENV": "test"
+    },
+    "integrationFolder": "./client"
+}
