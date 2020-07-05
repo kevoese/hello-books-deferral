@@ -42,9 +42,7 @@ class User extends Model {
             .to(this.email, this.firstName)
             .data({
                 name: this.firstName,
-                url: `${config.server.url}/api/v1/auth/verify/${
-                    this.email_confirm_code
-                }`
+                url: `${config.server.url}/api/v1/auth/verify/${this.email_confirm_code}`
             })
             .subject('Welcome Onboard')
             .send();
