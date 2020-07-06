@@ -38,8 +38,8 @@ const Profile = () => {
     const [profileImage, setProfileImage] = useState(initialFormValues.avatar);
     const [profileImageName, setprofileImageName] = useState('');
     const CLOUDINARY_URL =
-        'https://api.cloudinary.com/v1_1/deferral-hello-books/upload';
-    const CLOUDINARY_UPLOAD_PRESET = 'hwmdjyvu';
+        'https://api.cloudinary.com/v1_1/dmyu8akhu/image/upload';
+    const CLOUDINARY_UPLOAD_PRESET = 'kelvin_hello';
 
     const selectProfileImage = event => {
         const files = event.target.files;
@@ -55,6 +55,55 @@ const Profile = () => {
             const reader = new FileReader();
             reader.onload = e => setProfileImage(e.target.result);
             reader.readAsDataURL(files[0]);
+        }
+    };
+
+    const handleSubmit = async (
+        values,
+        { setStatus, setSubmitting, resetForm }
+    ) => {
+        try {
+            if (selectedImage) {
+                const formdata = new FormData();
+                formdata.append('file', selectedImage);
+                formdata.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                const cloudinaryResponse = await axios({
+                    method: 'post',
+                    url: CLOUDINARY_URL,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    data: formdata
+                });
+                values.avatar = cloudinaryResponse.data.secure_url;
+            }
+            if (initialFormValues.email == values.email) delete values.email;
+            const res = await axios.patch(`/api/v1/profile`, values, {
+                headers: {
+                    'x-access-token': `${auth.token}`
+                }
+            });
+
+            showToast('success', 'Profile updated Successfully');
+            // setAuth({
+            //     token: auth.token,
+            //     user: res.data.data
+            // });
+            // localStorage.setItem('user', JSON.stringify(res.data.data));
+            resetForm({
+                firstName: res.data.data.firstName || '',
+                lastName: res.data.data.lastName || '',
+                email: res.data.data.email || '',
+                bio: res.data.data.bio || ''
+            });
+            selectedImage = '';
+            setProfileImage(
+                res.data.data.avatar || 'https://via.placeholder.com/150'
+            );
+        } catch (e) {
+            showToast('error', 'An error must have occurred please try again');
+            setStatus(e);
+            setSubmitting(false);
         }
     };
 
@@ -75,86 +124,7 @@ const Profile = () => {
                                 enableReinitialize={true}
                                 initialValues={initialFormValues}
                                 validationSchema={ProfileValidator}
-                                onSubmit={async (
-                                    values,
-                                    { setStatus, setSubmitting, resetForm }
-                                ) => {
-                                    try {
-                                        if (selectedImage) {
-                                            const formdata = new FormData();
-                                            formdata.append(
-                                                'file',
-                                                selectedImage
-                                            );
-                                            formdata.append(
-                                                'upload_preset',
-                                                CLOUDINARY_UPLOAD_PRESET
-                                            );
-                                            const cloudinaryResponse = await axios(
-                                                {
-                                                    method: 'post',
-                                                    url: CLOUDINARY_URL,
-                                                    headers: {
-                                                        'Content-Type':
-                                                            'application/x-www-form-urlencoded'
-                                                    },
-                                                    data: formdata
-                                                }
-                                            );
-                                            values.avatar =
-                                                cloudinaryResponse.data.secure_url;
-                                        }
-                                        if (
-                                            initialFormValues.email ==
-                                            values.email
-                                        )
-                                            delete values.email;
-                                        const res = await axios.patch(
-                                            `/api/v1/profile`,
-                                            values,
-                                            {
-                                                headers: {
-                                                    'x-access-token': `${
-                                                        auth.token
-                                                    }`
-                                                }
-                                            }
-                                        );
-
-                                        showToast(
-                                            'success',
-                                            'Profile updated Successfully'
-                                        );
-                                        setAuth({
-                                            token: auth.token,
-                                            user: res.data.data
-                                        });
-                                        localStorage.setItem(
-                                            'user',
-                                            JSON.stringify(res.data.data)
-                                        );
-                                        resetForm({
-                                            firstName:
-                                                res.data.data.firstName || '',
-                                            lastName:
-                                                res.data.data.lastName || '',
-                                            email: res.data.data.email || '',
-                                            bio: res.data.data.bio || ''
-                                        });
-                                        selectedImage = '';
-                                        setProfileImage(
-                                            res.data.data.avatar ||
-                                                'https://via.placeholder.com/150'
-                                        );
-                                    } catch (e) {
-                                        showToast(
-                                            'error',
-                                            'An error must have occurred please try again'
-                                        );
-                                        setStatus(e);
-                                        setSubmitting(false);
-                                    }
-                                }}
+                                onSubmit={handleSubmit}
                             >
                                 {({
                                     values,
