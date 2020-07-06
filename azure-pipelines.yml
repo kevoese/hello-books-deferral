@@ -8,7 +8,7 @@ trigger:
 
 variables:
   PASSWORD: $(CONTAINER_PASSWORD)
-  appImage: $(IMAGE_NAME):v1
+  appImage: $(IMAGE_NAME)
 
 pool:
   vmImage: 'ubuntu-latest'
