@@ -23,18 +23,6 @@
         "heroku-postbuild": "npm run migrate && npm run build && npm run seed:prod",
         "coverage": "jest --forceExit --coverage && cat ./coverage/lcov.info | coveralls"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
-    "lint-staged": {
-        "*.js": [
-            "npm run lint:fix",
-            "npm run prettier",
-            "git add"
-        ]
-    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/bahdcoder/hello-books-deferral.git"
@@ -70,6 +58,7 @@
         "knex": "^0.16.5",
         "lint-staged": "^8.1.5",
         "moment": "^2.24.0",
+        "mysql": "^2.18.1",
         "npm-run-all": "^4.1.5",
         "objection": "^1.6.8",
         "paystack": "^2.0.1",
